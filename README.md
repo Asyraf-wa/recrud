@@ -69,11 +69,28 @@ Please adhere to this project's `code of conduct`.
 
 ## Installation
 
-Install my-project with npm
+Clone Re-CRUD repo
 
 ```bash
-  npm install my-project
-  cd my-project
+  https://github.com/Asyraf-wa/recrud.git
+```
+
+Composer update
+
+```bash
+  composer update
+```
+
+Database migration
+
+```bash
+  bin/cake migrations migrate
+```
+
+Database seeding
+
+```bash
+  bin/cake migrations seed
 ```
     
 ## Run Locally

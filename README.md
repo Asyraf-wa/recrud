@@ -72,7 +72,7 @@ Please adhere to this project's `code of conduct`.
 Clone Re-CRUD repo
 
 ```bash
-  https://github.com/Asyraf-wa/recrud.git
+  git clone https://github.com/Asyraf-wa/recrud.git
 ```
 
 Composer update

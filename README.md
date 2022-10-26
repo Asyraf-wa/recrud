@@ -1,5 +1,5 @@
 
-![Logo]()
+![Logo](https://github.com/Asyraf-wa/recrud/blob/main/webroot/img/ReCRUD.jpg)
 
 
 # Re-CRUD

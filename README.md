@@ -85,6 +85,23 @@ Composer update
   composer update
 ```
 
+Rename file `app_local_example.php` to  `app_local.php` in `config` folder
+
+Create database
+
+Configure database
+```bash
+    'Datasources' => [
+        'default' => [
+            'host' => 'localhost',
+            //'port' => 'non_standard_port_number',
+            'username' => 'root',
+            'password' => '',
+            'database' => 'recrud',
+            'url' => env('DATABASE_URL', null),
+        ],
+```
+
 Database migration
 
 ```bash

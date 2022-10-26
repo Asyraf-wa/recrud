@@ -116,31 +116,10 @@ Database seeding
   bin/cake migrations seed
 ```
     
-## Run Locally
+## 🛠 Requirements
 
-Clone the project
-
-```bash
-  git clone https://link-to-project
-```
-
-Go to the project directory
-
-```bash
-  cd my-project
-```
-
-Install dependencies
-
-```bash
-  npm install
-```
-
-Start the server
-
-```bash
-  npm run start
-```
+PHP 8+
+intl extension
 
 
 ## Usage/Examples

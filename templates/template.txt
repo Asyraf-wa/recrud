@@ -1,0 +1,103 @@
+<div class="row pt-5">
+	<div class="col-md-3">
+		<div class="card shadow mb-3 border-0" style="background-color: #BB86FC !important;">
+		<div class="card-body">
+		<div class="card_title">Welcome</div>
+		<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+		<div class="mb-3">
+		<input type="text" class="form-control form-control-sm shadow-0" id="exampleFormControlInput1" placeholder="Looking for something?">
+		</div>
+		</div>
+		</div>
+
+		<div class="card_title">Search</div>
+		The User Experience Designer position exists to create compelling and digital user experience through excellent design...
+		<br>
+
+
+
+		<div class="form-check">
+		<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+		<label class="form-check-label" for="flexCheckDefault">
+		Default checkbox
+		</label>
+		</div>
+		<div class="form-check">
+		<input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+		<label class="form-check-label" for="flexCheckChecked">
+		Checked checkbox
+		</label>
+		</div>
+	</div>
+	<div class="col-md-9">
+<h1 class="page_title">Code</h1>
+		
+	</div>
+</div>
+
+
+------------------------------------------------
+<div class="row pt-5">
+	<div class="col-md-3">
+<div class="card border-0 shadow">
+  <div class="card-body">
+    This is some text within a card body.
+  </div>
+</div>
+	</div>
+	<div class="col-md-9">
+	<h1 class="page_title">Code</h1>
+	</div>
+</div>
+
+====================================
+<div class="row">
+	<div class="col-md-3">
+
+	</div>
+	<div class="col-md-9">
+
+	</div>
+</div>
+====================================
+<div class="card shadow">
+	<div class="card-header d-flex align-items-center justify-content-between border-bottom">
+		<div class="card-title mb-0">
+		  <h1 class="m-0 me-2 page_title"><?php echo $title; ?></h1>
+		  <small class="text-muted"><?php echo $system_name; ?></small>
+		</div>
+		<div class="dropdown">
+		  <button class="btn p-0" type="button" id="orederStatistics" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			<i class="fa-solid fa-ellipsis-vertical"></i>
+		  </button>
+		  <div class="dropdown-menu dropdown-menu-end" aria-labelledby="orederStatistics">
+			<a class="dropdown-item" href="javascript:void(0);">Select All</a>
+			<a class="dropdown-item" href="javascript:void(0);">Refresh</a>
+			<a class="dropdown-item" href="javascript:void(0);">Share</a>
+		  </div>
+		</div>
+	</div>
+	<div class="card-body mt-4">
+	ccc
+	</div>
+</div>
+
+=================
+<div class="card shadow">
+	<div class="card-body">
+
+	</div>
+</div>
+===================
+$this->set('title', 'User');
+===================
+<div class="special_card mb-3">
+  <div class="profile-card js-profile-card shadow">
+	<div class="profile-card__img shadow" style="background-color: #dc3545;color: #ffffff;">
+	  <i class="fa-solid fa-question fa-xl" style="margin-left: 16px;margin-top: 21px;"></i>
+	</div>
+		<div class="card-body small-text pt-0">
+
+		</div>
+  </div>
+</div>

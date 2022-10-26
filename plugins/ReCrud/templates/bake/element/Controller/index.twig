@@ -1,0 +1,104 @@
+{#
+/**
+ * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
+ * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link          http://cakephp.org CakePHP(tm) Project
+ * @since         2.0.0
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ */
+#}
+
+	public function viewClasses(): array
+    {
+        return [JsonView::class];
+		//return [JsonView::class, XmlView::class];
+    }
+	
+	public function json()
+    {
+		$this->viewBuilder()->setLayout('json');
+        $this->set('{{ pluralName }}', $this->paginate());
+        $this->viewBuilder()->setOption('serialize', '{{ pluralName }}');
+    }
+	
+	public function csv()
+	{
+		$this->response = $this->response->withDownload('{{ pluralName }}.csv');
+		${{ pluralName }} = $this->{{ currentModelName }}->find();
+		$_serialize = '{{ pluralName }}';
+
+		$this->viewBuilder()->setClassName('CsvView.Csv');
+		$this->set(compact('{{ pluralName }}', '_serialize'));
+	}
+	
+	public function pdfList()
+	{
+		$this->viewBuilder()->enableAutoLayout(false); 
+{% set belongsTo = Bake.aliasExtractor(modelObj, 'BelongsTo') %}
+{% if belongsTo %}
+        $this->paginate = [
+            'contain' => {{ Bake.exportArray(belongsTo)|raw }},
+			'maxLimit' => 10,
+        ];
+{% endif %}
+		${{ pluralName }} = $this->paginate($this->{{ currentModelName }});
+		$this->viewBuilder()->setClassName('CakePdf.Pdf');
+		$this->viewBuilder()->setOption(
+			'pdfConfig',
+			[
+				'orientation' => 'portrait',
+				'download' => true, 
+				'filename' => '{{ pluralName }}_List.pdf' 
+			]
+		);
+		$this->set(compact('{{ pluralName }}'));
+	}
+    /**
+     * Index method
+     *
+     * @return \Cake\Http\Response|null|void Renders view
+     */
+    public function index()
+    {
+		$this->set('title', '{{ currentModelName }} List');
+{% set belongsTo = Bake.aliasExtractor(modelObj, 'BelongsTo') %}
+{% if belongsTo %}
+        $this->paginate = [
+            'contain' => {{ Bake.exportArray(belongsTo)|raw }},
+			'maxLimit' => 10,
+        ];
+{% endif %}
+		$this->paginate = [
+			'maxLimit' => 10,
+		];
+		//Search
+		${{ pluralName }} = $this->paginate($this->{{ currentModelName }}->find('search', ['search' => $this->request->getQuery()]));
+		
+		//count
+		$this->set('total_{{ pluralName }}', $this->{{ currentModelName }}->find()->count());
+		$this->set('total_{{ pluralName }}_archived', $this->{{ currentModelName }}->find()->where(['status' => 2])->count());
+		$this->set('total_{{ pluralName }}_active', $this->{{ currentModelName }}->find()->where(['status' => 1])->count());
+		$this->set('total_{{ pluralName }}_disabled', $this->{{ currentModelName }}->find()->where(['status' => 0])->count());
+		
+		//Count By Month
+		$this->set('january', $this->{{ currentModelName }}->find()->where(['MONTH(created)' => date('1'), 'YEAR(created)' => date('Y')])->count());
+		$this->set('february', $this->{{ currentModelName }}->find()->where(['MONTH(created)' => date('2'), 'YEAR(created)' => date('Y')])->count());
+		$this->set('march', $this->{{ currentModelName }}->find()->where(['MONTH(created)' => date('3'), 'YEAR(created)' => date('Y')])->count());
+		$this->set('april', $this->{{ currentModelName }}->find()->where(['MONTH(created)' => date('4'), 'YEAR(created)' => date('Y')])->count());
+		$this->set('may', $this->{{ currentModelName }}->find()->where(['MONTH(created)' => date('5'), 'YEAR(created)' => date('Y')])->count());
+		$this->set('jun', $this->{{ currentModelName }}->find()->where(['MONTH(created)' => date('6'), 'YEAR(created)' => date('Y')])->count());
+		$this->set('july', $this->{{ currentModelName }}->find()->where(['MONTH(created)' => date('7'), 'YEAR(created)' => date('Y')])->count());
+		$this->set('august', $this->{{ currentModelName }}->find()->where(['MONTH(created)' => date('8'), 'YEAR(created)' => date('Y')])->count());
+		$this->set('september', $this->{{ currentModelName }}->find()->where(['MONTH(created)' => date('9'), 'YEAR(created)' => date('Y')])->count());
+		$this->set('october', $this->{{ currentModelName }}->find()->where(['MONTH(created)' => date('10'), 'YEAR(created)' => date('Y')])->count());
+		$this->set('november', $this->{{ currentModelName }}->find()->where(['MONTH(created)' => date('11'), 'YEAR(created)' => date('Y')])->count());
+		$this->set('december', $this->{{ currentModelName }}->find()->where(['MONTH(created)' => date('12'), 'YEAR(created)' => date('Y')])->count());
+
+        $this->set(compact('{{ pluralName }}'));
+    }

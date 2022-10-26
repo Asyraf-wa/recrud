@@ -1,0 +1,11 @@
+
+
+<?php
+foreach (${{ pluralVar }} as ${{ singularVar }}) {
+    unset(${{ singularVar }}->generated_html);
+}
+//echo json_encode(compact('{{ pluralVar }}'));
+$json_pretty = json_encode(compact('{{ pluralVar }}'), JSON_PRETTY_PRINT);
+echo "<pre>" . $json_pretty . "<pre/>";
+?>
+

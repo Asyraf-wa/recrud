@@ -1,0 +1,75 @@
+{#
+/**
+ * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
+ * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link          http://cakephp.org CakePHP(tm) Project
+ * @since         2.0.0
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ */
+#}
+<!--Header-->
+<div class="row mb-3">
+	<div class="col-10">
+		<h1 class="m-0 me-2 page_title"><?php echo $title; ?></h1>
+		<small class="text-muted"><?php echo $system_name; ?></small>
+	</div>
+	<div class="col-2">
+		<div class="text-end">
+			<div class="dropdown mx-3">
+				<button class="btn p-0" type="button" id="orederStatistics" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<i class="fa-solid fa-bars text-primary"></i>
+				</button>
+					<div class="dropdown-menu dropdown-menu-end" aria-labelledby="orederStatistics">					
+						<li><?= $this->Html->link(__('List {{ pluralHumanName }}'), ['action' => 'index'], ['class' => 'dropdown-item', 'escapeTitle' => false]) ?></li>
+					</div>
+			</div>	
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-9">
+		<div class="card shadow">
+			<div class="card-body">
+<?php
+/**
+ * @var \{{ namespace }}\View\AppView $this
+ * @var \{{ entityClass }} ${{ singularVar }}
+        {{- "\n" }}
+{%- if associations.BelongsTo is defined %}
+    {%- for assocName, assocData in associations.BelongsTo %}
+ * @var \Cake\Collection\CollectionInterface|string[] ${{ assocData.variable }}
+        {{- "\n" }}
+    {%- endfor %}
+{% endif %}
+{%- if associations.BelongsToMany is defined %}
+    {%- for assocName, assocData in associations.BelongsToMany %}
+ * @var \Cake\Collection\CollectionInterface|string[] ${{ assocData.variable }}
+        {{- "\n" }}
+    {%- endfor %}
+{% endif %}
+ */
+?>
+{{ element('Bake.form') }}
+			</div>
+		</div>
+	</div>
+	<div class="col-md-3">
+		<div class="special_card mb-3">
+		  <div class="profile-card js-profile-card shadow">
+			<div class="profile-card__img shadow" style="background-color: #dc3545;color: #ffffff;">
+			  <i class="fa-solid fa-question fa-xl" style="margin-left: 16px;margin-top: 21px;"></i>
+			</div>
+				<div class="card-body small-text pt-0">
+				Content...
+				</div>
+		  </div>
+		</div>
+	</div>
+</div>

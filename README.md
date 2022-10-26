@@ -69,7 +69,7 @@ Please adhere to this project's `code of conduct`.
 
 ## Installation
 
-Clone Re-CRUD repo
+1. Clone Re-CRUD repo
 
 ```bash
   composer create-project recrud/app
@@ -79,7 +79,7 @@ or
   git clone https://github.com/Asyraf-wa/recrud.git
 ```
 
-Composer update
+2. Run composer update
 
 ```bash
   composer update

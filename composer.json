@@ -1,7 +1,7 @@
 {
-    "name": "cakephp/app",
-    "description": "CakePHP skeleton app",
-    "homepage": "https://cakephp.org",
+    "name": "ReCRUD",
+    "description": "ReCRUD Skeleton App",
+    "homepage": "https://github.com/Asyraf-wa/recrud",
     "type": "project",
     "license": "MIT",
     "require": {

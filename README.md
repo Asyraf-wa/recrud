@@ -119,6 +119,7 @@ Database seeding
 ## 🛠 Requirements
 
 PHP 8+
+
 intl extension
 
 

@@ -87,7 +87,7 @@ Composer update
 
 Rename file `app_local_example.php` to  `app_local.php` in `config` folder
 
-Create database
+Create database in `phpmyadmin`
 
 Configure database
 ```bash

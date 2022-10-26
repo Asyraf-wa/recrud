@@ -72,6 +72,10 @@ Please adhere to this project's `code of conduct`.
 Clone Re-CRUD repo
 
 ```bash
+  composer create-project recrud/app
+```
+or
+```bash
   git clone https://github.com/Asyraf-wa/recrud.git
 ```
 

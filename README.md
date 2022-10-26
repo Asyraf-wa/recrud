@@ -69,7 +69,7 @@ Please adhere to this project's `code of conduct`.
 
 ## Installation
 
-1. Clone Re-CRUD repo
+Clone Re-CRUD repo
 
 ```bash
   composer create-project recrud/app
@@ -79,11 +79,13 @@ or
   git clone https://github.com/Asyraf-wa/recrud.git
 ```
 
-2. Run composer update
+Run composer update
 
 ```bash
   composer update
 ```
+
+## Configuration
 
 Rename file `app_local_example.php` to  `app_local.php` in `config` folder
 

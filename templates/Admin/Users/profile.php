@@ -12,42 +12,34 @@
 
 <div class="row mt-3">
 	<div class="col-md-8">
-<div class="nav-align-top mb-4">
-      <ul class="nav nav-pills mb-3" role="tablist">
-        <li class="nav-item">
-          <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-top-account" aria-controls="navs-pills-top-account" aria-selected="true"><i class="fa-solid fa-user-astronaut"></i> Account</button>
-        </li>
-        <li class="nav-item">
-          <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-top-update" aria-controls="navs-pills-top-update" aria-selected="false"><i class="fa-regular fa-pen-to-square"></i> Update</button>
-        </li>
-        <li class="nav-item">
-          <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-top-password" aria-controls="navs-pills-top-password" aria-selected="false"><i class="fa-solid fa-unlock"></i> Password</button>
-        </li>
-        <li class="nav-item">
-          <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-top-activity" aria-controls="navs-pills-top-activity" aria-selected="false"><i class="fa-solid fa-timeline"></i> Activities</button>
-        </li>
-        <li class="nav-item">
-			<?php echo $this->Html->link(__('<i class="fa-regular fa-file-pdf"></i> PDF'), ['action' => 'pdf_profile', $user->slug],['class' => 'nav-link', 'escapeTitle' => false]) ?>	
-        </li>
-      </ul>
-      <div class="tab-content p-0">
-        <div class="tab-pane fade show active" id="navs-pills-top-account" role="tabpanel">
-
-
+<ul class="nav nav-pills flex-column flex-md-row mb-3">
+<li class="nav-item">
+<?= $this->Html->link(__('<i class="fa-solid fa-user-astronaut"></i> Account'), ['action' => 'profile', $user->slug], ['class' => 'nav-link active', 'escapeTitle' => false]) ?>
+</li>
+<li class="nav-item">
+<?= $this->Html->link(__('<i class="fa-regular fa-pen-to-square"></i> Update'), ['action' => 'update', $user->slug], ['class' => 'nav-link', 'escapeTitle' => false]) ?>
+</li>
+<li class="nav-item">
+<?= $this->Html->link(__('<i class="fa-solid fa-unlock"></i> Password'), ['action' => 'change_password', $user->slug], ['class' => 'nav-link', 'escapeTitle' => false]) ?>
+</li>
+<li class="nav-item">
+<?= $this->Html->link(__('<i class="fa-solid fa-timeline"></i> Activities'), ['action' => 'activity', $user->slug], ['class' => 'nav-link', 'escapeTitle' => false]) ?>
+</li>
+<li class="nav-item">
+<?php echo $this->Html->link(__('<i class="fa-regular fa-file-pdf"></i> PDF'), ['action' => 'pdf_profile', $user->slug],['class' => 'nav-link', 'escapeTitle' => false]) ?>	
+</li>
+</ul>
+<div class="card shadow mb-4">
 <div class="card bg-gold">
 <div class="p-3">
 <?php if ($user->avatar != NULL) {
-echo $this->Html->image('../files/Users/avatar/' . $user->slug . '/' . $user->avatar,['class'=> 'd-block rounded shadow', 'width'=>'130px', 'height'=>'130px']);
-}else
-echo $this->Html->image('blank_profile.png', ['class'=> 'd-block rounded shadow', 'width'=>'130px', 'height'=>'130px']);
+	echo $this->Html->image('../files/Users/avatar/' . $user->slug . '/' . $user->avatar,['class'=> 'd-block rounded shadow', 'width'=>'130px', 'height'=>'130px']);
+	}else
+	echo $this->Html->image('blank_profile.png', ['class'=> 'd-block rounded shadow', 'width'=>'130px', 'height'=>'130px']);
 ?>
 </div>
-
 </div>
-
-
-
-<div class="row mt-3 px-3">
+<div class="row px-3 py-3">
 	<div class="col-md-9">
 <div class="table-responsive">
 	<table class="table table-borderless table-sm">
@@ -128,170 +120,20 @@ echo $this->Html->image('blank_profile.png', ['class'=> 'd-block rounded shadow'
 
 	</div>
 </div>
-
-
-        </div>
-        <div class="tab-pane fade" id="navs-pills-top-update" role="tabpanel">
-<div class="row p-3">
-	<div class="col-md-2">
-<?php if ($user->avatar != NULL) {
-echo $this->Html->image('../files/Users/avatar/' . $user->slug . '/' . $user->avatar,['class'=> 'd-block rounded', 'width'=>'100px', 'height'=>'100px']);
-}else
-echo $this->Html->image('avatar_default.png', ['alt' => 'avatar', 'class' => 'img-circle']);
-?>
-	</div>
-	<div class="col-md-10 ps-0">
-	<?php echo $this->Form->create($user, ['type' => 'file', 'novalidate' => true]); ?>
-<?php echo $this->Form->control('avatar',['type'=>'file','required' => false, 'class' =>'form-control', 'label' => 'Profile Image']); ?>
-<p class="text-muted mb-0">Allowed JPG/JPEG Only. Recommended Size 100px X 100px</p>
-	</div>
 </div>
-
-
-
-<div class="p-3">
-
-                <fieldset>
-				
-<div class="row">
-	<div class="col-md-6">
-	  <?php echo $this->Form->control('fullname',['required' => false]); ?>
-	</div>
-	<div class="col-md-6">
-	  <?php echo $this->Form->control('email',['required' => false]); ?>
-	</div>
-</div>				
 	
-<?php echo $this->Form->control('slug',['required' => false]); ?>
-
-<div class="row">
-	<div class="col-md-6">
-	  <?php 
-echo $this->Form->control('user_group_id', [
-	//'type' => 'text', 
-	'options' => $userGroups,
-	'id' => 'group',
-	'label' => 'User Group',
-	'class' => 'form-control',
-	'required' => false]); 
-?>
-<script type="text/javascript">
-$('#group').select2({
-	tags: true,
-    //data: ["Clare","Cork","South Dublin"],
-    //tokenSeparators: [','], 
-    placeholder: "Select",
-    /* the next 2 lines make sure the user can click away after typing and not lose the new tag */
-    //selectOnClose: true, 
-    //closeOnSelect: false
-});
-</script>
-	</div>
-	<div class="col-md-6">
-<label>Status</label><br>
-				<?php echo $this->Form->radio(
-						'status',
-						[
-							['value' => '1', 'text' => 'Active', 'label' => ['class' => 'btn btn-outline-success ms-1 mb-3']],
-							['value' => '0', 'text' => 'Disabled', 'label' => ['class' => 'btn btn-outline-danger ms-1 mb-3']],
-							['value' => '2', 'text' => 'Archived', 'label' => ['class' => 'btn btn-outline-secondary ms-1 mb-3']],
-						],
-						['class' => 'form-control','required' => false]
-					);
-					if ($this->Form->isFieldError('status')) {
-						echo $this->Form->error('status', 'Please select score for Question 1');
-					} ?>
-	</div>
-</div>		
-
-
-
-
-
-                </fieldset>
-				<div class="text-end">
-				  <?= $this->Form->button(__('Submit'),['type' => 'submit', 'class' => 'btn btn-outline-primary']) ?>
-				  <?= $this->Form->end() ?>
-                </div>
-				
-
-
-</div>
-        </div>
-        <div class="tab-pane fade" id="navs-pills-top-password" role="tabpanel">
-<div class="p-3">
-<?php echo $this->Form->create($user, ['url' => ['action' => 'change_password']]); ?>
-<fieldset>
-	<div class="form-group">
-		<?php echo $this->Form->control('current_password', ['class' => 'form-control','required' => false, 'value' => '','autocomplete' => 'off', 'type'=>'password', 'id'=>'myPassword']); ?>
-	</div>
-
-	<div class="row">
-		<div class="col-md-6">
-	<div class="form-group">
-		<?php echo $this->Form->control('password', ['class' => 'form-control','required' => false, 'label'=>'New Password', 'value' => '','autocomplete' => 'off', 'type'=>'password', 'id'=>'myPassword2']); ?>
-	</div>
-		</div>
-		<div class="col-md-6">
-	<div class="form-group">
-		<?php echo $this->Form->control('cpassword', ['class' => 'form-control', 'type'=>'password', 'label'=>'Confirm New Password','required' => false, 'value' => '','autocomplete' => 'off', 'type'=>'password', 'id'=>'myPassword3']);?>
-	</div>
-		</div>
-	</div>
-</fieldset>
-
-<?php echo $this->Form->checkbox('showPass', ['value' => 'showPass', 'class'=>'form-check-input shadow', 'id'=>'showPass', 'onclick'=>'myFunction()']); ?>
-&nbsp;<label for="showPass">Show Password</label>
-
-
-<script>
-function myFunction() {
-  var x = document.getElementById("myPassword");
-  if (x.type === "password") {
-    x.type = "text";
-  } else {
-    x.type = "password";
-  }
-  var x = document.getElementById("myPassword2");
-  if (x.type === "password") {
-    x.type = "text";
-  } else {
-    x.type = "password";
-  }
-  var x = document.getElementById("myPassword3");
-  if (x.type === "password") {
-    x.type = "text";
-  } else {
-    x.type = "password";
-  }
-}
-</script>
-				<div class="text-end">
-				  <?= $this->Form->button(__('Submit'),['type' => 'submit', 'class' => 'btn btn-outline-primary']) ?>
-				  <?= $this->Form->end() ?>
-                </div>
-</div>
-        </div>
-        <div class="tab-pane fade" id="navs-pills-top-activity" role="tabpanel">
-<div class="p-3">
-bbb
-</div>
-        </div>
-      </div>
-    </div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	</div>
 	<div class="col-md-4">
-<div class="special_card mb-3">
-  <div class="profile-card js-profile-card shadow">
-    <div class="profile-card__img shadow" style="background-color: #dc3545;color: #ffffff;">
-      <i class="fa-solid fa-question fa-xl" style="margin-left: 16px;margin-top: 21px;"></i>
-    </div>
-		<div class="card-body small-text pt-0">
-		The User Experience Designer position exists to create compelling and digital user experience through excellent design...
-		</div>
-  </div>
-</div>
-
 <div class="special_card mb-3">
   <div class="profile-card js-profile-card shadow">
     <div class="profile-card__img shadow" style="background-color: #dc3545;color: #ffffff;">

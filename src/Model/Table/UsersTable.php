@@ -6,6 +6,7 @@ namespace App\Model\Table;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
+use Cake\Auth\DefaultPasswordHasher;
 use Cake\Validation\Validator;
 
 /**
@@ -170,6 +171,60 @@ class UsersTable extends Table
             'foreignKey' => 'user_id',
         ]);
     }
+	
+	public function validationPassword($validator) {
+		$validator
+			->add('current_password', [
+				'notBlank'=>[
+					'rule'=>'notBlank',
+					'message'=>__('Please enter old password'),
+					'last'=>true
+				],
+			])
+			
+			->add('current_password',
+				'custom',[
+					'rule'=>  function($value, $context){
+						$user = $this->get($context['data']['id']);
+							if ($user) {
+								if ((new DefaultPasswordHasher)->check($value, $user->password)) {
+									return true;
+								}
+							}
+						return false;
+					},
+					'message'=>'The old password does not match the current password!',
+			])
+
+
+			->add('password', [
+				'notBlank'=>[
+					'rule'=>'notBlank',
+					'message'=>__('Please enter password'),
+					'last'=>true
+				],
+				'mustBeLonger'=>[
+					'rule'=>['minLength', 6],
+					'message'=>__('Password must be greater than 5 characters'),
+					'last'=>true
+				]
+			])
+
+			->add('cpassword', [
+				'notBlank'=>[
+					'rule'=>'notBlank',
+					'message'=>__('Please enter password'),
+					'last'=>true
+				],
+				'mustMatch'=>[
+					'rule'=>'checkForSamePassword',
+					'provider'=>'table',
+					'message'=>__('Both password must match')
+				]
+			]);
+
+		return $validator;
+	}
 
     /**
      * Default validation rules.
@@ -301,6 +356,14 @@ class UsersTable extends Table
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
      * @return \Cake\ORM\RulesChecker
      */
+	 
+	public function checkForSamePassword($value, $context) {
+		if(!empty($value) && $value != $context['data']['password']) {
+			return false;
+		}
+		return true;
+	}
+	
     public function buildRules(RulesChecker $rules): RulesChecker
     {
         $rules->add($rules->isUnique(['username']), ['errorField' => 'username']);

@@ -270,4 +270,85 @@ class UsersController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+	
+	public function update($slug = null)
+	{
+		$this->set('title', 'Update Profile');
+		$this->loadModel('AuditLogs');
+		$auditLogs = $this->AuditLogs->find('all')
+			->where([
+				'primary_key' => 11,
+				//'category_id' => '1',
+				])
+			->order(['created' => 'ASC'])
+			->limit(10);
+			
+        $user = $this->Users
+			->findBySlug($slug)
+			->contain(['UserGroups'])
+			->firstOrFail();
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $user = $this->Users->patchEntity($user, $this->request->getData());
+            if ($this->Users->save($user)) {
+                $this->Flash->success(__('Account details updated'));
+				return $this->redirect($this->referer());
+            }
+            $this->Flash->error(__('The user could not be saved. Please, try again.'));
+        }
+        $userGroups = $this->Users->UserGroups->find('list', ['limit' => 200])->all();
+        $this->set(compact('user', 'userGroups','auditLogs'));
+	}
+	
+	public function changePassword($slug = null)
+	{
+		$this->set('title', 'Change Password');
+        $user = $this->Users
+			->findBySlug($slug)
+			->contain(['UserGroups'])
+			->firstOrFail();
+		
+		//$userSlug = $this->Auth->user('slug');
+
+		/* if($slug != $userSlug){
+				$this->Flash->error(__('You are not authorized to view'));
+				return $this->redirect(['action' => 'profile', $this->Auth->user('slug')]);
+		} */
+		
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $user = $this->Users->patchEntity($user, $this->request->getData(),['validate' => 'password']);
+			
+            if ($this->Users->save($user)) {
+                $this->Flash->success(__('Your password has been updated.'));
+
+                return $this->redirect(['action' => 'profile', $this->Auth->user('slug')]);
+            }
+            $this->Flash->error(__('Your password could not be update. Please, try again.'));
+        }
+        $userGroups = $this->Users->UserGroups->find('list', ['limit' => 200]);
+        $this->set(compact('user', 'userGroups'));
+		
+	}
+	
+	public function activity($slug = null)
+    {
+		$this->set('title', 'User Activities');
+		
+		$user = $this->Users
+			->findBySlug($slug)
+			->contain(['UserGroups'])
+			->firstOrFail();
+			
+		if ($this->request->is(['patch', 'post', 'put'])) {
+            $user = $this->Users->patchEntity($user, $this->request->getData());
+            if ($this->Users->save($user)) {
+                $this->Flash->success(__('Account details updated'));
+				return $this->redirect($this->referer());
+            }
+            $this->Flash->error(__('The user could not be saved. Please, try again.'));
+        }
+        $userGroups = $this->Users->UserGroups->find('list', ['limit' => 200])->all();
+        $this->set(compact('user', 'userGroups'));
+			
+		//$this->set(compact('user', 'userGroups'));
+    }
 }

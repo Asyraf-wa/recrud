@@ -101,3 +101,21 @@ $this->set('title', 'User');
 		</div>
   </div>
 </div>
+
+=========================
+  <ul class="nav nav-pills flex-column flex-md-row mb-3">
+	<li class="nav-item">
+	  <?= $this->Html->link(__('<i class="fa-solid fa-user-astronaut"></i> Account'), ['action' => 'profile'], ['class' => 'nav-link active', 'escapeTitle' => false]) ?>
+	</li>
+	<li class="nav-item">
+	  <?= $this->Html->link(__('<i class="fa-regular fa-pen-to-square"></i> Update'), ['action' => 'update'], ['class' => 'nav-link', 'escapeTitle' => false]) ?>
+	</li>
+	<li class="nav-item">
+	  <?= $this->Html->link(__('<i class="fa-solid fa-unlock"></i> Password'), ['action' => 'change_password'], ['class' => 'nav-link', 'escapeTitle' => false]) ?>
+	</li>
+  </ul>
+  <div class="card shadow mb-4">
+<div class="p-3">
+bbb
+</div>
+  </div>

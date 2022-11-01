@@ -4,6 +4,14 @@ declare(strict_types=1);
 namespace App\Controller;
 use Cake\Event\EventInterface;
 
+use Cake\Mailer\Email;
+use Cake\Mailer\Mailer;
+use Cake\Mailer\TransportFactory;
+use Cake\Auth\DefaultPasswordHasher;
+use Cake\Utility\Security;
+use Cake\ORM\TableRegistry;
+use Cake\Http\ServerRequest;
+
 use AuditStash\Meta\ApplicationMetadata;
 use Cake\Event\EventManager;
 
@@ -12,6 +20,8 @@ class UsersController extends AppController
 	public function initialize(): void
 	{
 		parent::initialize();
+		
+		$this->loadComponent('UserLogs');
 	}
 	
 	public function beforeFilter(\Cake\Event\EventInterface $event)
@@ -27,6 +37,7 @@ class UsersController extends AppController
 		$result = $this->Authentication->getResult();
 		if ($result->isValid()) {
 			$target = $this->Authentication->getLoginRedirect() ?? '/dashboard';
+			$this->UserLogs->userLoginActivity($this->Authentication->getIdentity('id')->getIdentifier('id'));
 			return $this->redirect($target);
 		}
 		if ($this->request->is('post')) {
@@ -36,13 +47,13 @@ class UsersController extends AppController
 	
 	public function logout()
 	{
+		$this->UserLogs->userLogoutActivity($this->Authentication->getIdentity('id')->getIdentifier('id'));
 		$this->Authentication->logout();
 		return $this->redirect(['controller' => 'Users', 'action' => 'login']);
 	}
 	
 	public function registration()
     {
-		
 		$this->set('title', 'User Registration');
         $user = $this->Users->newEmptyEntity();
         if ($this->request->is('post')) {
@@ -100,21 +111,126 @@ class UsersController extends AppController
 				
 			}
 		});
-//{"ip":"::1","url":"\/books\/appraisal-form\/7","user":1,"a_name":"Edit","c_name":"Books"}
-//{"a_name":"Edit","c_name":"Users"}
         if ($this->request->is(['patch', 'post', 'put'])) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
-			//$slug_name = $this->request->getData('slug');
-		//debug($slug_name);
-		//exit;
             if ($this->Users->save($user)) {
-                $this->Flash->success(__('The user has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
+                $this->Flash->success(__('Account details updated'));
+				return $this->redirect($this->referer());
             }
             $this->Flash->error(__('The user could not be saved. Please, try again.'));
         }
         $userGroups = $this->Users->UserGroups->find('list', ['limit' => 200])->all();
         $this->set(compact('user', 'userGroups','auditLogs'));
+    }
+	
+	public function update($slug = null)
+	{
+		$this->set('title', 'Update Profile');
+		$this->loadModel('AuditLogs');
+		$auditLogs = $this->AuditLogs->find('all')
+			->where([
+				'primary_key' => 11,
+				//'category_id' => '1',
+				])
+			->order(['created' => 'ASC'])
+			->limit(10);
+			
+        $user = $this->Users
+			->findBySlug($slug)
+			->contain(['UserGroups'])
+			->firstOrFail();
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $user = $this->Users->patchEntity($user, $this->request->getData());
+            if ($this->Users->save($user)) {
+                $this->Flash->success(__('Account details updated'));
+				return $this->redirect($this->referer());
+            }
+            $this->Flash->error(__('The user could not be saved. Please, try again.'));
+        }
+        $userGroups = $this->Users->UserGroups->find('list', ['limit' => 200])->all();
+        $this->set(compact('user', 'userGroups','auditLogs'));
+	}
+	
+	public function removeAvatar($slug = null)
+	{
+		$this->set('title', 'Remove Profile Picture');
+		$this->loadModel('AuditLogs');
+		$auditLogs = $this->AuditLogs->find('all')
+			->where([
+				'primary_key' => 11,
+				//'category_id' => '1',
+				])
+			->order(['created' => 'ASC'])
+			->limit(10);
+			
+        $user = $this->Users
+			->findBySlug($slug)
+			->contain(['UserGroups'])
+			->firstOrFail();
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $user = $this->Users->patchEntity($user, $this->request->getData());
+            if ($this->Users->save($user)) {
+                $this->Flash->success(__('Account details updated'));
+				//return $this->redirect($this->referer());
+				return $this->redirect(['action' => 'profile', $user->slug]);
+            }
+            $this->Flash->error(__('The user could not be saved. Please, try again.'));
+        }
+        $userGroups = $this->Users->UserGroups->find('list', ['limit' => 200])->all();
+        $this->set(compact('user', 'userGroups','auditLogs'));
+	}
+	
+	public function changePassword($slug = null)
+	{
+		$this->set('title', 'Change Password');
+        $user = $this->Users
+			->findBySlug($slug)
+			->contain(['UserGroups'])
+			->firstOrFail();
+		
+		//$userSlug = $this->Auth->user('slug');
+
+		/* if($slug != $userSlug){
+				$this->Flash->error(__('You are not authorized to view'));
+				return $this->redirect(['action' => 'profile', $this->Auth->user('slug')]);
+		} */
+		
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $user = $this->Users->patchEntity($user, $this->request->getData(),['validate' => 'password']);
+			
+            if ($this->Users->save($user)) {
+                $this->Flash->success(__('Your password has been updated.'));
+
+                return $this->redirect(['action' => 'profile', $this->Authentication->getIdentity('slug')->getIdentifier('slug')]);
+            }
+            $this->Flash->error(__('Your password could not be update. Please, try again.'));
+        }
+        $userGroups = $this->Users->UserGroups->find('list', ['limit' => 200]);
+        $this->set(compact('user', 'userGroups'));
+		
+	}
+	
+	public function activity($slug = null)
+    {
+		$this->set('title', 'User Activities');
+		
+		$user = $this->Users
+			->findBySlug($slug)
+			->contain(['UserGroups'])
+			->firstOrFail();
+			
+			
+		$this->loadModel('userLogs');
+		$userLogs = $this->userLogs->find('all')
+			->where([
+				'user_id' => $user->id,
+				//'category_id' => '1',
+				])
+			->order(['created' => 'ASC'])
+			->limit(10);
+		
+        $this->set(compact('user','userLogs'));
+			
+		//$this->set(compact('user', 'userGroups'));
     }
 }

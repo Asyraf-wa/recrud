@@ -24,14 +24,21 @@
           <div class="menu-inner-shadow"></div>
 
           <ul class="menu-inner py-1">
+<?php if ($this->Identity->isLoggedIn() == NULL) { ?>
+		<li class="menu-item <?= $c_name == 'Users' && $a_name == 'login'?'active':'' ?>">
+		  <?= $this->Html->link(__('<i class="menu-icon fa-solid fa-code"></i> Sign-in'), ['controller' => 'Users', 'action' => 'login', 'prefix' => false], ['class' => 'menu-link', 'escape' => false]) ?>
+		</li>
+<?php } ?>
+<?php if ($this->Identity->isLoggedIn()) { ?>
             <!-- Dashboard -->
 			<li class="menu-item <?= $c_name == 'Dashboards' && $a_name == 'index'?'active':'' ?>">
               <?= $this->Html->link(__('<i class="menu-icon fa-solid fa-code"></i> Dashboard'), ['controller' => 'Dashboards', 'action' => 'index', 'prefix' => false], ['class' => 'menu-link', 'escape' => false]) ?>
             </li>
+<?php } ?>
 			<li class="menu-item <?= $c_name == 'Faqs' && $a_name == 'index'?'active':'' ?>">
               <?= $this->Html->link(__('<i class="menu-icon fa-regular fa-circle-question"></i> FAQ'), ['controller' => 'Faqs', 'action' => 'index', 'prefix' => false], ['class' => 'menu-link', 'escape' => false]) ?>
             </li>
-			<li class="menu-item <?= $c_name == 'Contact' && $a_name == 'index'?'active':'' ?>">
+			<li class="menu-item <?= $c_name == 'Contact' && $a_name == 'add'?'active':'' ?>">
               <?= $this->Html->link(__('<i class="menu-icon fa-regular fa-message"></i> Contact Us'), ['controller' => 'Contact', 'action' => 'index', 'prefix' => false], ['class' => 'menu-link', 'escape' => false]) ?>
             </li>
 			

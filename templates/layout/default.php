@@ -137,12 +137,16 @@ function toggleFull() {
               <!-- /Search -->
 
               <ul class="navbar-nav flex-row align-items-center ms-auto">
-
+<?php if ($this->Identity->isLoggedIn()) { ?>
                 <!-- User -->
                 <li class="nav-item navbar-dropdown dropdown-user dropdown">
                   <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                     <div class="avatar avatar-online">
-					  <?php echo $this->Html->image('blank_profile.png', ['class' => 'w-px-40 h-auto rounded-circle', 'alt' => 'Profile']); ?>
+<?php if ($this->Identity->get('avatar') != NULL) {
+		echo $this->Html->image('../files/Users/avatar/' . $this->Identity->get('slug') . '/' . $this->Identity->get('avatar'),['class'=> 'w-px-40 rounded-circle', 'width' => '40px', 'height' => '40px']);
+	}else
+		echo $this->Html->image('avatar_default.png', ['alt' => 'avatar', 'class' => 'w-px-40 h-auto rounded-circle', 'width' => '40px', 'height' => '40px']);
+?>
                     </div>
                   </a>
                   <ul class="dropdown-menu dropdown-menu-end">
@@ -151,12 +155,16 @@ function toggleFull() {
                         <div class="d-flex">
                           <div class="flex-shrink-0 me-3">
                             <div class="avatar avatar-online">
-					  <?php echo $this->Html->image('blank_profile.png', ['class' => 'w-px-40 h-auto rounded-circle', 'alt' => 'Profile']); ?>
+<?php if ($this->Identity->get('avatar') != NULL) {
+		echo $this->Html->image('../files/Users/avatar/' . $this->Identity->get('slug') . '/' . $this->Identity->get('avatar'),['class'=> 'w-px-40 rounded-circle', 'width' => '40px', 'height' => '40px']);
+	}else
+		echo $this->Html->image('avatar_default.png', ['alt' => 'avatar', 'class' => 'w-px-40 h-auto rounded-circle', 'width' => '40px', 'height' => '40px']);
+?>
                             </div>
                           </div>
                           <div class="flex-grow-1">
-                            <span class="fw-semibold d-block">John Doe</span>
-                            <small class="text-muted">Admin</small>
+                            <span class="fw-semibold d-block"><?php echo $this->Identity->get('fullname'); ?></span>
+                            <small class="text-muted"><?php echo $this->Identity->get('email'); ?></small>
                           </div>
                         </div>
                       </a>
@@ -165,38 +173,24 @@ function toggleFull() {
                       <div class="dropdown-divider"></div>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="#">
-                        <i class="bx bx-user me-2"></i>
-                        <span class="align-middle">My Profile</span>
-                      </a>
+					<?= $this->Html->link(__('<i class="fa-solid fa-user-astronaut"></i> Account'), ['action' => 'profile', $user->slug], ['class' => 'dropdown-item', 'escapeTitle' => false]) ?>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="#">
-                        <i class="bx bx-cog me-2"></i>
-                        <span class="align-middle">Settings</span>
-                      </a>
+					
                     </li>
                     <li>
-                      <a class="dropdown-item" href="#">
-                        <span class="d-flex align-items-center align-middle">
-                          <i class="flex-shrink-0 bx bx-credit-card me-2"></i>
-                          <span class="flex-grow-1 align-middle">Billing</span>
-                          <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">4</span>
-                        </span>
-                      </a>
+						
                     </li>
                     <li>
                       <div class="dropdown-divider"></div>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="auth-login-basic.html">
-                        <i class="bx bx-power-off me-2"></i>
-                        <span class="align-middle">Log Out</span>
-                      </a>
+					  <?= $this->Html->link(__('<i class="fa-solid fa-arrow-right-from-bracket"></i> Logout'), ['controller' => 'Users', 'action' => 'logout', 'prefix' => false], ['class' => 'dropdown-item', 'escapeTitle' => false]) ?>
                     </li>
                   </ul>
                 </li>
                 <!--/ User -->
+<?php } ?>
               </ul>
             </div>
           </nav>

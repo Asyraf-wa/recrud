@@ -28,7 +28,7 @@ class UsersController extends AppController
 	{
 		parent::beforeFilter($event);
 
-		$this->Authentication->allowUnauthenticated(['login','registration']);
+		$this->Authentication->allowUnauthenticated(['login','registration','forgotPassword','forgotUsername','resetPassword','verify']);
 	}
 	
 	public function login()
@@ -50,6 +50,65 @@ class UsersController extends AppController
 		$this->UserLogs->userLogoutActivity($this->Authentication->getIdentity('id')->getIdentifier('id'));
 		$this->Authentication->logout();
 		return $this->redirect(['controller' => 'Users', 'action' => 'login']);
+	}
+	
+	public function forgotUsername()
+	{
+		$this->set('title', 'Forgot Username');
+		if ($this->request->is('post')) {
+				$email = $this->request->getData('email');
+				$userTable = TableRegistry::get('Users');
+				
+					if ($email == NULL) {
+						$this->Flash->error(__('Please insert your email address')); 
+					} 
+					if	($user = $userTable->find('all')->where(['email'=>$email])->first()) { 
+						 $username = $user->username;
+						if ($userTable->save($user)){
+							$mailer = new Mailer('default');
+							$mailer->setTransport('smtp');
+							$mailer->setFrom(['noreply@codethepixel.com' => 'ReCRUD'])
+							->setTo($email)
+							->setEmailFormat('html')
+							->setSubject('Forgot Username Request')
+							->deliver('Hi<br/><br/>Your username is '.$username.'</a>');
+						}
+						$this->Flash->success('Your username is sent to '.$email.', please check your email');
+					}
+					if	($total = $userTable->find('all')->where(['email'=>$email])->count()==0) {
+						$this->Flash->error(__('Email is not registered in system'));
+					}
+			}
+	}
+	
+	public function forgotPassword()
+	{
+		$this->set('title', 'Forgot Password');
+	if ($this->request->is('post')) {
+			$email = $this->request->getData('email');
+			$token = Security::hash(Security::randomBytes(25));
+			
+			$userTable = TableRegistry::get('Users');
+				if ($email == NULL) {
+					$this->Flash->error(__('Please insert your email address')); 
+				} 
+				if	($user = $userTable->find('all')->where(['email'=>$email])->first()) { 
+					$user->token = $token;
+					if ($userTable->save($user)){
+						$mailer = new Mailer('default');
+						$mailer->setTransport('smtp');
+						$mailer->setFrom(['noreply@codethepixel.com' => 'ReCRUD'])
+						->setTo($email)
+						->setEmailFormat('html')
+						->setSubject('Forgot Password Request')
+						->deliver('Hello<br/>Please click link below to reset your password<br/><br/><a href="http://localhost/recrud/users/resetpassword/'.$token.'">Reset Password</a>');
+					}
+					$this->Flash->success('Reset password link has been sent to your email ('.$email.'), please check your email');
+				}
+				if	($total = $userTable->find('all')->where(['email'=>$email])->count()==0) {
+					$this->Flash->error(__('Email is not registered in system'));
+				}
+		}
 	}
 	
 	public function registration()
@@ -226,7 +285,7 @@ class UsersController extends AppController
 				'user_id' => $user->id,
 				//'category_id' => '1',
 				])
-			->order(['created' => 'ASC'])
+			->order(['created' => 'DESC'])
 			->limit(10);
 		
         $this->set(compact('user','userLogs'));

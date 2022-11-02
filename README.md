@@ -76,7 +76,7 @@ Please adhere to this project's `code of conduct`.
 Clone Re-CRUD repo
 
 ```bash
-  composer create-project recrud/app
+  composer create-project recrud/recrud
 ```
 or
 ```bash

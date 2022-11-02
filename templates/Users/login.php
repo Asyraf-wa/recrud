@@ -47,7 +47,7 @@
 <hr>
 
 <div class="btn-grid">
-<?php echo $this->Html->link(__('User Manual'), array('controller' => 'pages', 'action' => 'user_manual'), array('class' => 'btn btn-primary btn-sm', 'escape' => false)); ?> 
+<?php echo $this->Html->link(__('User Manual'), array('controller' => 'pages', 'action' => 'manual'), array('class' => 'btn btn-primary btn-sm', 'escape' => false)); ?> 
 
 <?php echo $this->Html->link(__('Frequently Asked Question'), array('controller' => 'Faqs', 'action' => 'index'), array('class' => 'btn btn-primary btn-sm', 'escape' => false)); ?> 
 

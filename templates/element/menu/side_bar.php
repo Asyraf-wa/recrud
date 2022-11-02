@@ -41,6 +41,9 @@
 			<li class="menu-item <?= $c_name == 'Contact' && $a_name == 'add'?'active':'' ?>">
               <?= $this->Html->link(__('<i class="menu-icon fa-regular fa-message"></i> Contact Us'), ['controller' => 'Contact', 'action' => 'index', 'prefix' => false], ['class' => 'menu-link', 'escape' => false]) ?>
             </li>
+            <li class="menu-item <?= $c_name == 'Pages' && $a_name == 'manual'?'active':'' ?>">
+              <?= $this->Html->link(__('<i class="menu-icon fa-solid fa-circle-info"></i> Documents'), ['controller' => 'Pages', 'action' => 'manual', 'prefix' => false], ['class' => 'menu-link', 'escape' => false]) ?>
+            </li>
 			
 <?php
 if ($this->Identity->isLoggedIn()) { ?>

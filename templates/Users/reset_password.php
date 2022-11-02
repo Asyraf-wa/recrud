@@ -13,7 +13,7 @@
 </div>
 
 <?= $this->Form->create() ?>
-<?= $this->Form->control('email', ['required' => true, 'class'=>'form-control', 'autocomplete'=>'off']) ?>
+<?php echo $this->Form->control('password', ['class' => 'form-control','required' => false, 'label'=>'New Password', 'value' => '','autocomplete' => 'off', 'type'=>'password']); ?>
 				<div class="text-end">
 				  <?= $this->Form->button('Reset', ['type' => 'reset', 'class' => 'btn btn-outline-warning']); ?>
 				  <?= $this->Form->button(__('Submit'),['type' => 'submit', 'class' => 'btn btn-outline-primary']) ?>

@@ -63,7 +63,7 @@ class UsersController extends AppController
 						$this->Flash->error(__('Please insert your email address')); 
 					} 
 					if	($user = $userTable->find('all')->where(['email'=>$email])->first()) { 
-						 $username = $user->username;
+						 $fullname = $user->fullname;
 						if ($userTable->save($user)){
 							$mailer = new Mailer('default');
 							$mailer->setTransport('smtp');
@@ -71,7 +71,7 @@ class UsersController extends AppController
 							->setTo($email)
 							->setEmailFormat('html')
 							->setSubject('Forgot Username Request')
-							->deliver('Hi<br/><br/>Your username is '.$username.'</a>');
+							->deliver('Hi<br/><br/>Your username is '.$fullname.'</a>');
 						}
 						$this->Flash->success('Your username is sent to '.$email.', please check your email');
 					}
@@ -101,13 +101,30 @@ class UsersController extends AppController
 						->setTo($email)
 						->setEmailFormat('html')
 						->setSubject('Forgot Password Request')
-						->deliver('Hello<br/>Please click link below to reset your password<br/><br/><a href="http://localhost/recrud/users/resetpassword/'.$token.'">Reset Password</a>');
+						->deliver('Hello<br/>Please click link below to reset your password<br/><br/><a href="http://localhost/recrud/users/reset_password/'.$token.'">Reset Password</a>');
 					}
 					$this->Flash->success('Reset password link has been sent to your email ('.$email.'), please check your email');
 				}
 				if	($total = $userTable->find('all')->where(['email'=>$email])->count()==0) {
 					$this->Flash->error(__('Email is not registered in system'));
 				}
+		}
+	}
+	
+	public function resetPassword($token = null)
+	{
+		$this->set('title', 'Reset Password');
+		$user = $this->Users->findByToken($token)->first();
+		$password = $this->request->getData('password');
+
+		if ($this->request->is(['post'])) {
+			$user->password = $password;
+			$user->token = '';
+			if ($this->Users->save($user)) {
+				$this->Flash->success(__('Your password has been successfully updated.'));
+				return $this->redirect(['action' => 'login']);
+			}
+			$this->Flash->error(__('Your password could not be saved. Please, try again.'));
 		}
 	}
 	
@@ -260,7 +277,7 @@ class UsersController extends AppController
             if ($this->Users->save($user)) {
                 $this->Flash->success(__('Your password has been updated.'));
 
-                return $this->redirect(['action' => 'profile', $this->Authentication->getIdentity('slug')->getIdentifier('slug')]);
+                return $this->redirect(['action' => 'profile', $user->slug]);
             }
             $this->Flash->error(__('Your password could not be update. Please, try again.'));
         }

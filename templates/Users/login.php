@@ -40,7 +40,7 @@
   
 <div class="postlink_space">
 <?php echo $this->Html->link('Register', ['controller'=>'Users','action'=>'registration']); ?> | 
-<?php echo $this->Html->link('Forgot Username', array('controller'=>'Users','action'=>'forgot_username')); ?> | 
+<?php //echo $this->Html->link('Forgot Username', array('controller'=>'Users','action'=>'forgot_username')); ?>
 <?php echo $this->Html->link('Forgot Password', array('controller'=>'Users','action'=>'forgot_password')); ?>
 </div>	
 

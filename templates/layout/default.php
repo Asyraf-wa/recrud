@@ -174,7 +174,7 @@ function toggleFull() {
                       <div class="dropdown-divider"></div>
                     </li>
                     <li>
-					<?= $this->Html->link(__('<i class="fa-solid fa-user-astronaut"></i> Account'), ['action' => 'profile', $user->slug], ['class' => 'dropdown-item', 'escapeTitle' => false]) ?>
+					<?= $this->Html->link(__('<i class="fa-solid fa-user-astronaut"></i> Account'), ['action' => 'profile', $this->Identity->get('slug')], ['class' => 'dropdown-item', 'escapeTitle' => false]) ?>
                     </li>
                     <li>
 					

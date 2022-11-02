@@ -510,3 +510,7 @@ a.kosong:hover {color: #697a8d; text-decoration: none;}
     font-size:30px;
     text-transform:uppercase;
 }
+
+.bg-light-gray{
+    background-color: #E3E3E3;
+}

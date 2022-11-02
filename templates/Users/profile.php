@@ -53,7 +53,7 @@
 		</tr>
 		<tr>
 			<th>Group</th>
-			<td><?= $user->has('user_group') ? $this->Html->link($user->user_group->name, ['controller' => 'UserGroups', 'action' => 'view', $user->user_group->id]) : '' ?></td>
+			<td><?= $user->user_group->name; ?></td>
 		</tr>
 		<tr>
 			<th>Status</th>

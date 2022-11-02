@@ -50,8 +50,11 @@ if ($this->Identity->isLoggedIn()) { ?>
             <li class="menu-item <?= $c_name == 'Users' && $a_name == 'profile'?'active':'' ?>">
               <?= $this->Html->link(__('<i class="menu-icon fa-solid fa-user-tie"></i> Profile'), ['controller' => 'Users', 'action' => 'profile', 'prefix' => false, $this->Identity->get('slug')], ['class' => 'menu-link', 'escape' => false]) ?>
             </li>
-            <li class="menu-item <?= $c_name == 'Users' && $a_name == 'update_password'?'active':'' ?>">
-              <?= $this->Html->link(__('<i class="menu-icon fa-solid fa-unlock-keyhole"></i> Password'), ['controller' => 'Users', 'action' => 'index', 'prefix' => false], ['class' => 'menu-link', 'escape' => false]) ?>
+            <li class="menu-item <?= $c_name == 'Users' && $a_name == 'change_password'?'active':'' ?>">
+              <?= $this->Html->link(__('<i class="menu-icon fa-solid fa-unlock-keyhole"></i> Password'), ['controller' => 'Users', 'action' => 'change_password', 'prefix' => false, $this->Identity->get('slug')], ['class' => 'menu-link', 'escape' => false]) ?>
+            </li>
+            <li class="menu-item <?= $c_name == 'Users' && $a_name == 'logout'?'active':'' ?>">
+              <?= $this->Html->link(__('<i class="menu-icon fa-solid fa-arrow-right-from-bracket"></i> Sign-out'), ['controller' => 'Users', 'action' => 'logout', 'prefix' => false], ['class' => 'menu-link', 'escape' => false]) ?>
             </li>
             <!-- Administrator -->
             <li class="menu-header small text-uppercase">

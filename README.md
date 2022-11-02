@@ -3,7 +3,8 @@
 
 
 Re-CRUD enable the developer to create the fundamental web application functions, create, read, update and delete including the other features such as searching, reporting, audit trail and others. Re-CRUD is based on the CakePHP framework with integrated useful plugins.
-## Authors
+
+## 🚀 Authors
 
 - [@Asyraf Wahi Anuar](https://github.com/Asyraf-wa)
 
@@ -121,6 +122,14 @@ Database seeding
 PHP 8+
 
 intl extension
+
+
+## 🔗 Webserver Links
+
+[![XAMPP](https://img.shields.io/badge/XAMPP-000?style=for-the-badge&logoColor=white)](https://www.apachefriends.org/download.html)
+[![WAMP](https://img.shields.io/badge/WAMP-0A66C2?style=for-the-badge&logoColor=white)](https://www.wampserver.com/en/)
+[![MAMP](https://img.shields.io/badge/MAMP-1DA1F2?style=for-the-badge&logoColor=white)](https://www.mamp.info/en/windows/)
+
 
 
 ## Usage/Examples

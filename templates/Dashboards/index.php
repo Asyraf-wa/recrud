@@ -14,6 +14,9 @@
 	</div>
 </div>
 
+<div class="row g-3">
+	<div class="col-md-9">
+	
 <div class="card bg-gold-full fs-5 fw-bold px-3 py-2 mb-3">
 Hello, <?php echo $this->Identity->get('fullname'); ?>, 
 <?php
@@ -33,22 +36,8 @@ Hello, <?php echo $this->Identity->get('fullname'); ?>,
             echo "Good evening";
         }
     ?>.
-</div>
-
-
-<div class="row">
-	<div class="col-md-9">
-
-	</div>
-	<div class="col-md-3">
-
-	</div>
-</div>
-
-
-
-<div class="row g-3">
-	<div class="col-md-8">
+</div>	
+	
 <div class="card shadow">
 	<div class="card-header d-flex align-items-center justify-content-between border-bottom">
 		<div class="card-title mb-0">
@@ -228,12 +217,12 @@ Form Features Enrichment
 
 
 	</div>
-	<div class="col-md-4">
+	<div class="col-md-3">
 	
 <div class="special_card mb-3">
   <div class="profile-card js-profile-card shadow">
 	<div class="profile-card__img shadow" style="background-color: #dc3545;color: #ffffff;">
-	  <i class="fa-solid fa-qrcode fa-xl" style="margin-left: 12px;margin-top: 22px;"></i> <?php echo $system_name; ?>
+	  <i class="fa-solid fa-qrcode fa-xl" style="margin-left: 12px;margin-top: 22px;"></i> <?php echo $system_abbr; ?>
 	</div>
 		<div class="card-body small-text pt-0">
 <div id="qr" align="center"></div>

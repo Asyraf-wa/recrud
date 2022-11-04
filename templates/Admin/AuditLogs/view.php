@@ -59,7 +59,7 @@ $diff = get_decorated_diff($string_old, $string_new);
 <?php echo $this->Html->link(
     '<i class="fas fa-external-link-alt"></i> Original',
     $info->url,
-    ['class' => 'btn btn-outline-primary btn-xs', 'escape' => false, 'target' => '_blank']
+    ['class' => 'btn btn-outline-primary btn-sm', 'escape' => false, 'target' => '_blank']
 ); ?>	
 		</div>
 	</div>
@@ -152,7 +152,7 @@ echo ($auditLog->type);
 				<tr>
 					<th>User</th>
 					<td>
-						<?php echo $info->user; ?>
+						<?php echo $info->slug; ?>
 					</td>
 				</tr>
             </table>
@@ -239,7 +239,6 @@ echo ($auditLog->type);
 	margin-top: -20px;
 }
 </style>
-	<div class="special_card_title fs-5 fw-bold">Raw Data</div><hr/>
 		<div class="card-body small-text pt-0">
             <div class="text">
                 <strong><?= __('Original') ?></strong>

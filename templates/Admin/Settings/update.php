@@ -44,16 +44,6 @@ use Cake\ORM\TableRegistry;
 		  <h1 class="m-0 me-2 page_title"><?php echo $title; ?></h1>
 		  <small class="text-muted"><?php echo $system_name; ?></small>
 		</div>
-		<div class="dropdown">
-		  <button class="btn p-0" type="button" id="orederStatistics" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-			<i class="fa-solid fa-ellipsis-vertical"></i>
-		  </button>
-		  <div class="dropdown-menu dropdown-menu-end" aria-labelledby="orederStatistics">
-			<a class="dropdown-item" href="javascript:void(0);">Select All</a>
-			<a class="dropdown-item" href="javascript:void(0);">Refresh</a>
-			<a class="dropdown-item" href="javascript:void(0);">Share</a>
-		  </div>
-		</div>
 	</div>
 	<div class="card-body mt-4">
 		<table class="table table-sm table-borderless table-hover">

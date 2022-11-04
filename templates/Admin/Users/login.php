@@ -40,16 +40,16 @@
   
 <div class="postlink_space">
 <?php echo $this->Html->link('Register', ['controller'=>'Users','action'=>'registration']); ?> | 
-<?php echo $this->Html->link('Forgot Username', array('controller'=>'Users','action'=>'forgot_username')); ?> | 
+<?php //echo $this->Html->link('Forgot Username', array('controller'=>'Users','action'=>'forgot_username')); ?>
 <?php echo $this->Html->link('Forgot Password', array('controller'=>'Users','action'=>'forgot_password')); ?>
 </div>	
 
 <hr>
 
 <div class="btn-grid">
-<?php echo $this->Html->link(__('User Manual'), array('controller' => 'pages', 'action' => 'user_manual'), array('class' => 'btn btn-primary btn-sm', 'escape' => false)); ?> 
+<?php echo $this->Html->link(__('User Manual'), array('controller' => 'pages', 'action' => 'manual'), array('class' => 'btn btn-primary btn-sm', 'escape' => false)); ?> 
 
-<?php echo $this->Html->link(__('Frequently Asked Question'), array('controller' => 'Faqs', 'action' => 'faq'), array('class' => 'btn btn-primary btn-sm', 'escape' => false)); ?> 
+<?php echo $this->Html->link(__('Frequently Asked Question'), array('controller' => 'Faqs', 'action' => 'index'), array('class' => 'btn btn-primary btn-sm', 'escape' => false)); ?> 
 
 <?php echo $this->Html->link(__('Contact Us'), array('controller' => 'Contacts', 'action' => 'add'), array('class' => 'btn btn-primary btn-sm', 'escape' => false)); ?> 
 </div>
@@ -91,7 +91,7 @@ Leading The CRUD Evolution<br>
 	<div class="card-body">
 <div class="my-4 text-center">
 <b class="gradient-animate-big">&lt;&#47;&gt;</b>
-<div class="crud_tag">Leading The CRUD Evolution</div>
+<div class="crud_tag"><b class="page_title_gradient">Leading The CRUD Evolution</b></div>
 </div>
 
 <br>

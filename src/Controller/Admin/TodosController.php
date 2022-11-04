@@ -98,6 +98,7 @@ class TodosController extends AppController
         $todo = $this->Todos->newEmptyEntity();
         if ($this->request->is('post')) {
             $todo = $this->Todos->patchEntity($todo, $this->request->getData());
+			$todo->user_id = $this->Authentication->getIdentity('id')->getIdentifier('id');
             if ($this->Todos->save($todo)) {
                 $this->Flash->success(__('The todo has been saved.'));
 
@@ -199,7 +200,7 @@ class TodosController extends AppController
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $todo = $this->Todos->patchEntity($todo, $this->request->getData());
-			$todo->status = 'Cancel'; 
+			$todo->status = 'Canceled'; 
             if ($this->Todos->save($todo)) {
                 $this->Flash->success(__('The todo has been saved.'));
 

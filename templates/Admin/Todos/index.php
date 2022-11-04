@@ -28,7 +28,7 @@
 		<!--Icon & Menu-->
 		<div class="d-flex">
 			<div class="flex-grow-1">
-			<div class="icon_box mb-2" style="background-color: #DC3545;"><i class="fa-regular fa-heart fa-2xl"></i></div>
+			<div class="icon_box mb-2" style="background-color: #DC3545;"><i class="fa-solid fa-list-check fa-2xl"></i></div>
 			</div>
 		<div class="p-2">
 			<div class="dropdown">
@@ -36,16 +36,17 @@
 				<i class="fa-solid fa-ellipsis"></i>
 			  </a>
 			  <ul class="dropdown-menu">
-				<li><a class="dropdown-item" href="#">Action</a></li>
-				<li><a class="dropdown-item" href="#">Another action</a></li>
-				<li><a class="dropdown-item" href="#">Something else here</a></li>
+				<li><?= $this->Html->link(__('<i class="fa-solid fa-plus"></i> New Task'), ['action' => 'add'], ['class' => 'dropdown-item', 'escapeTitle' => false]) ?></li>
+				<li><hr class="dropdown-divider"></li>
+				<li><?= $this->Html->link(__('<i class="fa-solid fa-chart-line"></i> Report'), ['action' => 'report'], ['class' => 'dropdown-item', 'escapeTitle' => false]) ?></li>
+				<li><?= $this->Html->link(__('<i class="fa-solid fa-file-csv"></i> Export CSV'), ['action' => 'index'], ['class' => 'dropdown-item', 'escapeTitle' => false]) ?></li>
 			  </ul>
 			</div>
 		</div>
 		</div>
 		<!--Content-->
-		<div class="card_title">UI / UX Designer Bg White</div>
-		The User Experience Designer position exists to create compelling and digital user experience through excellent design...
+		<div class="card_title">To Do Task</div>
+		Got anything in your mind? Create the to do task here.
 	</div>
 </div>
 

@@ -49,12 +49,26 @@
 if ($this->Identity->isLoggedIn()) { ?>
             <!-- My Account -->
             <li class="menu-header small text-uppercase"><span class="menu-header-text">My Account</span></li>
-            <!-- Cards -->
-            <li class="menu-item <?= $c_name == 'Users' && $a_name == 'profile'?'active':'' ?>">
-              <?= $this->Html->link(__('<i class="menu-icon fa-solid fa-user-tie"></i> Profile'), ['controller' => 'Users', 'action' => 'profile', 'prefix' => false, $this->Identity->get('slug')], ['class' => 'menu-link', 'escape' => false]) ?>
-            </li>
-            <li class="menu-item <?= $c_name == 'Users' && $a_name == 'change_password'?'active':'' ?>">
-              <?= $this->Html->link(__('<i class="menu-icon fa-solid fa-unlock-keyhole"></i> Password'), ['controller' => 'Users', 'action' => 'change_password', 'prefix' => false, $this->Identity->get('slug')], ['class' => 'menu-link', 'escape' => false]) ?>
+			
+            <li class="menu-item">
+              <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon fa-solid fa-user-tie"></i>
+                <div data-i18n="Account Settings">My Profile</div>
+              </a>
+              <ul class="menu-sub">
+                <li class="menu-item <?= $c_name == 'Users' && $a_name == 'profile'?'active':'' ?>">
+					<?= $this->Html->link(__('<i class="menu-icon fa-solid fa-user-tie"></i> Profile'), ['controller' => 'Users', 'action' => 'profile', 'prefix' => false, $this->Identity->get('slug')], ['class' => 'menu-link', 'escape' => false]) ?>
+				</li>
+				<li class="menu-item <?= $c_name == 'Users' && $a_name == 'update'?'active':'' ?>">
+				  <?= $this->Html->link(__('<i class="menu-icon fa-regular fa-pen-to-square"></i> Update'), ['controller' => 'Users', 'action' => 'update', 'prefix' => false, $this->Identity->get('slug')], ['class' => 'menu-link', 'escape' => false]) ?>
+				</li>
+				<li class="menu-item <?= $c_name == 'Users' && $a_name == 'changePassword'?'active':'' ?>">
+				  <?= $this->Html->link(__('<i class="menu-icon fa-solid fa-unlock-keyhole"></i> Password'), ['controller' => 'Users', 'action' => 'change_password', 'prefix' => false, $this->Identity->get('slug')], ['class' => 'menu-link', 'escape' => false]) ?>
+				</li>
+				<li class="menu-item <?= $c_name == 'Users' && $a_name == 'activity'?'active':'' ?>">
+				  <?= $this->Html->link(__('<i class="menu-icon fa-solid fa-cubes-stacked"></i> Activities'), ['controller' => 'Users', 'action' => 'activity', 'prefix' => false, $this->Identity->get('slug')], ['class' => 'menu-link', 'escape' => false]) ?>
+				</li>
+              </ul>
             </li>
             <li class="menu-item <?= $c_name == 'Users' && $a_name == 'logout'?'active':'' ?>">
               <?= $this->Html->link(__('<i class="menu-icon fa-solid fa-arrow-right-from-bracket"></i> Sign-out'), ['controller' => 'Users', 'action' => 'logout', 'prefix' => false], ['class' => 'menu-link', 'escape' => false]) ?>
@@ -80,29 +94,6 @@ if ($this->Identity->isLoggedIn()) { ?>
             </li>
 			<li class="menu-item <?= $c_name == 'Faqs' && $a_name == 'index'?'active':'' ?>">
               <?= $this->Html->link(__('<i class="menu-icon fa-regular fa-circle-question"></i> FAQ'), ['prefix' => 'Admin', 'controller' => 'Faqs', 'action' => 'index'], ['class' => 'menu-link', 'escape' => false]) ?>
-            </li>
-            <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon fas fa-bars"></i>
-                <div data-i18n="Account Settings">User Management</div>
-              </a>
-              <ul class="menu-sub">
-                <li class="menu-item">
-                  <a href="pages-account-settings-account.html" class="menu-link">
-                    <div data-i18n="Account">User List</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="pages-account-settings-account.html" class="menu-link">
-                    <div data-i18n="Account">User Log</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="pages-account-settings-notifications.html" class="menu-link">
-                    <div data-i18n="Notifications">User Email</div>
-                  </a>
-                </li>
-              </ul>
             </li>
 <?php } ?>
           </ul>

@@ -6,6 +6,7 @@
 	//echo $this->Html->script('https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js');
 	//echo $this->Html->script('https://unpkg.com/feather-icons'); 
 	echo $this->Html->script('qr-code-styling-1-5-0.min.js');
+	echo $this->Html->script('bootstrapModal', ['block' => 'scriptBottom']);
 ?>
 <h1 class="m-0 me-2 page_title"><?php echo $title; ?></h1>
 <small class="text-muted"><?php echo $system_name; ?></small>
@@ -23,7 +24,10 @@
 <?= $this->Html->link(__('<i class="fa-solid fa-unlock"></i> Password'), ['action' => 'change_password', $user->slug], ['class' => 'nav-link', 'escapeTitle' => false]) ?>
 </li>
 <li class="nav-item">
-<?= $this->Html->link(__('<i class="fa-solid fa-timeline"></i> Activities'), ['action' => 'activity', $user->slug], ['class' => 'nav-link', 'escapeTitle' => false]) ?>
+<?= $this->Html->link(__('<i class="fa-solid fa-cubes-stacked"></i> Activities'), ['action' => 'activity', $user->slug], ['class' => 'nav-link', 'escapeTitle' => false]) ?>
+</li>
+<li class="nav-item">
+<?= $this->Html->link(__('<i class="fa-solid fa-timeline"></i> Audit Trail'), ['action' => 'audit_trail', $user->slug], ['class' => 'nav-link', 'escapeTitle' => false]) ?>
 </li>
 <li class="nav-item">
 <?php echo $this->Html->link(__('<i class="fa-regular fa-file-pdf"></i> PDF'), ['action' => 'pdf_profile', $user->slug],['class' => 'nav-link', 'escapeTitle' => false]) ?>	
@@ -53,7 +57,7 @@
 		</tr>
 		<tr>
 			<th>Group</th>
-			<td><?= $user->has('user_group') ? $this->Html->link($user->user_group->name, ['controller' => 'UserGroups', 'action' => 'view', $user->user_group->id]) : '' ?></td>
+			<td><?= $user->user_group->name; ?></td>
 		</tr>
 		<tr>
 			<th>Status</th>
@@ -139,30 +143,141 @@
     <div class="profile-card__img shadow" style="background-color: #dc3545;color: #ffffff;">
       <i class="fa-solid fa-triangle-exclamation fa-xl" style="margin-left: 11px;margin-top: 21px;"></i>
     </div>
-	<h5 class="card-header py-0">Deactivate Account</h5>
 		<div class="card-body small-text pt-0">
+<?php if($user->status == 0 || $user->status == 1): ?>
+	<div class="fw-semibold fs-5 py-0">Delete Account</div>
         <div class="mb-3 col-12 mb-0">
           <div class="alert alert-warning">
-            <h6 class="alert-heading fw-bold mb-1">Are you sure you want to deactivate your account?</h6>
-            <p class="mb-0">Once you deactivate your account, there is no going back. Please be certain.</p>
+            <p class="mb-0">Once you deactivate <?= h($user->fullname) ?> account, there is no going back. Please be certain.</p>
           </div>
         </div>
 		
-<?php echo $this->Form->checkbox('terms', ['value' => 'terms', 'class'=>'form-check-input shadow', 'id'=>'terms']); ?>
-&nbsp;<label for="terms">I agree to deactivate this account.</label>
-				<div class="text-end">
-				  <?= $this->Form->button(__('Submit'),['type' => 'submit', 'disabled' => 'disabled', 'class' => 'btn btn-danger']) ?>
-				  <?= $this->Form->end() ?>
+				<div class="text-end mb-2">
+					<?php $this->Form->setTemplates([
+						'confirmJs' => 'addToModal("{{formName}}"); return false;'
+						//'confirmJs' => 'console.log("{{confirmMessage}} - {{formName}}"); return false;'
+					]); ?>
+					<?= $this->Form->postLink(
+						__('<i class="fa-regular fa-trash-can"></i> Delete'),
+						['action' => 'delete', $user->id],
+						[
+							'confirm' => __('Are you sure you want to delete user: "{0}"?', $user->fullname),
+							'title' => __('Delete'),
+							'disabled' => 'disabled',
+							'class' => 'btn btn-danger',
+							'escapeTitle' => false,
+							'data-bs-toggle' => "modal",
+							'data-bs-target' => "#bootstrapModal"
+						]
+					) ?>	
                 </div>
-				
-<script>
-var checkboxes = $("input[type='checkbox']"),
-    submitButton = $("button[type='submit']");
 
-checkboxes.click(function() {
-    submitButton.attr("disabled", !checkboxes.is(":checked"));
-});
-</script>		
+
+<?php endif; ?>
+<?php if($user->status == 0): ?>
+	<div class="fw-semibold fs-5 py-0">Activate Account</div>
+<div class="mb-3 col-12 mb-0">
+  <div class="alert alert-warning">
+	<p class="mb-0">Are you sure you want to activate <?= h($user->fullname) ?> account?</p>
+  </div>
+</div>
+
+<div class="text-end mb-2">
+<?= $this->Form->postLink(
+				__('Activate'),
+				['action' => 'activate', $user->slug],
+				[
+					'confirm' => __('Are you sure you want to activate user: "{0}"?', $user->fullname),
+					'title' => __('Activate'),
+					'class' => 'btn btn-success',
+					'escapeTitle' => false,
+					'data-bs-toggle' => "modal",
+					'data-bs-target' => "#bootstrapModal"
+				]
+			) ?>
+
+</div>
+<?php endif; ?>	
+
+<?php if($user->status == 1): ?>	
+	<div class="fw-semibold fs-5 py-0">Disable Account</div>
+<div class="mb-3 col-12 mb-0">
+  <div class="alert alert-warning">
+	<p class="mb-0">Are you sure you want to disable <?= h($user->fullname) ?> account?</p>
+  </div>
+</div>
+
+<div class="text-end mb-2">
+<?= $this->Form->postLink(
+				__('Disable'),
+				['action' => 'disable', $user->slug],
+				[
+					'confirm' => __('Are you sure you want to Disable user: "{0}"?', $user->fullname),
+					'title' => __('Disable'),
+					'class' => 'btn btn-danger',
+					'escapeTitle' => false,
+					'data-bs-toggle' => "modal",
+					'data-bs-target' => "#bootstrapModal"
+				]
+			) ?>
+
+</div>		
+<?php endif; ?>	
+<?php if($user->is_email_verified == 0): ?>
+
+	<div class="fw-semibold fs-5 py-0">Verify Account</div>
+<div class="mb-3 col-12 mb-0">
+  <div class="alert alert-warning">
+	<p class="mb-0">This step will manually verify the registered account without validating the email address. Please be certain.</p>
+  </div>
+</div>
+
+<div class="text-end mb-2">
+<?= $this->Form->postLink(
+				__('Verify'),
+				['action' => 'admin_verify', $user->slug],
+				[
+					'confirm' => __('Are you sure you want to verify user: "{0}"?', $user->fullname),
+					'title' => __('Verify'),
+					'class' => 'btn btn-success',
+					'escapeTitle' => false,
+					'data-bs-toggle' => "modal",
+					'data-bs-target' => "#bootstrapModal"
+				]
+			) ?>
+
+</div>
+<?php endif; ?>	
+
+<?php if($user->status == 0 || $user->status == 1): ?>
+
+	<div class="fw-semibold fs-5 py-0">Archived Account</div>
+<div class="mb-3 col-12 mb-0">
+  <div class="alert alert-warning">
+	<p class="mb-0">This step will transfer the account to archived. Once transfer to archived, it will remained and cannot be revert back. Please be certain.</p>
+  </div>
+</div>
+
+<div class="text-end mb-2">
+<?= $this->Form->postLink(
+				__('Archived'),
+				['action' => 'archived', $user->slug],
+				[
+					'confirm' => __('Are you sure you want to archived user: "{0}"?', $user->fullname),
+					'title' => __('Archived'),
+					'class' => 'btn btn-success',
+					'escapeTitle' => false,
+					'data-bs-toggle' => "modal",
+					'data-bs-target' => "#bootstrapModal"
+				]
+			) ?>
+
+</div>
+<?php endif; ?>	
+
+<?php if($user->status == 2): ?>
+This account has been archived on <?php echo date('M d, Y (h:i A)', strtotime($user->modified)); ?>
+<?php endif; ?>	
 		
 		</div>
   </div>
@@ -174,11 +289,7 @@ checkboxes.click(function() {
 </div>
 
 
-<?php foreach ($auditLogs as $auditLog): ?>	
-	<li class="list-group-item text-secondary"><?= h($auditLog->id) ?></li>
-	<?php $info = json_decode($auditLog->meta); ?>
-	<?php echo $info->slug; ?>
-<?php endforeach; ?>
+
 
 
 <script type="text/javascript">
@@ -190,4 +301,21 @@ $(document).ready(function() {
 
 
 
-
+<div class="modal" id="bootstrapModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirm</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+			<i class="fa-regular fa-circle-xmark fa-6x text-danger mb-3"></i>
+                <p id="confirmMessage"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="ok">OK</button>
+            </div>
+        </div>
+    </div>
+</div>

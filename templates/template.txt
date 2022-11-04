@@ -119,3 +119,33 @@ $this->set('title', 'User');
 bbb
 </div>
   </div>
+=======================
+<div class="card bg-gold">
+Content
+</div>
+<div class="card-holder">
+<div class="card bg-news">
+Content <br/> 
+Content
+</div>
+</div>
+<div class="card-holder">
+<div class="card bg-germany">
+Content
+</div>
+</div>
+<div class="card-holder">
+<div class="card bg-aurora">
+Content<br/>Content
+</div>
+</div>
+<div class="card-holder">
+<div class="card bg-purple">
+Content
+</div>
+</div>
+<div class="card-holder">
+<div class="card bg-spring">
+Content
+</div>
+</div>

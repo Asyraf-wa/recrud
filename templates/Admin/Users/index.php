@@ -23,7 +23,7 @@
 		<i class="fa-solid fa-bars text-primary"></i>
 		</button>
 			<div class="dropdown-menu dropdown-menu-end" aria-labelledby="orederStatistics">
-			<li><?= $this->Html->link(__('<i class="fa-solid fa-plus"></i> Register New User'), ['action' => 'add'], ['class' => 'dropdown-item', 'escapeTitle' => false]) ?></li>
+			<li><?= $this->Html->link(__('<i class="fa-solid fa-plus"></i> Register New User'), ['action' => 'registration'], ['class' => 'dropdown-item', 'escapeTitle' => false]) ?></li>
 			<li><hr class="dropdown-divider"></li>
 			<li><?= $this->Html->link(__('<i class="fa-solid fa-chart-line"></i> Report'), ['action' => 'report'], ['class' => 'dropdown-item', 'escapeTitle' => false]) ?></li>
 			<li><?= $this->Html->link(__('<i class="fa-solid fa-file-csv"></i> Export CSV'), ['action' => 'index'], ['class' => 'dropdown-item', 'escapeTitle' => false]) ?></li>
@@ -471,20 +471,6 @@ const status = new Chart(ctx_2, {
 		</div>
   </div>
 </div>
-
-<div class="special_card mb-3">
-  <div class="profile-card js-profile-card shadow">
-    <div class="profile-card__img shadow" style="background-color: #dc3545;color: #ffffff;">
-      <i class="fa-solid fa-question fa-xl" style="margin-left: 16px;margin-top: 21px;"></i>
-    </div>
-		<div class="card-body small-text pt-0">
-		The User Experience Designer position exists to create compelling and digital user experience through excellent design...
-		</div>
-  </div>
-</div>
-	
-
-	
 
 	</div>
 </div>

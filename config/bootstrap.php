@@ -223,12 +223,16 @@ TypeFactory::map('time', StringType::class);
 //Inflector::rules('uninflected', ['dontinflectme']);
 
 Configure::write('CakePdf', [
-    'engine' => [
-        'className' => 'CakePdf.DomPdf',
-        'options' => [
-            'isRemoteEnabled' => true
-        ]
-    ],
+'engine' => [
+    'className' => 'CakePdf.DomPdf',
+    'options' => [
+        'isRemoteEnabled' => true,
+        /* 'chroot' => [
+            WWW_ROOT,
+            ROOT . DS . 'vendor' . DS . 'dompdf' . DS . 'dompdf' . DS,
+        ], */
+    ]
+],
     'margin' => [
         'bottom' => 10,
         'left' => 10,

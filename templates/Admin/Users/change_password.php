@@ -14,7 +14,10 @@
 <?= $this->Html->link(__('<i class="fa-solid fa-unlock"></i> Password'), ['action' => 'change_password', $user->slug], ['class' => 'nav-link active', 'escapeTitle' => false]) ?>
 </li>
 <li class="nav-item">
-<?= $this->Html->link(__('<i class="fa-solid fa-timeline"></i> Activities'), ['action' => 'activity', $user->slug], ['class' => 'nav-link', 'escapeTitle' => false]) ?>
+<?= $this->Html->link(__('<i class="fa-solid fa-cubes-stacked"></i> Activities'), ['action' => 'activity', $user->slug], ['class' => 'nav-link', 'escapeTitle' => false]) ?>
+</li>
+<li class="nav-item">
+<?= $this->Html->link(__('<i class="fa-solid fa-timeline"></i> Audit Trail'), ['action' => 'audit_trail', $user->slug], ['class' => 'nav-link', 'escapeTitle' => false]) ?>
 </li>
 <li class="nav-item">
 <?php echo $this->Html->link(__('<i class="fa-regular fa-file-pdf"></i> PDF'), ['action' => 'pdf_profile', $user->slug],['class' => 'nav-link', 'escapeTitle' => false]) ?>	
@@ -22,7 +25,7 @@
 </ul>
 <div class="card shadow mb-4">
 <div class="p-3">
-<?php echo $this->Form->create($user, ['url' => ['action' => 'change_password']]); ?>
+<?php echo $this->Form->create($user); ?>
 <fieldset>
 	<div class="form-group">
 		<?php echo $this->Form->control('current_password', ['class' => 'form-control','required' => false, 'value' => '','autocomplete' => 'off', 'type'=>'password', 'id'=>'myPassword']); ?>

@@ -112,6 +112,13 @@
     font-weight: 600;
 }
 
+.page_title_gradient {
+    background: linear-gradient(140deg, #D2A8FF 12.09%, #F778BA 42.58%, #FF7B72 84.96%);
+    /*140deg, #D2A8FF 12.09%, #F778BA 42.58%, #FF7B72*/
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 /*Badge top  */
 .badge_card {
     margin-top: 10px;
@@ -277,6 +284,14 @@
   border-top-right-radius: 0.5rem;
   border-bottom-right-radius: 0rem;
   border-bottom-left-radius: 0rem;
+}
+
+.bg-gold-full {
+  background: -webkit-linear-gradient(110deg, #fdcd3b 60%, #ffed4b 60%);
+  background: -o-linear-gradient(110deg, #fdcd3b 60%, #ffed4b 60%);
+  background: -moz-linear-gradient(110deg, #fdcd3b 60%, #ffed4b 60%);
+  background: linear-gradient(110deg, #fdcd3b 60%, #ffed4b 60%);
+  color: #ffffff;
 }
 
 .bg-news {
@@ -513,4 +528,158 @@ a.kosong:hover {color: #697a8d; text-decoration: none;}
 
 .bg-light-gray{
     background-color: #E3E3E3;
+}
+a.reference:link {
+    color:#000000;
+    text-decoration:none;
+}
+a.reference:visited {
+    color: #000000;
+    text-decoration:none;
+}
+a.reference:hover {
+    color: #000000;
+    text-decoration:underline;
+}
+a.reference:active {
+    color: #000000;
+    text-decoration:none;
+}
+
+.kotak {
+	width: 100px;
+	height: 100px;
+	margin-bottom: 8px;
+    margin-right: 8px;
+	position: relative;
+    float: left;
+    display: inline-block;
+
+}
+
+.kotak-blue {
+	background-color: #0e9dd0;
+}
+
+.kotak-blue:hover {
+	background-color: #0C86B4;
+}
+
+.kotak-green {
+	background-color: #9bc505;
+}
+
+.kotak-green:hover {
+	background-color: #769704;
+}
+
+.kotak-yellow {
+	background-color: #ecd902;
+}
+
+.kotak-yellow:hover {
+	background-color: #C4B502;
+}
+
+.kotak-orange {
+	background-color: #ff8b0c;
+}
+
+.kotak-orange:hover {
+	background-color: #EC7C00;
+}
+
+.kotak-red {
+	background-color: #e2241a;
+}
+
+.kotak-red:hover {
+	background-color: #CA2017;
+}
+
+.kotak-purple {
+	background-color: #7340b2;
+}
+
+.kotak-purple:hover {
+	background-color: #5F3492;
+}
+
+.kotak-darkblue {
+	background-color: #34495e;
+}
+
+.kotak-darkblue:hover {
+	background-color: #263646;
+}
+
+.kotak-emerald {
+	background-color: #1abc9c;
+}
+
+.kotak-emerald:hover {
+	background-color: #14967C;
+}
+
+.kotak-grey {
+	background-color: #95a5a6;
+}
+
+.kotak-grey:hover {
+	background-color: #748A8B;
+}
+
+.kotak-pink {
+	background-color: #eb1460;
+}
+
+.kotak-pink:hover {
+	background-color: #CC1153;
+}
+
+.kotak-brown {
+	background-color: #795446;
+}
+
+.kotak-brown:hover {
+	background-color: #624439;
+}
+
+.kotak-amber {
+	background-color: #ffc100;
+}
+
+.kotak-amber:hover {
+	background-color: #CE9B00;
+}
+
+.kotak-lightred {
+	background-color: #F85A49;
+}
+
+.kotak-lightred:hover {
+	background-color: #F73722;
+}
+
+
+.kotak-lightpurple {
+	background-color: #bb64d9;
+}
+
+.kotak-lightpurple:hover {
+	background-color: #A532CB;
+}
+.icon {
+    text-align: center;
+	color: white;
+    margin-top: 20%
+}
+.nota {
+    text-align: center;
+	color: white;
+    font-size: 12px;
+    white-space: normal;
+    margin-top: 10%;
+  font-family: Segoe UI Semilight WestEuropean,Segoe UI Semilight,Segoe UI,Tahoma,Arial,sans-serif;
+  line-height: 11px
 }

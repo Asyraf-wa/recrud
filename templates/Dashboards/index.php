@@ -1,3 +1,6 @@
+<?php
+	echo $this->Html->script('qr-code-styling-1-5-0.min.js');
+?>
 <!--Header-->
 <div class="row mb-3">
 	<div class="col-10">
@@ -11,73 +14,37 @@
 	</div>
 </div>
 
-<div class="row">
-	<div class="col-md-8">
-<div class="card">
-  <div class="d-flex align-items-end row">
-	<div class="col-sm-7">
-	  <div class="card-body">
-		<h5 class="card-title text-primary">Congratulations John! 🎉</h5>
-		<p class="mb-4">You have done <span class="fw-bold">72%</span> more sales today. Check your new badge in your profile.</p>
+<div class="card bg-gold-full fs-5 fw-bold px-3 py-2 mb-3">
+Hello, <?php echo $this->Identity->get('fullname'); ?>, 
+<?php
+        date_default_timezone_set("Asia/Kuala_Lumpur");  
+        $h = date('G');
 
-		<a href="javascript:;" class="btn btn-sm btn-outline-primary">View Badges</a>
-	  </div>
-	</div>
-	<div class="col-sm-5 text-center text-sm-left">
-	  <div class="card-body pb-0 px-0 px-md-4">
-		<?php echo $this->Html->image('man-with-laptop-light.png', ['height' => '140px', 'alt' => 'View Badge User']); ?>
-	  </div>
-	</div>
-  </div>
+        if($h>=5 && $h<=11)
+        {
+            echo "Good morning";
+        }
+        else if($h>=12 && $h<=15)
+        {
+            echo "Good afternoon";
+        }
+        else
+        {
+            echo "Good evening";
+        }
+    ?>.
 </div>
+
+
+<div class="row">
+	<div class="col-md-9">
+
 	</div>
-	<div class="col-md-2">
-<div class="card">
-  <div class="card-body">
-	<div class="card-title d-flex align-items-start justify-content-between">
-	  <div class="avatar flex-shrink-0">
-		<?php echo $this->Html->image('unicons/chart-success.png', ['class' => 'rounded', 'alt' => 'Chart']); ?>
-	  </div>
-	  <div class="dropdown">
-		<button class="btn p-0" type="button" id="cardOpt3" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-		  <i class="fa-solid fa-ellipsis-vertical"></i>
-		</button>
-		<div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOpt3">
-		  <a class="dropdown-item" href="javascript:void(0);">View More</a>
-		  <a class="dropdown-item" href="javascript:void(0);">Delete</a>
-		</div>
-	  </div>
-	</div>
-	<span class="fw-semibold d-block mb-1">Profit</span>
-	<h3 class="card-title mb-2">$12,628</h3>
-	<small class="text-success fw-semibold"><i class="fa-solid fa-arrow-up"></i> +72.80%</small>
-  </div>
-</div>
-	</div>
-	<div class="col-md-2">
-<div class="card">
-  <div class="card-body">
-	<div class="card-title d-flex align-items-start justify-content-between">
-	  <div class="avatar flex-shrink-0">
-		<?php echo $this->Html->image('unicons/chart-success.png', ['class' => 'rounded', 'alt' => 'Chart']); ?>
-	  </div>
-	  <div class="dropdown">
-		<button class="btn p-0" type="button" id="cardOpt3" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-		  <i class="fa-solid fa-ellipsis-vertical"></i>
-		</button>
-		<div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOpt3">
-		  <a class="dropdown-item" href="javascript:void(0);">View More</a>
-		  <a class="dropdown-item" href="javascript:void(0);">Delete</a>
-		</div>
-	  </div>
-	</div>
-	<span class="fw-semibold d-block mb-1">Profit</span>
-	<h3 class="card-title mb-2">$12,628</h3>
-	<small class="text-success fw-semibold"><i class="fa-solid fa-arrow-up"></i> +72.80%</small>
-  </div>
-</div>
+	<div class="col-md-3">
+
 	</div>
 </div>
+
 
 
 <div class="row g-3">
@@ -87,16 +54,6 @@
 		<div class="card-title mb-0">
 		  <h1 class="m-0 me-2 page_title">Welcome Note</h1>
 		  <small class="text-muted"><?php echo $system_name; ?></small>
-		</div>
-		<div class="dropdown">
-		  <button class="btn p-0" type="button" id="orederStatistics" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-			<i class="fa-solid fa-ellipsis-vertical"></i>
-		  </button>
-		  <div class="dropdown-menu dropdown-menu-end" aria-labelledby="orederStatistics">
-			<a class="dropdown-item" href="javascript:void(0);">Select All</a>
-			<a class="dropdown-item" href="javascript:void(0);">Refresh</a>
-			<a class="dropdown-item" href="javascript:void(0);">Share</a>
-		  </div>
 		</div>
 	</div>
 	<div class="card-body mt-4 justify">
@@ -134,59 +91,247 @@ Form Features Enrichment
 	</div>
 	</div>
 </div>
+
+<div class="card shadow mt-3">
+	<div class="card-body">
+<div class="row">
+		  <div class="col">
+		  <?php echo $this->Html->link(
+		   '<div class="col kotak kotak-blue">
+			<div class="icon"><i class="fa fa-cog fa-3x" aria-hidden="true"></i></div>
+			<div class="nota">Menu</div>
+			</div>',
+			array('controller'=>'dashboards','action'=>'#'),
+			array('escape' => false)); ?>
+			
+		<?php echo $this->Html->link(
+		   '<div class="col kotak kotak-green">
+			<div class="icon"><i class="fab fa-staylinked fa-3x"></i></div>
+			<div class="nota">Menu</div>
+			</div>',
+			array('controller'=>'dashboards','action'=>'#'),
+			array('escape' => false)); ?>
+			
+		<?php echo $this->Html->link(
+		   '<div class="col kotak kotak-yellow">
+			<div class="icon"><i class="far fa-envelope fa-3x" aria-hidden="true"></i></div>
+			<div class="nota">Menu</div>
+			</div>',
+			array('controller'=>'dashboards','action'=>'#'),
+			array('escape' => false)); ?>
+			
+		<?php echo $this->Html->link(
+		   '<div class="col kotak kotak-orange">
+			<div class="icon"><i class="fas fa-users fa-3x" aria-hidden="true"></i></div>
+			<div class="nota">Menu</div>
+			</div>',
+			array('controller'=>'dashboards','action'=>'#'),
+			array('escape' => false)); ?>
+			
+		<?php echo $this->Html->link(
+		   '<div class="col kotak kotak-red">
+			<div class="icon"><i class="far fa-user fa-3x" aria-hidden="true"></i></div>
+			<div class="nota">Menu</div>
+			</div>',
+			array('controller'=>'dashboards','action'=>'#'),
+			array('escape' => false)); ?>
+
+		<?php echo $this->Html->link(
+		   '<div class="col kotak kotak-purple">
+			<div class="icon"><i class="fa fa-id-badge fa-3x" aria-hidden="true"></i></div>
+			<div class="nota">Menu</div>
+			</div>',
+			array('controller'=>'dashboards','action'=>'#'),
+			array('escape' => false)); ?>
+			
+		<?php echo $this->Html->link(
+		   '<div class="col kotak kotak-darkblue">
+			<div class="icon"><i class="far fa-keyboard fa-3x"></i></div>
+			<div class="nota">Menu</div>
+			</div>',
+			array('controller'=>'dashboards','action'=>'#'),
+			array('escape' => false)); ?>
+			
+		<?php echo $this->Html->link(
+		   '<div class="col kotak kotak-brown">
+			<div class="icon"><i class="fas fa-diagnoses fa-3x"></i></div>
+			<div class="nota">Menu</div>
+			</div>',
+			array('controller'=>'dashboards','action'=>'#'),
+			array('escape' => false)); ?>
+			
+		<?php echo $this->Html->link(
+		   '<div class="col kotak kotak-emerald">
+			<div class="icon"><i class="fab fa-connectdevelop fa-3x"></i></div>
+			<div class="nota">Menu</div>
+			</div>',
+			array('controller'=>'dashboards','action'=>'#'),
+			array('escape' => false)); ?>
+			
+		<?php echo $this->Html->link(
+		   '<div class="col kotak kotak-grey">
+			<div class="icon"><i class="fa fa-cube fa-3x" aria-hidden="true"></i></div>
+			<div class="nota">Menu</div>
+			</div>',
+			array('controller'=>'dashboards','action'=>'#'),
+			array('escape' => false)); ?>
+			
+		<?php echo $this->Html->link(
+		   '<div class="col kotak kotak-pink">
+			<div class="icon"><i class="far fa-bookmark fa-3x" aria-hidden="true"></i></div>
+			<div class="nota">Menu</div>
+			</div>',
+			array('controller'=>'dashboards','action'=>'#'),
+			array('escape' => false)); ?>
+			
+		<?php echo $this->Html->link(
+		   '<div class="col kotak kotak-amber">
+			<div class="icon"><i class="far fa-building fa-3x" aria-hidden="true"></i></div>
+			<div class="nota">Menu</div>
+			</div>',
+			array('controller'=>'dashboards','action'=>'#'),
+			array('escape' => false)); ?>
+
+		<?php echo $this->Html->link(
+		   '<div class="col kotak kotak-lightred">
+			<div class="icon"><i class="fa fa-bullhorn fa-3x" aria-hidden="true"></i></div>
+			<div class="nota">Menu</div>
+			</div>',
+			array('controller'=>'dashboards','action'=>'#'),
+			array('escape' => false)); ?>
+			
+		<?php echo $this->Html->link(
+		   '<div class="col kotak kotak-lightpurple">
+			<div class="icon"><i class="fas fa-ad fa-3x"></i></div>
+			<div class="nota">Menu</div>
+			</div>',
+			array('controller'=>'dashboards','action'=>'#'),
+			array('escape' => false)); ?>
+			
+		<?php echo $this->Html->link(
+		   '<div class="col kotak kotak-red">
+			<div class="icon"><i class="far fa-comment-alt fa-3x" aria-hidden="true"></i></div>
+			<div class="nota">Menu</div>
+			</div>',
+			array('controller'=>'dashboards','action'=>'#'),
+			array('escape' => false)); ?>
+			
+		  </div>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
+
 	</div>
 	<div class="col-md-4">
-		<div class="card shadow">
-			<div class="card-body">
-x
+	
+<div class="special_card mb-3">
+  <div class="profile-card js-profile-card shadow">
+	<div class="profile-card__img shadow" style="background-color: #dc3545;color: #ffffff;">
+	  <i class="fa-solid fa-qrcode fa-xl" style="margin-left: 12px;margin-top: 22px;"></i> <?php echo $system_name; ?>
+	</div>
+		<div class="card-body small-text pt-0">
+<div id="qr" align="center"></div>
+<script type="text/javascript">
+	const qrCode = new QRCodeStyling({
+		width: 130,
+		height: 130,
+		margin: 0,
+		//type: "svg",
+		data: "<?php echo $this->request->getUri(); ?>",
+		dotsOptions: {
+			//color: "#4267b2",
+			type: "dots"
+		},
+		cornersSquareOptions: {
+			type: "dots",
+			color: "#007bff",
+		},
+		cornersDotOptions: {
+			type: "dots"
+		},
+		backgroundOptions: {
+			//color: "#ffffff",
+		},
+		imageOptions: {
+			crossOrigin: "anonymous",
+			margin: 20
+		}
+	});
+
+	qrCode.append(document.getElementById("qr"));
+	//qrCode.download({ name: "qr", extension: "png" });
+</script>
+		</div>
+  </div>
+</div>	
+
+
+<div class="special_card mb-3">
+  <div class="profile-card js-profile-card shadow">
+	<div class="profile-card__img shadow" style="background-color: #696cff;color: #ffffff;">
+	  <i class="far fa-bookmark fa-xl" style="margin-left: 14px;margin-top: 21px;"></i> Useful Link
+	</div>
+		<div class="card-body pt-0">
+			<div class="table-responsive">
+<table class="table table-sm table-borderless">
+	<tr>
+		<td><i class="far fa-bookmark" style="color: var(--bs-blue);"></i> <?php echo $this->Html->link('Re-CRUD repository','https://github.com/Asyraf-wa', ['target'=>'_blank', 'class' => 'reference']); ?></td>
+	</tr>
+	<tr>
+		<td><i class="far fa-bookmark" style="color: var(--bs-indigo);"></i> <?php echo $this->Html->link('Code The Pixel - Re-CRUD tutorial','https://codethepixel.com', ['target'=>'_blank', 'class' => 'reference']); ?></td>
+	</tr>
+	<tr>
+		<td><i class="far fa-bookmark" style="color: var(--bs-purple);"></i> <?php echo $this->Html->link('GetBootstrap - Theme components','https://getbootstrap.com', ['target'=>'_blank', 'class' => 'reference']); ?></td>
+	</tr>
+	<tr>
+		<td><i class="far fa-bookmark" style="color: var(--bs-pink);"></i> <?php echo $this->Html->link('Font Awesome Icon - Icon collection','https://fontawesome.com', ['target'=>'_blank', 'class' => 'reference']); ?></td>
+	</tr>
+	<tr>
+		<td><i class="far fa-bookmark" style="color: var(--bs-red);"></i> <?php echo $this->Html->link('Feather Icon - Icon collection','https://feathericons.com', ['target'=>'_blank', 'class' => 'reference']); ?></td>
+	</tr>
+	<tr>
+		<td><i class="far fa-bookmark" style="color: var(--bs-orange);"></i> <?php echo $this->Html->link('Github - Codes repository','https://github.com', ['target'=>'_blank', 'class' => 'reference']); ?></td>
+	</tr>
+	<tr>
+		<td><i class="far fa-bookmark" style="color: var(--bs-yellow);"></i> <?php echo $this->Html->link('Composer - Dependecy manager','https://getcomposer.org/', ['target'=>'_blank', 'class' => 'reference']); ?></td>
+	</tr>
+	<tr>
+		<td><i class="far fa-bookmark" style="color: var(--bs-green);"></i> <?php echo $this->Html->link('ChartJS - Flexible charting library','https://www.chartjs.org/', ['target'=>'_blank', 'class' => 'reference']); ?></td>
+	</tr>
+	<tr>
+		<td><i class="far fa-bookmark" style="color: var(--bs-teal);"></i> <?php echo $this->Html->link('DataTables - Table features enhancement','https://datatables.net/', ['target'=>'_blank', 'class' => 'reference']); ?></td>
+	</tr>
+	<tr>
+		<td><i class="far fa-bookmark" style="color: var(--bs-cyan);"></i> <?php echo $this->Html->link('Google Fonts - Font library','https://fonts.google.com/', ['target'=>'_blank', 'class' => 'reference']); ?></td>
+	</tr>
+	<tr>
+		<td><i class="far fa-bookmark" style="color: var(--bs-warning);"></i> <?php echo $this->Html->link('Optimizilla - Image optimizer','https://imagecompressor.com/', ['target'=>'_blank', 'class' => 'reference']); ?></td>
+	</tr>
+	<tr>
+		<td><i class="far fa-bookmark" style="color: var(--bs-danger);"></i> <?php echo $this->Html->link('PHP - Official PHP references','https://www.php.net/manual/en/', ['target'=>'_blank', 'class' => 'reference']); ?></td>
+	</tr>
+	<tr>
+		<td><i class="far fa-bookmark"></i> <?php echo $this->Html->link('CakePHP - Web Application Framework','https://cakephp.org/', ['target'=>'_blank', 'class' => 'reference']); ?></td>
+	</tr>
+</table>
 			</div>
 		</div>
+  </div>
+</div>
+	
+	
+
 	</div>
-	<div class="col-md-8">
-		<div class="card shadow">
-			<div class="card-body">
-x
-			</div>
-		</div>
-	</div>
-	<div class="col-md-4">
-		<div class="card shadow">
-			<div class="card-body">
-x
-			</div>
-		</div>
-	</div>
+
+
 </div>
 
 
 
 
-  <div class="card bg-gold">
-    New York is Sunny today at 60°.
-  </div>
-<div class="card-holder">
-  <div class="card bg-news">
-    Breaking News <br/> 
-    Apple launches the new iPhone.
-  </div>
-</div>
-<div class="card-holder">
-  <div class="card bg-germany">
-     Germany! Germany! Germany!!
-  </div>
-</div>
-<div class="card-holder">
-  <div class="card bg-aurora">
-    New Planets<br/>Discovered
-  </div>
-</div>
-<div class="card-holder">
-  <div class="card bg-purple">
-    The refreshing Black Currant Ice Cream is a wonderful treat.
-  </div>
-</div>
-<div class="card-holder">
-  <div class="card bg-spring">
-   Keep Calm and Add Some Colors.
-  </div>
-</div>

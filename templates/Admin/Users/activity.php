@@ -14,7 +14,10 @@
 <?= $this->Html->link(__('<i class="fa-solid fa-unlock"></i> Password'), ['action' => 'change_password', $user->slug], ['class' => 'nav-link', 'escapeTitle' => false]) ?>
 </li>
 <li class="nav-item">
-<?= $this->Html->link(__('<i class="fa-solid fa-timeline"></i> Activities'), ['action' => 'activity', $user->slug], ['class' => 'nav-link active', 'escapeTitle' => false]) ?>
+<?= $this->Html->link(__('<i class="fa-solid fa-cubes-stacked"></i> Activities'), ['action' => 'activity', $user->slug], ['class' => 'nav-link active', 'escapeTitle' => false]) ?>
+</li>
+<li class="nav-item">
+<?= $this->Html->link(__('<i class="fa-solid fa-timeline"></i> Audit Trail'), ['action' => 'audit_trail', $user->slug], ['class' => 'nav-link', 'escapeTitle' => false]) ?>
 </li>
 <li class="nav-item">
 <?php echo $this->Html->link(__('<i class="fa-regular fa-file-pdf"></i> PDF'), ['action' => 'pdf_profile', $user->slug],['class' => 'nav-link', 'escapeTitle' => false]) ?>	
@@ -22,7 +25,39 @@
 </ul>
 <div class="card shadow mb-4">
 <div class="p-3">
-xxx
+
+<div class="table-responsive">
+	<table class="table table-sm table-hovered">
+		<tr>
+			<th>Action</th>
+			<th>Agent</th>
+			<th>OS</th>
+			<th>IP</th>
+			<th>Host</th>
+			<th>Date/Time</th>
+		</tr>
+<?php foreach ($userLogs as $userLog): ?>	
+			<tr>
+			<td>
+<?php if ($userLog->action == 'Login'){
+	echo '<span class="badge bg-success">Login</span>';
+}elseif ($userLog->action == 'Logout'){
+	echo '<span class="badge bg-danger">Logout</span>';
+}else
+	echo '<span class="badge bg-secondary">Error</span>';
+?>
+			</td>
+			<td><?= h($userLog->useragent) ?></td>
+			<td><?= h($userLog->os) ?></td>
+			<td><?= h($userLog->ip) ?></td>
+			<td><?= h($userLog->host) ?></td>
+			<td><?php echo date('M d, Y (h:i A)', strtotime($userLog->created)); ?></td>
+		</tr>
+<?php endforeach; ?>
+	</table>
+</div>
+
+
 </div>
 </div>
 	</div>

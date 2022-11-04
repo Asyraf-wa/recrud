@@ -57,8 +57,6 @@
 				<th><?= $this->Paginator->sort('type','Activity') ?></th>
 				<th><?= $this->Paginator->sort('primary_key','PK') ?></th>
 				<th><?= $this->Paginator->sort('source') ?></th>
-				<th><?= $this->Paginator->sort('original') ?></th>
-				<th><?= $this->Paginator->sort('changed') ?></th>
 				<th><?= $this->Paginator->sort('created','Logged on') ?></th>
 				<th class="text-center"><?= __('Actions') ?></th>
 			</tr>
@@ -88,30 +86,6 @@ echo ($auditLog->type);
 					</td>
                     <td><?= $auditLog->primary_key === null ? '' : $this->Number->format($auditLog->primary_key) ?></td>
                     <td><?= h($auditLog->source) ?></td>
-					<td>
-						<?php if ($auditLog->original == NULL) {
-								echo '[deleted]';
-							} else
-								echo $this->Text->truncate($auditLog->original,30,
-									[
-										'ellipsis' => '...',
-										'exact' => false
-									]
-								);
-						?>
-					</td>
-                    <td>
-						<?php if ($auditLog->changed == NULL) {
-								echo '[deleted]';
-							} else
-								echo $this->Text->truncate($auditLog->changed,30,
-									[
-										'ellipsis' => '...',
-										'exact' => false
-									]
-								);
-						?>
-					</td>
                     <td><?php echo date('M d, Y (h:i A)', strtotime($auditLog->created)); ?></td>
 			<td class="actions text-center">
 	<div class="btn-group shadow" role="group" aria-label="Basic example">
@@ -367,7 +341,70 @@ const status = new Chart(ctx_2, {
 		<div class="card-body small-text pt-0">
 			<?php echo $this->Form->create(null, ['valueSources' => 'query', 'url' => ['controller' => 'Audit Logs','action' => 'index']]); ?>
 			<fieldset>
-			<div class="mb-1"><?php echo $this->Form->control('id',['required' => false]); ?></div>
+			<div class="mb-1"><?php echo $this->Form->control('id',['label' => 'Log ID', 'required' => false]); ?></div>
+			<div class="mb-1"><?php echo $this->Form->control('primary_key',['label' => 'Primary Key', 'required' => false]); ?></div>
+			<div class="mb-1"><?php echo $this->Form->control('source',['label' => 'Source', 'required' => false]); ?></div>
+			<div class="mb-1">
+				<?php echo $this->Form->label('Activity'); ?><br>
+				<?php
+				$options = [
+					'create' => 'Create',
+					'Update' => 'Update',
+					'delete' => 'Delete',
+				];
+				echo $this->Form->select('type', $options, [
+					'multiple' => 'checkbox',
+					'class' =>'form-check-input'
+				]); 
+				?>
+			</div>
+<div class="row">
+	<div class="col-6">
+	<?php echo $this->Form->control('log_from',[
+				  'class' => 'form-control form-control-sm datepicker-here', 
+				  'label' => 'Log From',
+				  'id' => 'log_from',
+				  'type' => 'Text',
+				  'data-language' => 'en',
+				  'data-date-format' => 'Y-m-d',
+				  'empty'=>'empty',
+				  'required' => false,
+				  'autocomplete' => 'off'
+	]); ?>
+	</div>
+	<div class="col-6">
+	<?php echo $this->Form->control('log_to',[
+				  'class' => 'form-control form-control-sm datepicker-here', 
+				  'label' => 'Log To',
+				  'id' => 'log_to',
+				  'type' => 'Text',
+				  'data-language' => 'en',
+				  'data-date-format' => 'Y-m-d',
+				  'empty'=>'empty',
+				  'required' => false,
+				  'autocomplete' => 'off'
+	]); ?>
+	</div>
+</div>
+<script type="text/javascript">
+$('#log_from').datetimepicker({
+	lang:'en',
+	timepicker:false,
+	format:'Y-m-d',
+	formatDate:'Y/m/d',
+	//minDate:'-1970/01/01', // yesterday is minimum date
+	//maxDate:'+1970/01/02' // and tommorow is maximum date calendar
+});
+
+$('#log_to').datetimepicker({
+	lang:'en',
+	timepicker:false,
+	format:'Y-m-d',
+	formatDate:'Y/m/d',
+	//minDate:'-1970/01/01', // yesterday is minimum date
+	//maxDate:'+1970/01/02' // and tommorow is maximum date calendar
+});
+</script>
 			</fieldset>
 				<div class="text-end">
 <?php 
@@ -384,16 +421,6 @@ const status = new Chart(ctx_2, {
   </div>
 </div>
 
-<div class="special_card mb-3">
-  <div class="profile-card js-profile-card shadow">
-    <div class="profile-card__img shadow" style="background-color: #dc3545;color: #ffffff;">
-      <i class="fa-solid fa-question fa-xl" style="margin-left: 16px;margin-top: 21px;"></i>
-    </div>
-		<div class="card-body small-text pt-0">
-		The User Experience Designer position exists to create compelling and digital user experience through excellent design...
-		</div>
-  </div>
-</div>
 	
 	</div>
 </div>

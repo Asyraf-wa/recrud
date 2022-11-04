@@ -23,7 +23,10 @@
 <?= $this->Html->link(__('<i class="fa-solid fa-unlock"></i> Password'), ['action' => 'change_password', $user->slug], ['class' => 'nav-link', 'escapeTitle' => false]) ?>
 </li>
 <li class="nav-item">
-<?= $this->Html->link(__('<i class="fa-solid fa-timeline"></i> Activities'), ['action' => 'activity', $user->slug], ['class' => 'nav-link', 'escapeTitle' => false]) ?>
+<?= $this->Html->link(__('<i class="fa-solid fa-cubes-stacked"></i> Activities'), ['action' => 'activity', $user->slug], ['class' => 'nav-link', 'escapeTitle' => false]) ?>
+</li>
+<li class="nav-item">
+<?= $this->Html->link(__('<i class="fa-solid fa-timeline"></i> Audit Trail'), ['action' => 'audit_trail', $user->slug], ['class' => 'nav-link', 'escapeTitle' => false]) ?>
 </li>
 <li class="nav-item">
 <?php echo $this->Html->link(__('<i class="fa-regular fa-file-pdf"></i> PDF'), ['action' => 'pdf_profile', $user->slug],['class' => 'nav-link', 'escapeTitle' => false]) ?>	
@@ -35,13 +38,16 @@
 <?php if ($user->avatar != NULL) {
 echo $this->Html->image('../files/Users/avatar/' . $user->slug . '/' . $user->avatar,['class'=> 'd-block rounded', 'width'=>'100px', 'height'=>'100px']);
 }else
-echo $this->Html->image('avatar_default.png', ['alt' => 'avatar', 'class' => 'img-circle']);
+echo $this->Html->image('avatar_default.png', ['alt' => 'avatar', 'class' => 'd-block rounded', 'width'=>'100px', 'height'=>'100px']);
 ?>
 	</div>
 	<div class="col-md-10 ps-0">
 	<?php echo $this->Form->create($user, ['type' => 'file', 'novalidate' => true]); ?>
 <?php echo $this->Form->control('avatar',['type'=>'file','required' => false, 'class' =>'form-control', 'label' => 'Profile Image']); ?>
-<p class="text-muted mb-0">Allowed JPG/JPEG Only. Recommended Size 100px X 100px</p>
+<p class="text-muted mb-0">
+<?php echo $this->Html->link(__('Remove Existing Picture'), ['action' => 'remove_avatar', $user->slug],['class' => 'btn btn-sm btn-outline-primary', 'escapeTitle' => false]) ?>&nbsp;&nbsp;&nbsp;
+Allowed JPG/JPEG Only. Recommended Size 100px X 100px
+</p>
 	</div>
 </div>
 
@@ -61,7 +67,8 @@ if ($this->Identity->isLoggedIn()) { ?>
 	<div class="col-md-6">
 	  <?php echo $this->Form->control('email',['required' => false]); ?>
 	</div>
-</div>				
+</div>	
+			
 
 <div class="row">
 	<div class="col-md-6">
@@ -101,7 +108,9 @@ $('#group').select2({
 						echo $this->Form->error('status', 'Please select score for Question 1');
 					} ?>
 	</div>
-</div>		
+</div>				
+
+		
 
 <?php } ?>
 

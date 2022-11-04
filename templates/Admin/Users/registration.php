@@ -6,26 +6,13 @@
 	//echo $this->Html->script('https://unpkg.com/feather-icons'); 
 ?>
 
-<div class="row">
+<h1 class="m-0 me-2 page_title"><?php echo $title; ?></h1>
+<small class="text-muted"><?php echo $system_name; ?></small>
+
+<div class="row mt-3">
 	<div class="col-md-9">
 <div class="card shadow">
-	<div class="card-header d-flex align-items-center justify-content-between border-bottom">
-		<div class="card-title mb-0">
-		  <h1 class="m-0 me-2 page_title"><?php echo $title; ?></h1>
-		  <small class="text-muted"><?php echo $system_name; ?></small>
-		</div>
-		<div class="dropdown">
-		  <button class="btn p-0" type="button" id="orederStatistics" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-			<i class="fa-solid fa-ellipsis-vertical"></i>
-		  </button>
-		  <div class="dropdown-menu dropdown-menu-end" aria-labelledby="orederStatistics">
-			<a class="dropdown-item" href="javascript:void(0);">Select All</a>
-			<a class="dropdown-item" href="javascript:void(0);">Refresh</a>
-			<a class="dropdown-item" href="javascript:void(0);">Share</a>
-		  </div>
-		</div>
-	</div>
-	<div class="card-body mt-4">
+	<div class="card-body">
 <?php echo $this->Form->create($user, ['type' => 'file', 'novalidate' => true]); ?>
                 <fieldset>
 				
@@ -47,41 +34,7 @@
 	</div>
 </div>	
 
-<div class="row">
-	<div class="col">
-	  <?php 
-echo $this->Form->control('user_group_id', [
-	//'type' => 'text', 
-	'options' => $userGroups,
-	'id' => 'group',
-	'label' => 'User Group',
-	'class' => 'form-control',
-	'required' => false]); 
-?>
-<script type="text/javascript">
-$('#group').select2({
-	tags: true,
-    //data: ["Clare","Cork","South Dublin"],
-    //tokenSeparators: [','], 
-    placeholder: "Select",
-    /* the next 2 lines make sure the user can click away after typing and not lose the new tag */
-    //selectOnClose: true, 
-    //closeOnSelect: false
-});
-</script>
-	</div>
-	<div class="col">
-<label>Status</label><br>
-		<?php
-			echo $this->Form->radio(
-				'status',
-				[
-					['value' => '1', 'text' => 'Active', 'label' => ['class' => 'btn btn-outline-success ms-1 mb-3']],
-					['value' => '0', 'text' => 'In-Active', 'label' => ['class' => 'btn btn-outline-warning ms-1 mb-3']],
-				]
-			);?>
-	</div>
-</div>		
+		
 <?php echo $this->Form->control('avatar',['type'=>'file','required' => false, 'class' =>'form-control', 'label' => 'Profile Image']); ?>
 
 <?php echo $this->Form->checkbox('terms', ['value' => 'terms', 'class'=>'form-check-input shadow', 'id'=>'terms']); ?>
@@ -114,7 +67,12 @@ checkboxes.click(function() {
       <i class="fa-solid fa-question fa-xl" style="margin-left: 16px;margin-top: 21px;"></i>
     </div>
 		<div class="card-body small-text pt-0">
-		The User Experience Designer position exists to create compelling and digital user experience through excellent design...
+		<ul>
+			<li>All information provided during registration is correct</li>
+			<li>One email can register only one account</li>
+			<li>Please use strong password to ensure your account is secure</li>
+			<li>Contact administrator if unable to register</li>
+		</ul>
 		</div>
   </div>
 </div>

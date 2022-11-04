@@ -11,7 +11,7 @@
 <small class="text-muted"><?php echo $system_name; ?></small>
 
 <div class="row mt-3">
-	<div class="col-md-8">
+	<div class="col-md-12">
 <ul class="nav nav-pills flex-column flex-md-row mb-3">
 <li class="nav-item">
 <?= $this->Html->link(__('<i class="fa-solid fa-user-astronaut"></i> Account'), ['action' => 'profile', $user->slug], ['class' => 'nav-link active', 'escapeTitle' => false]) ?>
@@ -26,7 +26,7 @@
 <?= $this->Html->link(__('<i class="fa-solid fa-timeline"></i> Activities'), ['action' => 'activity', $user->slug], ['class' => 'nav-link', 'escapeTitle' => false]) ?>
 </li>
 <li class="nav-item">
-<?php echo $this->Html->link(__('<i class="fa-regular fa-file-pdf"></i> PDF'), ['action' => 'pdf_profile', $user->slug],['class' => 'nav-link', 'escapeTitle' => false]) ?>	
+<?php echo $this->Html->link(__('<i class="fa-regular fa-file-pdf"></i> PDF'), ['action' => 'profile_pdf', $user->slug],['class' => 'nav-link', 'escapeTitle' => false]) ?>	
 </li>
 </ul>
 <div class="card shadow mb-4">
@@ -121,54 +121,6 @@
 	</div>
 </div>
 </div>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	</div>
-	<div class="col-md-4">
-<div class="special_card mb-3">
-  <div class="profile-card js-profile-card shadow">
-    <div class="profile-card__img shadow" style="background-color: #dc3545;color: #ffffff;">
-      <i class="fa-solid fa-triangle-exclamation fa-xl" style="margin-left: 11px;margin-top: 21px;"></i>
-    </div>
-	<h5 class="card-header py-0">Deactivate Account</h5>
-		<div class="card-body small-text pt-0">
-        <div class="mb-3 col-12 mb-0">
-          <div class="alert alert-warning">
-            <h6 class="alert-heading fw-bold mb-1">Are you sure you want to deactivate your account?</h6>
-            <p class="mb-0">Once you deactivate your account, there is no going back. Please be certain.</p>
-          </div>
-        </div>
-		
-<?php echo $this->Form->checkbox('terms', ['value' => 'terms', 'class'=>'form-check-input shadow', 'id'=>'terms']); ?>
-&nbsp;<label for="terms">I agree to deactivate this account.</label>
-				<div class="text-end">
-				  <?= $this->Form->button(__('Submit'),['type' => 'submit', 'disabled' => 'disabled', 'class' => 'btn btn-danger']) ?>
-				  <?= $this->Form->end() ?>
-                </div>
-				
-<script>
-var checkboxes = $("input[type='checkbox']"),
-    submitButton = $("button[type='submit']");
-
-checkboxes.click(function() {
-    submitButton.attr("disabled", !checkboxes.is(":checked"));
-});
-</script>		
-		
-		</div>
-  </div>
-</div>
-
-
 	
 	</div>
 </div>

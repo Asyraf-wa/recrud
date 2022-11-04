@@ -20,21 +20,11 @@
 		  <h1 class="m-0 me-2 page_title"><?php echo $title; ?></h1>
 		  <small class="text-muted"><?php echo $system_name; ?></small>
 		</div>
-		<div class="dropdown">
-		  <button class="btn p-0" type="button" id="orederStatistics" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-			<i class="fa-solid fa-ellipsis-vertical"></i>
-		  </button>
-		  <div class="dropdown-menu dropdown-menu-end" aria-labelledby="orederStatistics">
-			<a class="dropdown-item" href="javascript:void(0);">Select All</a>
-			<a class="dropdown-item" href="javascript:void(0);">Refresh</a>
-			<a class="dropdown-item" href="javascript:void(0);">Share</a>
-		  </div>
-		</div>
 	</div>
 	<div class="card-body mt-4">
 <?php echo $this->Form->create($todo); ?>
                 <fieldset>
-<?php echo $this->Form->control('user_id', ['options' => $users]); ?>
+<?php //echo $this->Form->control('user_id', ['options' => $users]); ?>
 <?php echo $this->Form->control('task',['required' => false]); ?>
 
 <div class="row">
@@ -115,7 +105,7 @@ checkboxes.click(function() {
       <i class="fa-solid fa-question fa-xl" style="margin-left: 16px;margin-top: 21px;"></i>
     </div>
 		<div class="card-body small-text pt-0">
-		The User Experience Designer position exists to create compelling and digital user experience through excellent design...
+		Please select the priority and status appropriately.
 		</div>
   </div>
 </div>

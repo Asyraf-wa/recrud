@@ -47,17 +47,26 @@ class AuditLogsTable extends Table
 		$this->addBehavior('Search.Search');
 		$this->searchManager()
 			->value('id')
-				->add('search', 'Search.Like', [
-					//'before' => true,
-					//'after' => true,
+			->value('primary_key')
+			->value('source')
+			->value('status')
+			->add('type', 'Search.Like', [
+					'before' => true,
+					'after' => true,
 					'fieldMode' => 'OR',
 					'multiValue' => true,
-					'multiValueSeparator' => '|',
+					'multiValueSeparator' => '',
 					'comparison' => 'LIKE',
-					'wildcardAny' => '*',
-					'wildcardOne' => '?',
-					'fields' => ['id'],
-				]);
+					'fields' => ['type'],
+				])
+			->add('log_from', 'Search.Compare', [
+				'fields' => [$this->aliasField('created')],
+				'operator' => '>='
+			])
+			->add('log_to', 'Search.Compare', [
+				'fields' => [$this->aliasField('created')],
+				'operator' => '<='
+			]);
     }
 
     /**

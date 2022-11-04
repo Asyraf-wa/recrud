@@ -91,7 +91,7 @@ Leading The CRUD Evolution<br>
 	<div class="card-body">
 <div class="my-4 text-center">
 <b class="gradient-animate-big">&lt;&#47;&gt;</b>
-<div class="crud_tag">Leading The CRUD Evolution</div>
+<div class="crud_tag"><b class="page_title_gradient">Leading The CRUD Evolution</b></div>
 </div>
 
 <br>

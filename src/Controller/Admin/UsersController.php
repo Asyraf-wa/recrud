@@ -11,6 +11,13 @@ use Cake\Routing\Router;
 use Cake\View\JsonView;
 use Cake\View\XmlView;
 
+use Cake\Mailer\Email;
+use Cake\Mailer\Mailer;
+use Cake\Mailer\TransportFactory;
+use Cake\Auth\DefaultPasswordHasher;
+use Cake\Utility\Security;
+use Cake\Http\ServerRequest;
+
 use AuditStash\Meta\ApplicationMetadata;
 use Cake\Event\EventManager;
 /**
@@ -24,77 +31,18 @@ class UsersController extends AppController
 	public function initialize(): void
 	{
 		parent::initialize();
-
-		$this->loadComponent('Search.Search', [
-			'actions' => ['search'],
-		]);
+		
+		$this->loadComponent('UserLogs');
 	}
 	
 	public function beforeFilter(\Cake\Event\EventInterface $event)
 	{
 		parent::beforeFilter($event);
-		/* if(isset($this->request->query['search'])){
-		  $this->request->query['search'] = explode(" ", $this->request->query['search']);
-		} */
+
+		$this->Authentication->allowUnauthenticated(['']);
 	}
 	
-	public function viewClasses(): array
-    {
-        return [JsonView::class];
-		//return [JsonView::class, XmlView::class];
-    }
-	
-	public function json()
-    {
-		$this->viewBuilder()->setLayout('json');
-        $this->set('users', $this->paginate());
-        $this->viewBuilder()->setOption('serialize', 'users');
-    }
-	
-	public function pdfProfile($slug = null)
-	{
-		$this->viewBuilder()->enableAutoLayout(false); 
-		$user = $this->Users
-			->findBySlug($slug)
-			//->contain(['UserGroups', 'Contacts', 'UserLogs'])
-			->firstOrFail();
-		$this->viewBuilder()->setClassName('CakePdf.Pdf');
-		$this->viewBuilder()->setOption(
-			'pdfConfig',
-			[
-				'orientation' => 'portrait',
-				'download' => true, // This can be omitted if "filename" is specified.
-				'filename' => 'User_' . $slug . '.pdf' //// This can be omitted if you want file name based on URL.
-			]
-		);
-		$this->set('user', $user);
-	}
-	
-	public function pdfList()
-	{
-		$this->viewBuilder()->enableAutoLayout(false); 
-		$this->paginate = [
-            'contain' => ['UserGroups'],
-			'maxLimit' => 10,
-        ];
-		$users = $this->paginate($this->Users);
-		$this->viewBuilder()->setClassName('CakePdf.Pdf');
-		$this->viewBuilder()->setOption(
-			'pdfConfig',
-			[
-				'orientation' => 'portrait',
-				'download' => true, 
-				'filename' => 'User_List.pdf' 
-			]
-		);
-		$this->set(compact('users'));
-	}
-    /**
-     * Index method
-     *
-     * @return \Cake\Http\Response|null|void Renders view
-     */
-    public function index()
+	public function index()
     {
 		$this->set('title', 'User Management');
         $this->paginate = [
@@ -126,49 +74,26 @@ class UsersController extends AppController
 
         $this->set(compact('users'));
     }
-
-    /**
-     * View method
-     *
-     * @param string|null $id User id.
-     * @return \Cake\Http\Response|null|void Renders view
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function view($slug = null)
-    {
-		$this->set('title', 'User Details');
-        /* $user = $this->Users->get($id, [
-            'contain' => ['UserGroups', 'Contacts', 'UserLogs'],
-        ]); */
-		$user = $this->Users
-			->findBySlug($slug)
-			->contain(['UserGroups', 'Contacts', 'UserLogs'])
-			->firstOrFail();
-
-        $this->set(compact('user'));
-    }
 	
-	public function csv()
+	public function resetPassword($token = null)
 	{
-		$this->response = $this->response->withDownload('user.csv');
-		$users = $this->Users->find();
-		$_serialize = 'users';
+		$this->set('title', 'Reset Password');
+		$user = $this->Users->findByToken($token)->first();
+		$password = $this->request->getData('password');
 
-		$this->viewBuilder()->setClassName('CsvView.Csv');
-		$this->set(compact('users', '_serialize'));
+		if ($this->request->is(['post'])) {
+			$user->password = $password;
+			$user->token = '';
+			if ($this->Users->save($user)) {
+				$this->Flash->success(__('Your password has been successfully updated.'));
+				return $this->redirect(['action' => 'login']);
+			}
+			$this->Flash->error(__('Your password could not be saved. Please, try again.'));
+		}
 	}
-
 	
-	
-
-    /**
-     * Add method
-     *
-     * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
-     */
-    public function add()
+	public function registration()
     {
-		
 		$this->set('title', 'User Registration');
         $user = $this->Users->newEmptyEntity();
         if ($this->request->is('post')) {
@@ -184,16 +109,13 @@ class UsersController extends AppController
         $this->set(compact('user', 'userGroups'));
     }
 
-    /**
-     * Edit method
-     *
-     * @param string|null $id User id.
-     * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
     public function profile($slug = null)
     {
 		$this->set('title', 'Account Details');
+		$user = $this->Users
+			->findBySlug($slug)
+			->contain(['UserGroups'])
+			->firstOrFail();
 		/* $user = $this->Users->get($id, [
             'contain' => ['UserGroups', 
 			//'Contacts', 'UserLogs'
@@ -203,72 +125,50 @@ class UsersController extends AppController
 		//exit;
 		$this->loadModel('AuditLogs');
 		
-		
-		
 		$auditLogs = $this->AuditLogs->find('all')
 			->where([
-				'primary_key' => 11,
+				'primary_key' => $user->id,
 				//'category_id' => '1',
 				])
 			->order(['created' => 'ASC'])
 			->limit(10);
 		
-		$user = $this->Users
-			->findBySlug($slug)
-			->contain(['UserGroups'])
-			->firstOrFail();
+		
 		
         /* $user = $this->Users->get($id, [
             ->contain(['UserGroups'])
         ]); */
-		
-		EventManager::instance()->on('AuditStash.beforeLog', function ($event, array $logs) {
-			foreach ($logs as $log) {
-				$log->setMetaInfo($log->getMetaInfo() + ['a_name' => 'Edit']);
-				$log->setMetaInfo($log->getMetaInfo() + ['c_name' => 'Users']);
-				$log->setMetaInfo($log->getMetaInfo() + ['ip' => $this->request->clientIp()]);
-				$log->setMetaInfo($log->getMetaInfo() + ['url' => Router::url(null, true)]);
-				$log->setMetaInfo($log->getMetaInfo() + ['c_name' => 'Users']);
-				//$log->setMetaInfo($log->getMetaInfo() + ['slug' => $user]);
-				
-			}
-		});
-//{"ip":"::1","url":"\/books\/appraisal-form\/7","user":1,"a_name":"Edit","c_name":"Books"}
-//{"a_name":"Edit","c_name":"Users"}
         if ($this->request->is(['patch', 'post', 'put'])) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
-			//$slug_name = $this->request->getData('slug');
-		//debug($slug_name);
-		//exit;
             if ($this->Users->save($user)) {
-                $this->Flash->success(__('The user has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
+                $this->Flash->success(__('Account details updated'));
+				return $this->redirect($this->referer());
             }
             $this->Flash->error(__('The user could not be saved. Please, try again.'));
         }
         $userGroups = $this->Users->UserGroups->find('list', ['limit' => 200])->all();
         $this->set(compact('user', 'userGroups','auditLogs'));
     }
-
-    /**
-     * Delete method
-     *
-     * @param string|null $id User id.
-     * @return \Cake\Http\Response|null|void Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function delete($id = null)
+	
+	public function auditTrail($slug = null)
     {
-        $this->request->allowMethod(['post', 'delete']);
-        $user = $this->Users->get($id);
-        if ($this->Users->delete($user)) {
-            $this->Flash->success(__('The user has been deleted.'));
-        } else {
-            $this->Flash->error(__('The user could not be deleted. Please, try again.'));
-        }
-
-        return $this->redirect(['action' => 'index']);
+		$this->set('title', 'Audit Trail');
+		$user = $this->Users
+			->findBySlug($slug)
+			->contain(['UserGroups'])
+			->firstOrFail();
+		$this->loadModel('AuditLogs');
+		
+		$auditLogs = $this->AuditLogs->find('all')
+			->where([
+				'primary_key' => $user->id,
+				//'category_id' => '1',
+				])
+			->order(['created' => 'ASC'])
+			->limit(10);
+	
+        $userGroups = $this->Users->UserGroups->find('list', ['limit' => 200])->all();
+        $this->set(compact('user', 'userGroups','auditLogs'));
     }
 	
 	public function update($slug = null)
@@ -287,11 +187,53 @@ class UsersController extends AppController
 			->findBySlug($slug)
 			->contain(['UserGroups'])
 			->firstOrFail();
+			
+			
+		EventManager::instance()->on('AuditStash.beforeLog', function ($event, array $logs) {
+			foreach ($logs as $log) {
+				$log->setMetaInfo($log->getMetaInfo() + ['a_name' => 'Edit']);
+				$log->setMetaInfo($log->getMetaInfo() + ['c_name' => 'Users']);
+				$log->setMetaInfo($log->getMetaInfo() + ['ip' => $this->request->clientIp()]);
+				$log->setMetaInfo($log->getMetaInfo() + ['url' => Router::url(null, true)]);
+				$log->setMetaInfo($log->getMetaInfo() + ['slug' => $this->Authentication->getIdentity('slug')->getIdentifier('slug')]);
+				
+			}
+		});	
+			
         if ($this->request->is(['patch', 'post', 'put'])) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
             if ($this->Users->save($user)) {
                 $this->Flash->success(__('Account details updated'));
 				return $this->redirect($this->referer());
+            }
+            $this->Flash->error(__('The user could not be saved. Please, try again.'));
+        }
+        $userGroups = $this->Users->UserGroups->find('list', ['limit' => 200])->all();
+        $this->set(compact('user', 'userGroups','auditLogs'));
+	}
+	
+	public function removeAvatar($slug = null)
+	{
+		$this->set('title', 'Remove Profile Picture');
+		$this->loadModel('AuditLogs');
+		$auditLogs = $this->AuditLogs->find('all')
+			->where([
+				'primary_key' => 11,
+				//'category_id' => '1',
+				])
+			->order(['created' => 'ASC'])
+			->limit(10);
+			
+        $user = $this->Users
+			->findBySlug($slug)
+			->contain(['UserGroups'])
+			->firstOrFail();
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $user = $this->Users->patchEntity($user, $this->request->getData());
+            if ($this->Users->save($user)) {
+                $this->Flash->success(__('Account details updated'));
+				//return $this->redirect($this->referer());
+				return $this->redirect(['action' => 'profile', $user->slug]);
             }
             $this->Flash->error(__('The user could not be saved. Please, try again.'));
         }
@@ -320,7 +262,7 @@ class UsersController extends AppController
             if ($this->Users->save($user)) {
                 $this->Flash->success(__('Your password has been updated.'));
 
-                return $this->redirect(['action' => 'profile', $this->Auth->user('slug')]);
+                return $this->redirect(['action' => 'profile', $user->slug]);
             }
             $this->Flash->error(__('Your password could not be update. Please, try again.'));
         }
@@ -338,17 +280,141 @@ class UsersController extends AppController
 			->contain(['UserGroups'])
 			->firstOrFail();
 			
-		if ($this->request->is(['patch', 'post', 'put'])) {
-            $user = $this->Users->patchEntity($user, $this->request->getData());
-            if ($this->Users->save($user)) {
-                $this->Flash->success(__('Account details updated'));
-				return $this->redirect($this->referer());
-            }
-            $this->Flash->error(__('The user could not be saved. Please, try again.'));
-        }
-        $userGroups = $this->Users->UserGroups->find('list', ['limit' => 200])->all();
-        $this->set(compact('user', 'userGroups'));
+			
+		$this->loadModel('userLogs');
+		$userLogs = $this->userLogs->find('all')
+			->where([
+				'user_id' => $user->id,
+				//'category_id' => '1',
+				])
+			->order(['created' => 'DESC'])
+			->limit(10);
+		
+        $this->set(compact('user','userLogs'));
 			
 		//$this->set(compact('user', 'userGroups'));
     }
+	
+	public function delete($id = null)
+    {
+        $this->request->allowMethod(['post', 'delete']);
+        $user = $this->Users->get($id);
+		EventManager::instance()->on('AuditStash.beforeLog', function ($event, array $logs) {
+			foreach ($logs as $log) {
+				$log->setMetaInfo($log->getMetaInfo() + ['a_name' => 'Delete']);
+				$log->setMetaInfo($log->getMetaInfo() + ['c_name' => 'Users']);
+				$log->setMetaInfo($log->getMetaInfo() + ['ip' => $this->request->clientIp()]);
+				$log->setMetaInfo($log->getMetaInfo() + ['url' => Router::url(null, true)]);
+				$log->setMetaInfo($log->getMetaInfo() + ['slug' => $this->Authentication->getIdentity('slug')->getIdentifier('slug')]);
+				
+			}
+		});	
+        if ($this->Users->delete($user)) {
+            $this->Flash->success(__('The user has been deleted.'));
+        } else {
+            $this->Flash->error(__('The user could not be deleted. Please, try again.'));
+        }
+
+        return $this->redirect(['action' => 'index']);
+    }
+	
+	public function activate($slug = null)
+	{
+        $user = $this->Users
+			->findBySlug($slug)
+			->contain(['UserGroups'])
+			->firstOrFail();
+			
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $user = $this->Users->patchEntity($user, $this->request->getData());
+			$user->status = 1;
+            if ($this->Users->save($user)) {
+                $this->Flash->success(__('Account has been activated'));
+				return $this->redirect($this->referer());
+            }
+            $this->Flash->error(__('Cannot activate. Please, try again.'));
+        }
+	}
+	
+	public function disable($slug = null)
+	{
+        $user = $this->Users
+			->findBySlug($slug)
+			->contain(['UserGroups'])
+			->firstOrFail();
+			
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $user = $this->Users->patchEntity($user, $this->request->getData());
+			$user->status = 0;
+            if ($this->Users->save($user)) {
+                $this->Flash->success(__('Account has been disabled'));
+				return $this->redirect($this->referer());
+            }
+            $this->Flash->error(__('Cannot disable. Please, try again.'));
+        }
+	}
+	
+	public function adminVerify($slug = null)
+	{
+        $user = $this->Users
+			->findBySlug($slug)
+			->contain(['UserGroups'])
+			->firstOrFail();
+			
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $user = $this->Users->patchEntity($user, $this->request->getData());
+			$user->is_email_verified = 1;
+            if ($this->Users->save($user)) {
+                $this->Flash->success(__('Account has been verified'));
+				return $this->redirect($this->referer());
+            }
+            $this->Flash->error(__('Cannot verified. Please, try again.'));
+        }
+	}
+	
+	public function archived($slug = null)
+	{
+        $user = $this->Users
+			->findBySlug($slug)
+			->contain(['UserGroups'])
+			->firstOrFail();
+			
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $user = $this->Users->patchEntity($user, $this->request->getData());
+			$user->status = 2;
+            if ($this->Users->save($user)) {
+                $this->Flash->success(__('Account has been verified'));
+				return $this->redirect($this->referer());
+            }
+            $this->Flash->error(__('Cannot verified. Please, try again.'));
+        }
+	}
+	
+	public function resetToken($slug=null)
+	{
+		$user = $this->Users->get($slug, [
+            'contain' => [],
+        ]);
+		$this->request->allowMethod(['post']);
+		$user = $this->Users->get($slug);
+		$token = $user->token;
+		
+		if($token == NULL)
+		{
+			$this->Flash->error(__('No token detected'));
+			return $this->redirect($this->referer());
+		}
+		
+		if($token != NULL)
+		{
+			$user->token = '';
+		}
+		
+		if($this->Users->save($user))
+		{
+			$this->Flash->success(__('Token reset succesful'));
+		}
+		return $this->redirect($this->referer());
+		$this->set(compact('user'));
+	}
 }

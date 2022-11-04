@@ -309,4 +309,26 @@ class UsersController extends AppController
 			
 		//$this->set(compact('user', 'userGroups'));
     }
+	
+	public function profilePdf($slug = null)
+	{
+		$this->viewBuilder()->enableAutoLayout(false); 
+		//$user = $this->Users->get($slug);
+		$user = $this->Users
+			->findBySlug($slug)
+			->contain(['UserGroups'])
+			->firstOrFail();
+		//debug($user);
+		//exit;
+		$this->viewBuilder()->setClassName('CakePdf.Pdf');
+		$this->viewBuilder()->setOption(
+			'pdfConfig',
+			[
+				'orientation' => 'portrait',
+				'download' => true, // This can be omitted if "filename" is specified.
+				'filename' => 'User_' . $slug . '.pdf' //// This can be omitted if you want file name based on URL.
+			]
+		);
+		$this->set('user', $user);
+	}
 }

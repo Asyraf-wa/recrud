@@ -294,7 +294,7 @@ Form Features Enrichment
 		<td><i class="far fa-bookmark" style="color: var(--bs-green);"></i> <?php echo $this->Html->link('ChartJS - Flexible charting library','https://www.chartjs.org/', ['target'=>'_blank', 'class' => 'reference']); ?></td>
 	</tr>
 	<tr>
-		<td><i class="far fa-bookmark" style="color: var(--bs-teal);"></i> <?php echo $this->Html->link('DataTables - Table features enhancement','https://datatables.net/', ['target'=>'_blank', 'class' => 'reference']); ?></td>
+		<td><i class="far fa-bookmark" style="color: var(--bs-teal);"></i> <?php echo $this->Html->link('DataTables','https://datatables.net/', ['target'=>'_blank', 'class' => 'reference']); ?></td>
 	</tr>
 	<tr>
 		<td><i class="far fa-bookmark" style="color: var(--bs-cyan);"></i> <?php echo $this->Html->link('Google Fonts - Font library','https://fonts.google.com/', ['target'=>'_blank', 'class' => 'reference']); ?></td>
@@ -306,7 +306,7 @@ Form Features Enrichment
 		<td><i class="far fa-bookmark" style="color: var(--bs-danger);"></i> <?php echo $this->Html->link('PHP - Official PHP references','https://www.php.net/manual/en/', ['target'=>'_blank', 'class' => 'reference']); ?></td>
 	</tr>
 	<tr>
-		<td><i class="far fa-bookmark"></i> <?php echo $this->Html->link('CakePHP - Web Application Framework','https://cakephp.org/', ['target'=>'_blank', 'class' => 'reference']); ?></td>
+		<td><i class="far fa-bookmark"></i> <?php echo $this->Html->link('CakePHP','https://cakephp.org/', ['target'=>'_blank', 'class' => 'reference']); ?></td>
 	</tr>
 </table>
 			</div>

@@ -34,15 +34,9 @@ $a_name = $this->request->getParam('action');
 	echo $this->Html->css('perfect-scrollbar.css');
 	//Helpers
 	echo $this->Html->script('helpers.js');
-	echo $this->Html->script('config.js');
 	echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js');
 	//Bottom JS
-	echo $this->Html->script('popper.js', ['block' => 'scriptBottom']);
 	echo $this->Html->script('bootstrap.js', ['block' => 'scriptBottom']);
-	echo $this->Html->script('perfect-scrollbar.js', ['block' => 'scriptBottom']);
-	echo $this->Html->script('menu.js', ['block' => 'scriptBottom']); 
-	echo $this->Html->script('main.js', ['block' => 'scriptBottom']);
-	echo $this->Html->script('dashboards-analytics.js', ['block' => 'scriptBottom']);
 	echo $this->Html->script('custom.js', ['block' => 'scriptBottom']);
 	echo $this->fetch('meta');
 	echo $this->fetch('css');

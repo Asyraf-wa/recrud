@@ -44,6 +44,15 @@ $a_name = $this->request->getParam('action');
 	?>
 </head>
 <body>
+
+<?php if($ribbon_status == true): ?>
+<?php echo $this->element('ribbon'); ?>
+<?php endif; ?>
+
+<?php if($notification_status == true): ?>
+<?php echo $this->element('notification_bar'); ?>
+<?php endif; ?>
+  
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
       <div class="layout-container">

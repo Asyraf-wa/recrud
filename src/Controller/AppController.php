@@ -54,6 +54,11 @@ class AppController extends Controller
 		$this->set('config_2', $config->get('config_2'));
 		$this->set('config_3', $config->get('config_3'));
 		$this->set('version', $config->get('version'));
+		$this->set('notification', $config->get('notification'));
+		$this->set('notification_status', $config->get('notification_status'));
+		$this->set('ribbon_title', $config->get('ribbon_title'));
+		$this->set('ribbon_link', $config->get('ribbon_link'));
+		$this->set('ribbon_status', $config->get('ribbon_status'));
 		//$this->set('telegram_bot_token', $config->get('telegram_bot_token'));
 		//$this->set('telegram_chat_id', $config->get('telegram_chat_id'));
 		

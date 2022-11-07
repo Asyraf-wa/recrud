@@ -17,6 +17,7 @@ use Cake\ORM\TableRegistry;
 	echo $this->Html->css('https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css');
 	echo $this->Html->script('https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js');
 	//echo $this->Html->script('https://unpkg.com/feather-icons'); 
+	echo $this->Html->script('ckeditor/ckeditor.js');
 ?>
 
 <div class="mb-3 text-end">
@@ -83,6 +84,9 @@ use Cake\ORM\TableRegistry;
         </li>
         <li class="nav-item">
           <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-justified-other" aria-controls="navs-justified-other" aria-selected="true"><i class="fa-solid fa-cubes-stacked"></i> Others</button>
+        </li>
+        <li class="nav-item">
+          <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-justified-notification" aria-controls="navs-justified-notification" aria-selected="true"><i class="fa-solid fa-bell"></i> Notification</button>
         </li>
       </ul>
       <div class="tab-content">
@@ -250,6 +254,49 @@ use Cake\ORM\TableRegistry;
 				</div>
     </div>
   </div>
+        </div>
+        <div class="tab-pane fade" id="navs-justified-notification" role="tabpanel">
+		<?php //echo $this->Form->control('notification'); ?>
+<style>
+.ck-editor__editable_inline {
+    min-height: 150px;
+}
+</style>
+		<?php echo $this->Form->control('notification',['required' => false, 'id' => 'ckeditor', 'label' => 'Notification']); ?>
+<script>
+    ClassicEditor
+        .create( document.querySelector( '#ckeditor' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+		
+
+</script>
+		<?php //echo $this->Form->checkbox('notification_status'); ?>
+		<?php //echo $this->Form->label('Status'); ?>
+		
+<div class="form-check form-switch mb-2">
+<?php echo $this->Form->checkbox('notification_status', ['class'=>'form-check-input', 'id'=>'notification_status']); ?>
+<label class="form-check-label" for="flexSwitchCheckChecked">Enable Notification</label>
+</div>				
+		<?php //echo $this->Form->control('notification_date'); ?>
+<code>Note: The notification will be hidden for 1 hour after click close button</code>
+<hr/>
+
+<div class="row">
+	<div class="col-md-6">
+<?php echo $this->Form->control('ribbon_title',['required' => false, 'label' => 'Ribbon Text']); ?>
+	</div>
+	<div class="col-md-6">
+<?php echo $this->Form->control('ribbon_link',['required' => false, 'label' => 'Ribbon Link']); ?>
+	</div>
+</div>
+
+<div class="form-check form-switch mb-2">
+<?php echo $this->Form->checkbox('ribbon_status', ['class'=>'form-check-input', 'id'=>'ribbon_status']); ?>
+<label class="form-check-label" for="flexSwitchCheckChecked">Enable Ribbon</label>
+</div>
+		
         </div>
 				<div class="text-end">
 				  <?= $this->Form->button(__('Update'),['class' => 'btn btn-outline-primary']) ?>

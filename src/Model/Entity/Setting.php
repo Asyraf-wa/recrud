@@ -76,6 +76,12 @@ class Setting extends Entity
         'telegram_chatid' => true,
         'hcaptcha_sitekey' => true,
         'hcaptcha_secretkey' => true,
+        'notification' => true,
+        'notification_status' => true,
+        'notification_date' => true,
+        'ribbon_title' => true,
+        'ribbon_link' => true,
+        'ribbon_status' => true,
         'created' => true,
         'modified' => true,
     ];

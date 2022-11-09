@@ -19,25 +19,24 @@
         <div class="{{ pluralVar }} form content">
             <?= $this->Form->create(${{ singularVar }}) ?>
             <fieldset>
-                <?php
 {% for field in fields %}
 {%- if field not in primaryKey %}
     {%- if keyFields[field] is defined %}
         {%- set fieldData = Bake.columnData(field, schema) %}
         {%- if fieldData.null %}
-                    echo $this->Form->control('{{ field }}', ['options' => ${{ keyFields[field] }}, 'empty' => true]);
+                    <?php echo $this->Form->control('{{ field }}', ['options' => ${{ keyFields[field] }}, 'empty' => true]); ?>
                     {{- "\n" }}
         {%- else %}
-                    echo $this->Form->control('{{ field }}', ['options' => ${{ keyFields[field] }}]);
+                    <?php echo $this->Form->control('{{ field }}', ['options' => ${{ keyFields[field] }}]); ?>
                     {{- "\n" }}
         {%- endif %}
     {%- elseif field not in ['created', 'modified', 'updated'] %}
         {%- set fieldData = Bake.columnData(field, schema) %}
         {%- if fieldData.type in ['date', 'datetime', 'time'] and fieldData.null %}
-                    echo $this->Form->control('{{ field }}', ['empty' => true]);
+                    <?php echo $this->Form->control('{{ field }}', ['empty' => true]); ?>
                     {{- "\n" }}
         {%- else %}
-                    echo $this->Form->control('{{ field }}');
+                    <?php echo $this->Form->control('{{ field }}',['required' => false]); ?>
                     {{- "\n" }}
         {%- endif %}
     {%- endif %}
@@ -50,7 +49,6 @@
                     {{- "\n" }}
 {%- endfor %}
 {% endif %}
-                ?>
             </fieldset>
 				<div class="text-end">
 				  <?= $this->Form->button('Reset', ['type' => 'reset', 'class' => 'btn btn-outline-warning']); ?>

@@ -164,10 +164,43 @@
 		</div>
 	</div>
 	<div class="col-md-3">
-		<div class="card shadow">
-			<div class="card-body">
+<div class="special_card mb-3">
+  <div class="profile-card js-profile-card shadow">
+	<div class="profile-card__img shadow" style="background-color: #dc3545;color: #ffffff;">
+	  <i class="fa-solid fa-triangle-exclamation fa-xl" style="margin-left: 11px;margin-top: 21px;"></i>
+	</div>
+		<div class="card-body pt-0">
+<?php if(${{ singularVar }}->status == 0 || ${{ singularVar }}->status == 1): ?>
 
-			</div>
+	<div class="fw-semibold fs-5 py-0">Archived {{ singularVar }}</div>
+<div class="mb-3 col-12 mb-0">
+  <div class="alert alert-warning">
+	<p class="mb-0">This step will transfer the {{ singularVar }} to archived. Once transfer to archived, it will remained and cannot be revert back. Please be certain.</p>
+  </div>
+</div>
+
+<div class="text-end mb-2">
+<?= $this->Form->postLink(
+				__('Archived'),
+				['action' => 'archived', ${{ singularVar }}->id],
+				[
+					'confirm' => __('Are you sure you want to archived {{ singularVar }}: "{0}"?', ${{ singularVar }}->id),
+					'title' => __('Archived'),
+					'class' => 'btn btn-success',
+					'escapeTitle' => false,
+					'data-bs-toggle' => "modal",
+					'data-bs-target' => "#bootstrapModal"
+				]
+			) ?>
+
+</div>
+<?php endif; ?>	
+
+<?php if(${{ singularVar }}->status == 2): ?>
+This {{ singularVar }} has been archived on <?php echo date('M d, Y (h:i A)', strtotime(${{ singularVar }}->modified)); ?>
+<?php endif; ?>	
 		</div>
+  </div>
+</div>
 	</div>
 </div>

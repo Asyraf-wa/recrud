@@ -22,6 +22,15 @@
      */
     public function delete($id = null)
     {
+		EventManager::instance()->on('AuditStash.beforeLog', function ($event, array $logs) {
+			foreach ($logs as $log) {
+				$log->setMetaInfo($log->getMetaInfo() + ['a_name' => 'Delete']);
+				$log->setMetaInfo($log->getMetaInfo() + ['c_name' => '{{ currentModelName }}']);
+				$log->setMetaInfo($log->getMetaInfo() + ['ip' => $this->request->clientIp()]);
+				$log->setMetaInfo($log->getMetaInfo() + ['url' => Router::url(null, true)]);
+				$log->setMetaInfo($log->getMetaInfo() + ['slug' => $this->Authentication->getIdentity('slug')->getIdentifier('slug')]);
+			}
+		});
         $this->request->allowMethod(['post', 'delete']);
         ${{ singularName }} = $this->{{ currentModelName }}->get($id);
         if ($this->{{ currentModelName }}->delete(${{ singularName }})) {
@@ -31,4 +40,32 @@
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+	
+	public function archived($id = null)
+    {
+		$this->set('title', '{{ currentModelName }} Edit');
+		EventManager::instance()->on('AuditStash.beforeLog', function ($event, array $logs) {
+			foreach ($logs as $log) {
+				$log->setMetaInfo($log->getMetaInfo() + ['a_name' => 'Archived']);
+				$log->setMetaInfo($log->getMetaInfo() + ['c_name' => '{{ currentModelName }}']);
+				$log->setMetaInfo($log->getMetaInfo() + ['ip' => $this->request->clientIp()]);
+				$log->setMetaInfo($log->getMetaInfo() + ['url' => Router::url(null, true)]);
+				$log->setMetaInfo($log->getMetaInfo() + ['slug' => $this->Authentication->getIdentity('slug')->getIdentifier('slug')]);
+			}
+		});
+        ${{ singularHumanName|lower }} = $this->{{ currentModelName }}->get($id, [
+            'contain' => [],
+        ]);
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            ${{ singularHumanName|lower }} = $this->{{ currentModelName }}->patchEntity(${{ singularHumanName|lower }}, $this->request->getData());
+			${{ singularHumanName|lower }}->status = 2; //archived
+            if ($this->{{ currentModelName }}->save(${{ singularHumanName|lower }})) {
+                $this->Flash->success(__('The {{ singularHumanName|lower }} has been archived.'));
+
+				return $this->redirect($this->referer());
+            }
+            $this->Flash->error(__('The {{ singularHumanName|lower }} could not be archived. Please, try again.'));
+        }
+        $this->set(compact('{{ singularHumanName|lower }}'));
     }

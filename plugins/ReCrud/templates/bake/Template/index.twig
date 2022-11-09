@@ -111,7 +111,7 @@
 		<?= $this->Html->link(__('<i class="far fa-folder-open"></i>'), ['action' => 'view', {{ pk|raw }}], ['class' => 'btn btn-outline-primary btn-xs', 'escapeTitle' => false]) ?>
 		<?= $this->Html->link(__('<i class="fa-regular fa-pen-to-square"></i>'), ['action' => 'edit', {{ pk|raw }}], ['class' => 'btn btn-outline-warning btn-xs', 'escapeTitle' => false]) ?>
 		<?php $this->Form->setTemplates([
-			'confirmJs' => 'addToModal("{{formName}}"); return false;'
+			'confirmJs' => 'addToModal("{{ '{{formName}}' }}"); return false;'
 		]); ?>
 		<?= $this->Form->postLink(
 			__('<i class="fa-regular fa-trash-can"></i>'),

@@ -22,6 +22,15 @@
     public function add()
     {
 		$this->set('title', 'New {{ currentModelName }}');
+		EventManager::instance()->on('AuditStash.beforeLog', function ($event, array $logs) {
+			foreach ($logs as $log) {
+				$log->setMetaInfo($log->getMetaInfo() + ['a_name' => 'Add']);
+				$log->setMetaInfo($log->getMetaInfo() + ['c_name' => '{{ currentModelName }}']);
+				$log->setMetaInfo($log->getMetaInfo() + ['ip' => $this->request->clientIp()]);
+				$log->setMetaInfo($log->getMetaInfo() + ['url' => Router::url(null, true)]);
+				$log->setMetaInfo($log->getMetaInfo() + ['slug' => $this->Authentication->getIdentity('slug')->getIdentifier('slug')]);
+			}
+		});
         ${{ singularName }} = $this->{{ currentModelName }}->newEmptyEntity();
         if ($this->request->is('post')) {
             ${{ singularName }} = $this->{{ currentModelName }}->patchEntity(${{ singularName }}, $this->request->getData());

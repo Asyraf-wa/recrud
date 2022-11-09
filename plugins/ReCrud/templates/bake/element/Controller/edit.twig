@@ -26,6 +26,15 @@
     public function edit($id = null)
     {
 		$this->set('title', '{{ currentModelName }} Edit');
+		EventManager::instance()->on('AuditStash.beforeLog', function ($event, array $logs) {
+			foreach ($logs as $log) {
+				$log->setMetaInfo($log->getMetaInfo() + ['a_name' => 'Edit']);
+				$log->setMetaInfo($log->getMetaInfo() + ['c_name' => '{{ currentModelName }}']);
+				$log->setMetaInfo($log->getMetaInfo() + ['ip' => $this->request->clientIp()]);
+				$log->setMetaInfo($log->getMetaInfo() + ['url' => Router::url(null, true)]);
+				$log->setMetaInfo($log->getMetaInfo() + ['slug' => $this->Authentication->getIdentity('slug')->getIdentifier('slug')]);
+			}
+		});
         ${{ singularName }} = $this->{{ currentModelName }}->get($id, [
             'contain' => {{ Bake.exportArray(belongsToMany)|raw }},
         ]);

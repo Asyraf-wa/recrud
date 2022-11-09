@@ -141,13 +141,13 @@ Table should contain attribute: status(int) 1 with default value 1. This is used
 
 ## Usage/Examples
 
-Bake table with ReCrud features:
+Generate CRUD with ReCrud features:
 
 ```php
 bin/cake bake all tableName
 ```
 
-Bake table without ReCrud features:
+Generate CRUD without ReCrud features:
 
 ```php
 bin/cake bake all tableName --theme ReCrudZero

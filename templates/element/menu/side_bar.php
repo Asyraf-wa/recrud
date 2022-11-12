@@ -90,7 +90,7 @@ if ($this->Identity->isLoggedIn()) { ?>
               <?= $this->Html->link(__('<i class="menu-icon fa-regular fa-message"></i> Contacts'), ['prefix' => 'Admin', 'controller' => 'Contacts', 'action' => 'index'], ['class' => 'menu-link', 'escape' => false]) ?>
             </li>
 			<li class="menu-item <?= $c_name == 'AuditLogs' && $a_name == 'index'?'active':'' ?>">
-              <?= $this->Html->link(__('<i class="menu-icon fa-solid fa-timeline"></i> Audit Trail'), ['prefix' => 'Admin', 'controller' => 'auditLogs', 'action' => 'index'], ['class' => 'menu-link', 'escape' => false]) ?>
+              <?= $this->Html->link(__('<i class="menu-icon fa-solid fa-timeline"></i> Audit Trail'), ['prefix' => 'Admin', 'controller' => 'auditLogs', 'action' => 'index', '?' => ['limit'=>'25', 'status' => '1']], ['class' => 'menu-link', 'escape' => false]) ?>
             </li>
 			<li class="menu-item <?= $c_name == 'Faqs' && $a_name == 'index'?'active':'' ?>">
               <?= $this->Html->link(__('<i class="menu-icon fa-regular fa-circle-question"></i> FAQ'), ['prefix' => 'Admin', 'controller' => 'Faqs', 'action' => 'index'], ['class' => 'menu-link', 'escape' => false]) ?>

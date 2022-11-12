@@ -78,7 +78,7 @@ class AuditLogsController extends AppController
     {
 		$this->set('title', 'AuditLogs List');
 		$this->paginate = [
-			'maxLimit' => 10,
+			//'maxLimit' => 10,
 		];
 		//Search
 		$auditLogs = $this->paginate($this->AuditLogs->find('search', ['search' => $this->request->getQuery()]));
@@ -188,4 +188,19 @@ class AuditLogsController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+	
+	public function change()
+	{
+		if($this->getRequest()->is('post')) {
+			$check = $this->request->getData('check');
+			$status = $this->request->getData('status');
+			
+			$this->AuditLogs->updateAll(
+				['status ' => $status ],
+				['id IN' => $check]
+			);
+			$this->Flash->success(__('The selected action has been succesfully executed'));
+			return $this->redirect($this->referer());
+		}
+	}
 }

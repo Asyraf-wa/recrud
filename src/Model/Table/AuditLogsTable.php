@@ -49,7 +49,7 @@ class AuditLogsTable extends Table
 			->value('id')
 			->value('primary_key')
 			->value('source')
-			->value('status')
+			//->value('status')
 			->add('type', 'Search.Like', [
 					'before' => true,
 					'after' => true,
@@ -58,6 +58,15 @@ class AuditLogsTable extends Table
 					'multiValueSeparator' => '',
 					'comparison' => 'LIKE',
 					'fields' => ['type'],
+				])
+			->add('status', 'Search.Value', [
+					'before' => true,
+					'after' => true,
+					'fieldMode' => 'OR',
+					'multiValue' => true,
+					'multiValueSeparator' => '',
+					'comparison' => 'LIKE',
+					'fields' => ['status'],
 				])
 			->add('log_from', 'Search.Compare', [
 				'fields' => [$this->aliasField('created')],

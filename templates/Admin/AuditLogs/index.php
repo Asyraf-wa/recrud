@@ -30,7 +30,7 @@
 		</div>
 	</div>
 </div>
-
+<?= $this->Form->create(null,['url'=>['action'=>'change']]) ?>
 <!--Column-->
 <div class="row">
 	<div class="col-md-9">
@@ -48,16 +48,23 @@
       </ul>
       <div class="tab-content px-0">
         <div class="tab-pane fade active show" id="navs-top-list" role="tabpanel">
+		
+<div class="px-3 pb-3 text-end">
+<i class="fa-solid fa-circle text-success"></i> Active | <i class="fa-solid fa-circle text-secondary"></i> Archived
+</div>		
+		
 <div class="table-responsive">
 	<table class="table">
 		<thead>
 			<tr>
+				<th><?= $this->Form->checkbox('check[]',['onchange'=>'checkAll(this)', 'name'=>'chk[]']) ?></th>	
 				<th>#</th>
-				<th><?= $this->Paginator->sort('id','Log') ?></th>
+				<th><?= $this->Paginator->sort('id','Log_id') ?></th>
 				<th><?= $this->Paginator->sort('type','Activity') ?></th>
 				<th><?= $this->Paginator->sort('primary_key','PK') ?></th>
 				<th><?= $this->Paginator->sort('source') ?></th>
 				<th><?= $this->Paginator->sort('created','Logged on') ?></th>
+				<th class="text-center"><?= $this->Paginator->sort('status') ?></th>
 				<th class="text-center"><?= __('Actions') ?></th>
 			</tr>
 		</thead>
@@ -66,8 +73,10 @@
 			$limit = 10; 
 			$counter = ($page * $limit) - $limit + 1;
 		?>
+		
 		<?php foreach ($auditLogs as $auditLog): ?>
 		<tr>
+			<td><?php echo $this->Form->checkbox('check[]',['value'=>$auditLog->id]) ?></td>
 			<td><?php echo $counter++ ?></td>
                     <td><?= $this->Number->format($auditLog->id) ?></td>
                     <td>
@@ -87,33 +96,50 @@ echo ($auditLog->type);
                     <td><?= $auditLog->primary_key === null ? '' : $this->Number->format($auditLog->primary_key) ?></td>
                     <td><?= h($auditLog->source) ?></td>
                     <td><?php echo date('M d, Y (h:i A)', strtotime($auditLog->created)); ?></td>
+					<td class="text-center">
+					<?php if($auditLog->status == 1	){
+						echo '<i class="fa-solid fa-circle text-success"></i>';
+					}else
+						echo '<i class="fa-solid fa-circle text-archived"></i>';
+					?>
+					
+					</td>
 			<td class="actions text-center">
 	<div class="btn-group shadow" role="group" aria-label="Basic example">
 		<?= $this->Html->link(__('<i class="far fa-folder-open"></i>'), ['action' => 'view', $auditLog->id], ['class' => 'btn btn-outline-primary btn-xs', 'escapeTitle' => false]) ?>
-		<?= $this->Html->link(__('<i class="fa-regular fa-pen-to-square"></i>'), ['action' => 'edit', $auditLog->id], ['class' => 'btn btn-outline-warning btn-xs', 'escapeTitle' => false]) ?>
-		<?php $this->Form->setTemplates([
-			'confirmJs' => 'addToModal(""); return false;'
-		]); ?>
-		<?= $this->Form->postLink(
-			__('<i class="fa-regular fa-trash-can"></i>'),
-			['action' => 'delete', $auditLog->id],
-			[
-				'confirm' => __('Are you sure you want to delete Audit Logs: "{0}"?', $auditLog->id),
-				'title' => __('Delete'),
-				'class' => 'btn btn-outline-danger btn-xs',
-				'escapeTitle' => false,
-				'data-bs-toggle' => "modal",
-				'data-bs-target' => "#bootstrapModal"
-			]
-		) ?>
 	</div>
 			</td>
 		</tr>
 		<?php endforeach; ?>
 	</table>
 </div>
+
+<div class="row px-3">
+	<div class="col-md-2 col-5 pe-0">
+			<?php echo $this->Form->control('status', [
+				'class' => 'form-select form-select-sm',
+				'required' => false,
+				'options' => [
+					'1' => 'Active', 
+					'2' => 'Archived',
+					], 
+				'empty' => 'Update Status',
+				'label' => false]); ?>
+	</div>
+	<div class="col-md-8 col-3 ps-1">
+		<div class="text-start">
+<?= $this->Form->button(__('Submit'),['class' => 'btn btn-success btn-flat btn-sm']) ?>
+		</div>
+	</div>
+	<div class="col-md-2 col-4">
+		<div class="text-end">
+<?php echo $this->Paginator->limitControl([10 => 'Show 10 entries',25 => 'Show 25 entries', 50 => 'Show 50 entries', 100 => 'Show 100 entries'], $auditLog->perPage,['class' => 'form-select form-select-sm','label' => false]); ?>
+		</div>
+	</div>
+</div>
+
 <div aria-label="Page navigation" class="mt-3 px-2">
-    <ul class="pagination justify-content-end">
+    <ul class="pagination justify-content-end flex-wrap">
         <?= $this->Paginator->first('<< ' . __('First')) ?>
         <?= $this->Paginator->prev('< ' . __('Previous')) ?>
         <?= $this->Paginator->numbers(['before' => '', 'after' => '']) ?>
@@ -214,11 +240,11 @@ const monthly = new Chart(ctx, {
 	</div>
 	<div class="col-md-6">
 <div class="chart-container" style="position: relative;">
-    <canvas id="status"></canvas>
+    <canvas id="status_chart"></canvas>
 </div>
 <script>
-const ctx_2 = document.getElementById('status');
-const status = new Chart(ctx_2, {
+const ctx_2 = document.getElementById('status_chart');
+const status_chart = new Chart(ctx_2, {
     type: 'bar',
     data: {
         labels: ['Active', 'Disabled', 'Archived'],
@@ -358,6 +384,19 @@ const status = new Chart(ctx_2, {
 				]); 
 				?>
 			</div>
+			<div class="mb-1">
+				<?php echo $this->Form->label('Status'); ?><br>
+				<?php
+				$options = [
+					'1' => 'Active',
+					'2' => 'Archived'
+				];
+				echo $this->Form->select('status', $options, [
+					'multiple' => 'checkbox',
+					'class' =>'form-check-input'
+				]); 
+				?>
+			</div>
 <div class="row">
 	<div class="col-6">
 	<?php echo $this->Form->control('log_from',[
@@ -426,21 +465,24 @@ $('#log_to').datetimepicker({
 </div>
 
 
-<div class="modal" id="bootstrapModal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Confirm</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body text-center">
-			<i class="fa-regular fa-circle-xmark fa-6x text-danger mb-3"></i>
-                <p id="confirmMessage"></p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" id="ok">OK</button>
-            </div>
-        </div>
-    </div>
-</div>
+
+
+<script>
+ function checkAll(ele) {
+     var checkboxes = document.getElementsByTagName('input');
+     if (ele.checked) {
+         for (var i = 0; i < checkboxes.length; i++) {
+             if (checkboxes[i].type == 'checkbox') {
+                 checkboxes[i].checked = true;
+             }
+         }
+     } else {
+         for (var i = 0; i < checkboxes.length; i++) {
+             console.log(i)
+             if (checkboxes[i].type == 'checkbox') {
+                 checkboxes[i].checked = false;
+             }
+         }
+     }
+ }
+</script>

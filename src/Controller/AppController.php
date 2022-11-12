@@ -59,6 +59,7 @@ class AppController extends Controller
 		$this->set('ribbon_title', $config->get('ribbon_title'));
 		$this->set('ribbon_link', $config->get('ribbon_link'));
 		$this->set('ribbon_status', $config->get('ribbon_status'));
+		$this->set('recrud', '1.0.3');
 		//$this->set('telegram_bot_token', $config->get('telegram_bot_token'));
 		//$this->set('telegram_chat_id', $config->get('telegram_chat_id'));
 		

@@ -53,7 +53,7 @@ use Cake\ORM\TableRegistry;
 			</tr>
 			<tr>
 				<td><i data-feather="package"></i> Re-CRUD Version</td>
-				<td>1.0 Beta</td>
+				<td><?= $recrud; ?></td>
 			</tr>
 			<tr>
 				<td><i data-feather="code"></i> System Version</td>

@@ -29,7 +29,6 @@ use Cake\ORM\TableRegistry;
 			<li><?= $this->Html->link(__('<i class="far fa-hdd"></i> Log'), ['action' => 'cakelog'], ['class' => 'dropdown-item', 'escape' => false]) ?></li>
 			<li><hr class="dropdown-divider"></li>
 			<li><?= $this->Html->link(__('<i class="far fa-hdd"></i> Clear Cache'), ['action' => 'clearCache'], ['class' => 'dropdown-item', 'escape' => false]) ?></li>
-			<li><?= $this->Html->link(__('<i class="fas fa-list"></i> Server Info'), ['action' => 'index'], ['class' => 'dropdown-item', 'escape' => false]) ?></li>
 			</div>
 	</div>	
 </div>

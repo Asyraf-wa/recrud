@@ -40,8 +40,6 @@
 				{% set fields = Bake.filterFields(fields, schema, modelObject, indexColumns, ['binary', 'text']) %}
 					<li><?= $this->Html->link(__('<i class="fa-solid fa-plus"></i> New {{ singularHumanName }}'), ['action' => 'add'], ['class' => 'dropdown-item', 'escapeTitle' => false]) ?></li>
 				{% set done = [] %}
-					<li><hr class="dropdown-divider"></li>
-					<li><?= $this->Html->link(__('<i class="fa-solid fa-chart-line"></i> Report'), ['action' => 'report'], ['class' => 'dropdown-item', 'escapeTitle' => false]) ?></li>
 					</div>
 			</div>	
 		</div>
@@ -305,19 +303,6 @@ const status = new Chart(ctx_2, {
 			</div>
 		</div>
 	</a>
-	</div>
-	<div class="col-md-3 mb-2">
-		<a href='<?php echo $combine; ?>/xml' class="kosong">
-		<div class="card border shadow">
-			<div class="row mx-0">
-				<div class="col-5 text-center mt-3 mb-3"><i class="fa-brands fa-buromobelexperte fa-2x text-success" style=""></i></div>
-				<div class="col-7 text-end m-auto">
-					<div class="fs-4 fw-bold">XML</div>
-					<div class="small-text"><i class="fa-solid fa-angles-down fa-flip"></i> Download</div>
-				</div>
-			</div>
-		</div>
-		</a>
 	</div>
 	<div class="col-md-3 mb-2">
 		<a href='<?php echo $combine; ?>/json' class="kosong" target="_blank">

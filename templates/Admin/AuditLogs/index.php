@@ -296,7 +296,7 @@ const status_chart = new Chart(ctx_2, {
         <div class="tab-pane fade px-4" id="navs-top-export" role="tabpanel">
 <?php
 	$domain = Router::url("/", true);
-	$sub = 'auditLogs';
+	$sub = 'admin/auditLogs';
 	$combine = $domain . $sub;
 ?>
 <div class="row pb-3">
@@ -312,19 +312,6 @@ const status_chart = new Chart(ctx_2, {
 			</div>
 		</div>
 	</a>
-	</div>
-	<div class="col-md-3 mb-2">
-		<a href='<?php echo $combine; ?>/xml' class="kosong">
-		<div class="card border shadow">
-			<div class="row mx-0">
-				<div class="col-5 text-center mt-3 mb-3"><i class="fa-brands fa-buromobelexperte fa-2x text-success" style=""></i></div>
-				<div class="col-7 text-end m-auto">
-					<div class="fs-4 fw-bold">XML</div>
-					<div class="small-text"><i class="fa-solid fa-angles-down fa-flip"></i> Download</div>
-				</div>
-			</div>
-		</div>
-		</a>
 	</div>
 	<div class="col-md-3 mb-2">
 		<a href='<?php echo $combine; ?>/json' class="kosong" target="_blank">

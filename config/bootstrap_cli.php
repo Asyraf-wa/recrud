@@ -33,3 +33,4 @@ if (Configure::check('Log.debug')) {
 if (Configure::check('Log.error')) {
     Configure::write('Log.error.file', 'cli-error');
 }
+Configure::write('Bake.theme', 'ReCrud');

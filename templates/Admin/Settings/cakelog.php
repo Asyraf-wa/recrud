@@ -1,24 +1,27 @@
-<div class="horizontal_menu">
-<div class="btn-group">
-  <button type="button" class="btn btn-outline btn-sm btn-flat" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    <i class="fas fa-bars text-primary"></i>
-  </button>
-  <div class="dropdown-menu dropdown-menu-right">
-		<?= $this->Html->link(__('<i class="fas fa-cog"></i> System Setting'), ['action' => 'update',1], ['class' => 'dropdown-item', 'escape' => false]) ?>
-	<div class="dropdown-divider"></div>
-	<?= $this->Html->link(__('<i class="far fa-hdd"></i> Clear Cache'), ['action' => 'clearCache'], ['class' => 'dropdown-item', 'escape' => false]) ?>
-			
-	<?= $this->Html->link(__('<i class="fas fa-list"></i> Server Info'), ['action' => 'index'], ['class' => 'dropdown-item', 'escape' => false]) ?>
-  </div>
+<div class="row mb-3">
+	<div class="col-10">
+		<h1 class="m-0 me-2 page_title"><?php echo $title; ?></h1>
+		<small class="text-muted"><?php echo $system_name; ?></small>
+	</div>
+	<div class="col-2">
+<div class="text-end">
+	<div class="dropdown mx-3">
+		<button class="btn p-0" type="button" id="orederStatistics" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		<i class="fa-solid fa-bars text-primary"></i>
+		</button>
+			<div class="dropdown-menu dropdown-menu-end" aria-labelledby="orederStatistics">
+			<li><?= $this->Html->link(__('<i class="far fa-hdd"></i> Log'), ['action' => 'cakelog'], ['class' => 'dropdown-item', 'escape' => false]) ?></li>
+			<li><hr class="dropdown-divider"></li>
+			<li><?= $this->Html->link(__('<i class="far fa-hdd"></i> Clear Cache'), ['action' => 'clearCache'], ['class' => 'dropdown-item', 'escape' => false]) ?></li>
+			</div>
+	</div>	
 </div>
+	</div>
 </div>
 
-<div class="card2">
-	<div class="header">
-		<div class="panel_card2_title">Re-CRUD Logs</div>
-		<div class="panel_card2_subtitle"><?= $organization_name; ?></div>
-	</div>
-	<div class="body table-responsive">
+<div class="card shadow">
+	<div class="card-body">
+	<div class="table-responsive">
 		<table class="table table-striped table-bordered table-hover">
 			<thead>
 				<tr>
@@ -80,7 +83,7 @@
 		</table>
 
 		<div style="padding:15px">
-			<?php echo __('It is recommended to backup the log file on weekly or monthly basis. It can improve the site performance.');?>
+			<code><?php echo __('It is recommended to backup the log file on weekly or monthly basis. It can improve the site performance.');?></code>
 			<br/><br/>
 			
 			<?php
@@ -90,7 +93,7 @@
 				$pathinfo = pathinfo($filepath);?>
 
 				<div class="clearfix">
-					<div class="float-right">
+					<div class="text-end">
 						<?php echo $this->Html->link(__('Close', true), ['action'=>'cakelog'], ['class'=>'btn btn-primary btn-sm']);?>
 					</div>
 					<h4><?php echo $filename.__(' details');?></h4>
@@ -102,17 +105,15 @@
 
 				<?php echo $this->Form->control('Settings.logfile', ['type'=>'textarea', 'label'=>false, 'class'=>'p-3', 'style'=>'width:99%;height:200px', 'value'=>file_get_contents($filepath)]);?>
 				
-				<div class="row form-group border-top pt-3">
-					<div class="col">
+				<div class="text-end">
 						<?php echo $this->Form->Submit(__('Save'), ['class'=>'btn btn-primary']);?>
-					</div>
 				</div>
 				
 				<?php echo $this->Form->end();?>
 			<?php
 			}?>
 		</div>
-
-
+	</div>
 	</div>
 </div>
+

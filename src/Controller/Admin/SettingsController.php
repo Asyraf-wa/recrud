@@ -51,6 +51,7 @@ class SettingsController extends AppController
     }
 	
 	public function cakelog($filename=null) {
+		$this->set('title', 'Logs Management');
 		$fullpath = LOGS;
 
 		if($this->getRequest()->isPost()) {

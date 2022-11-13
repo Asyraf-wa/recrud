@@ -23,9 +23,6 @@
 		</button>
 			<div class="dropdown-menu dropdown-menu-end" aria-labelledby="orederStatistics">
 			<li><?= $this->Html->link(__('<i class="fa-solid fa-plus"></i> New Contact Ticket'), ['controller' => 'Contacts', 'action' => 'add', 'prefix' => false], ['class' => 'dropdown-item', 'escapeTitle' => false]) ?></li>
-			<li><hr class="dropdown-divider"></li>
-			<li><?= $this->Html->link(__('<i class="fa-solid fa-chart-line"></i> Report'), ['action' => 'report'], ['class' => 'dropdown-item', 'escapeTitle' => false]) ?></li>
-			<li><?= $this->Html->link(__('<i class="fa-solid fa-file-csv"></i> Export CSV'), ['action' => 'index'], ['class' => 'dropdown-item', 'escapeTitle' => false]) ?></li>
 			</div>
 	</div>	
 </div>

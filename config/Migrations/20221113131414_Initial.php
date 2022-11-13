@@ -113,6 +113,41 @@ class Initial extends AbstractMigration
             )
             ->create();
 
+        $this->table('books')
+            ->addColumn('id', 'integer', [
+                'autoIncrement' => true,
+                'default' => null,
+                'limit' => null,
+                'null' => false,
+            ])
+            ->addPrimaryKey(['id'])
+            ->addColumn('title', 'string', [
+                'default' => null,
+                'limit' => 255,
+                'null' => false,
+            ])
+            ->addColumn('date', 'datetime', [
+                'default' => null,
+                'limit' => null,
+                'null' => false,
+            ])
+            ->addColumn('status', 'integer', [
+                'default' => '1',
+                'limit' => null,
+                'null' => false,
+            ])
+            ->addColumn('created', 'datetime', [
+                'default' => null,
+                'limit' => null,
+                'null' => false,
+            ])
+            ->addColumn('modified', 'datetime', [
+                'default' => null,
+                'limit' => null,
+                'null' => false,
+            ])
+            ->create();
+
         $this->table('contacts')
             ->addColumn('id', 'integer', [
                 'autoIncrement' => true,
@@ -124,7 +159,7 @@ class Initial extends AbstractMigration
             ->addColumn('user_id', 'integer', [
                 'default' => null,
                 'limit' => null,
-                'null' => false,
+                'null' => true,
             ])
             ->addColumn('ticket', 'string', [
                 'default' => null,
@@ -139,7 +174,7 @@ class Initial extends AbstractMigration
             ->addColumn('category', 'string', [
                 'default' => null,
                 'limit' => 255,
-                'null' => false,
+                'null' => true,
             ])
             ->addColumn('name', 'string', [
                 'default' => null,
@@ -159,7 +194,7 @@ class Initial extends AbstractMigration
             ->addColumn('note_admin', 'text', [
                 'default' => null,
                 'limit' => null,
-                'null' => false,
+                'null' => true,
             ])
             ->addColumn('ip', 'string', [
                 'default' => null,
@@ -171,10 +206,15 @@ class Initial extends AbstractMigration
                 'limit' => 255,
                 'null' => false,
             ])
-            ->addColumn('respond_date_time', 'datetime', [
+            ->addColumn('is_replied', 'boolean', [
                 'default' => null,
                 'limit' => null,
                 'null' => false,
+            ])
+            ->addColumn('respond_date_time', 'datetime', [
+                'default' => null,
+                'limit' => null,
+                'null' => true,
             ])
             ->addColumn('slug', 'string', [
                 'default' => null,
@@ -662,6 +702,7 @@ class Initial extends AbstractMigration
     public function down()
     {
         $this->table('audit_logs')->drop()->save();
+        $this->table('books')->drop()->save();
         $this->table('contacts')->drop()->save();
         $this->table('faqs')->drop()->save();
         $this->table('settings')->drop()->save();

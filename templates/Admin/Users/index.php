@@ -17,25 +17,18 @@
 		<small class="text-muted"><?php echo $system_name; ?></small>
 	</div>
 	<div class="col-2">
-<div class="text-end">
-	<div class="dropdown mx-3">
-		<button class="btn p-0" type="button" id="orederStatistics" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-		<i class="fa-solid fa-bars text-primary"></i>
-		</button>
-			<div class="dropdown-menu dropdown-menu-end" aria-labelledby="orederStatistics">
-			<li><?= $this->Html->link(__('<i class="fa-solid fa-plus"></i> Register New User'), ['action' => 'registration'], ['class' => 'dropdown-item', 'escapeTitle' => false]) ?></li>
-			<li><hr class="dropdown-divider"></li>
-			<li><?= $this->Html->link(__('<i class="fa-solid fa-chart-line"></i> Report'), ['action' => 'report'], ['class' => 'dropdown-item', 'escapeTitle' => false]) ?></li>
-			<li><?= $this->Html->link(__('<i class="fa-solid fa-file-csv"></i> Export CSV'), ['action' => 'index'], ['class' => 'dropdown-item', 'escapeTitle' => false]) ?></li>
-			</div>
-	</div>	
-</div>
+		<div class="text-end">
+			<div class="dropdown mx-3">
+				<button class="btn p-0" type="button" id="orederStatistics" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<i class="fa-solid fa-bars text-primary"></i>
+				</button>
+					<div class="dropdown-menu dropdown-menu-end" aria-labelledby="orederStatistics">
+					<li><?= $this->Html->link(__('<i class="fa-solid fa-plus"></i> Register New User'), ['action' => 'registration'], ['class' => 'dropdown-item', 'escapeTitle' => false]) ?></li>
+					</div>
+			</div>	
+		</div>
 	</div>
 </div>
-
-
-		  
-
 
 <div class="row">
 	<div class="col-md-9">

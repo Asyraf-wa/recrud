@@ -6,12 +6,6 @@ namespace App\Controller\Admin;
 use App\Controller\AppController;
 use Cake\I18n\FrozenTime;
 
-/**
- * Contacts Controller
- *
- * @property \App\Model\Table\ContactsTable $Contacts
- * @method \App\Model\Entity\Contact[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
- */
 class ContactsController extends AppController
 {
 	public function initialize(): void
@@ -30,11 +24,7 @@ class ContactsController extends AppController
 		  $this->request->query['search'] = explode(" ", $this->request->query['search']);
 		} */
 	}
-    /**
-     * Index method
-     *
-     * @return \Cake\Http\Response|null|void Renders view
-     */
+
     public function index()
     {
 		$this->set('title', 'Contacts Management');
@@ -68,35 +58,21 @@ class ContactsController extends AppController
         $this->set(compact('contacts'));
     }
 
-    /**
-     * View method
-     *
-     * @param string|null $id Contact id.
-     * @return \Cake\Http\Response|null|void Renders view
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
     public function view($id = null)
     {
+		$this->set('title', 'Contacts Details');
         $contact = $this->Contacts->get($id, [
             //'contain' => ['Users'],
         ]);
-
-        $this->set(compact('contact'));
-    }
-
-    /**
-     * Add method
-     *
-     * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
-     */
-    public function add()
-    {
-		$this->set('title', 'Contact Us');
-        $contact = $this->Contacts->newEmptyEntity();
-        if ($this->request->is('post')) {
+		
+		if ($this->request->is(['patch', 'post', 'put'])) {
             $contact = $this->Contacts->patchEntity($contact, $this->request->getData());
+			$contact->respond_date_time = FrozenTime::now();
+			$contact->status = 1;
+			$contact->is_replied = true;
+			$contact->user_id = $this->Authentication->getIdentity('id')->getIdentifier('id');
             if ($this->Contacts->save($contact)) {
-                $this->Flash->success(__('The contact has been saved.'));
+                $this->Flash->success(__('The contact has been replied.'));
 
                 return $this->redirect(['action' => 'index']);
             }
@@ -106,13 +82,6 @@ class ContactsController extends AppController
         $this->set(compact('contact', 'users'));
     }
 
-    /**
-     * Edit method
-     *
-     * @param string|null $id Contact id.
-     * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
     public function edit($id = null)
     {
 		$this->set('title', 'Contact Ticket Details');
@@ -135,13 +104,6 @@ class ContactsController extends AppController
         $this->set(compact('contact', 'users'));
     }
 
-    /**
-     * Delete method
-     *
-     * @param string|null $id Contact id.
-     * @return \Cake\Http\Response|null|void Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
     public function delete($id = null)
     {
         $this->request->allowMethod(['post', 'delete']);

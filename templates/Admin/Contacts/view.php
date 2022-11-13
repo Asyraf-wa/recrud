@@ -1,27 +1,26 @@
 <?php
-/**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Contact $contact
- */
+echo $this->Html->script('ckeditor/ckeditor.js');
 ?>
+<div class="row mb-3">
+	<div class="col-8 col-md-10">
+		<h1 class="m-0 me-2 page_title"><?php echo $title; ?></h1>
+		<small class="text-muted"><?php echo $system_name; ?></small>
+	</div>
+	<div class="col-4 col-md-2">
+		<div class="text-end">
+			<div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+			<?php echo $this->Form->button ('<i class="fa-solid fa-arrow-left text-primary"></i> Back',['type' =>'button', 'onclick' =>'history.back()', 'escapeTitle' => false, 'class'=> 'btn btn-outline-primary btn-sm']); ?>
+			</div>
+		</div>
+	</div>
+</div>
+
 <div class="row">
-    <aside class="column">
-        <div class="side-nav">
-            <h4 class="heading"><?= __('Actions') ?></h4>
-            <?= $this->Html->link(__('Edit Contact'), ['action' => 'edit', $contact->id], ['class' => 'side-nav-item']) ?>
-            <?= $this->Form->postLink(__('Delete Contact'), ['action' => 'delete', $contact->id], ['confirm' => __('Are you sure you want to delete # {0}?', $contact->id), 'class' => 'side-nav-item']) ?>
-            <?= $this->Html->link(__('List Contacts'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
-            <?= $this->Html->link(__('New Contact'), ['action' => 'add'], ['class' => 'side-nav-item']) ?>
-        </div>
-    </aside>
-    <div class="column-responsive column-80">
-        <div class="contacts view content">
-            <h3><?= h($contact->name) ?></h3>
-            <table>
-                <tr>
-                    <th><?= __('User') ?></th>
-                    <td><?= $contact->has('user') ? $this->Html->link($contact->user->id, ['controller' => 'Users', 'action' => 'view', $contact->user->id]) : '' ?></td>
-                </tr>
+	<div class="col-md-6">
+		<div class="card shadow">
+			<div class="card-body">
+				<div class="table-responsive">
+            <table class="table table-hover">
                 <tr>
                     <th><?= __('Ticket') ?></th>
                     <td><?= h($contact->ticket) ?></td>
@@ -29,10 +28,6 @@
                 <tr>
                     <th><?= __('Subject') ?></th>
                     <td><?= h($contact->subject) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Category') ?></th>
-                    <td><?= h($contact->category) ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Name') ?></th>
@@ -43,46 +38,90 @@
                     <td><?= h($contact->email) ?></td>
                 </tr>
                 <tr>
+                    <th><?= __('Note') ?></th>
+                    <td><?= h($contact->notes) ?></td>
+                </tr>
+                <tr>
                     <th><?= __('Ip') ?></th>
                     <td><?= h($contact->ip) ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Status') ?></th>
-                    <td><?= h($contact->status) ?></td>
+                    <td>
+				<?php if ($contact->status == 1){
+					echo '<i class="fas fa-circle text-success"></i>';
+				}else
+					echo '<i class="fas fa-circle text-danger"></i>';
+				?>
+					</td>
                 </tr>
                 <tr>
-                    <th><?= __('Slug') ?></th>
-                    <td><?= h($contact->slug) ?></td>
+                    <th><?= __('Reply Status') ?></th>
+                    <td>
+				<?php if ($contact->is_replied == true){
+					echo '<i class="fa-solid fa-check text-success"></i>';
+				}else
+					echo '<i class="fa-solid fa-xmark text-danger"></i>';
+				?>
+					</td>
                 </tr>
                 <tr>
                     <th><?= __('Id') ?></th>
                     <td><?= $this->Number->format($contact->id) ?></td>
                 </tr>
                 <tr>
-                    <th><?= __('Respond Date Time') ?></th>
-                    <td><?= h($contact->respond_date_time) ?></td>
-                </tr>
-                <tr>
                     <th><?= __('Created') ?></th>
-                    <td><?= h($contact->created) ?></td>
+                    <td><?php echo date('M d, Y (h:i A)', strtotime($contact->created)); ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Modified') ?></th>
-                    <td><?= h($contact->modified) ?></td>
+                    <td><?php echo date('M d, Y (h:i A)', strtotime($contact->modified)); ?></td>
                 </tr>
             </table>
-            <div class="text">
-                <strong><?= __('Notes') ?></strong>
-                <blockquote>
-                    <?= $this->Text->autoParagraph(h($contact->notes)); ?>
-                </blockquote>
-            </div>
-            <div class="text">
-                <strong><?= __('Note Admin') ?></strong>
-                <blockquote>
-                    <?= $this->Text->autoParagraph(h($contact->note_admin)); ?>
-                </blockquote>
-            </div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-6">
+<?php if ($contact->is_replied == true):?>
+		<div class="card shadow">
+			<div class="card-body">
+<div class="fw-bold">Replied on:</div>
+<?= $contact->has('user') ? $this->Html->link($contact->user->id, ['controller' => 'Users', 'action' => 'view', $contact->user->id]) : '' ?>
+<?php echo date('M d, Y (h:i A)', strtotime($contact->respond_date_time)); ?>.<br/><br/>
+<div class="fw-bold">Response:</div>
+<?php echo $contact->note_admin; ?>
+			</div>
+		</div>
+<?php endif; ?>
+<?php if ($contact->is_replied == false):?>
+		<div class="card shadow">
+			<div class="card-body">
+        <div class="faqs form content">
+            <?= $this->Form->create($contact) ?>
+            <fieldset>
+<style>
+.ck-editor__editable_inline {
+    min-height: 300px;
+}
+</style>
+<?php echo $this->Form->control('note_admin',['required' => false, 'id' => 'ckeditor', 'label' => 'Reply Note']); ?>
+<script>
+    ClassicEditor
+        .create( document.querySelector( '#ckeditor' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+</script>
+            </fieldset>
+				<div class="text-end">
+				  <?= $this->Form->button('Reset', ['type' => 'reset', 'class' => 'btn btn-outline-warning']); ?>
+				  <?= $this->Form->button(__('Submit'),['type' => 'submit', 'class' => 'btn btn-outline-primary']) ?>
+				  <?= $this->Form->end() ?>
+                </div>
         </div>
-    </div>
+			</div>
+		</div>
+<?php endif; ?>
+	</div>
 </div>

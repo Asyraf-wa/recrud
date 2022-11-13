@@ -57,6 +57,7 @@
 			<td><?= $this->Paginator->sort('subject') ?></td>
 			<td><?= $this->Paginator->sort('name') ?></td>
 			<td class="text-center"><?= $this->Paginator->sort('status') ?></td>
+			<td class="text-center"><?= $this->Paginator->sort('is_replied','Reply') ?></td>
 			<td><?= $this->Paginator->sort('id') ?></td>
 			<td><?= $this->Paginator->sort('respond_date_time','Responded') ?></td>
 			<td><?= $this->Paginator->sort('created') ?></td>
@@ -78,6 +79,13 @@
 					echo '<i class="fas fa-circle text-success"></i>';
 				}else
 					echo '<i class="fas fa-circle text-danger"></i>';
+				?>
+			</td>
+			<td style="text-align: center;">
+				<?php if ($contact->is_replied == true){
+					echo '<i class="fa-solid fa-check text-success"></i>';
+				}else
+					echo '<i class="fa-solid fa-xmark text-danger"></i>';
 				?>
 			</td>
 			<td><?= $this->Number->format($contact->id) ?></td>
@@ -326,19 +334,6 @@ const status = new Chart(ctx_2, {
 	</a>
 	</div>
 	<div class="col-md-3 mb-2">
-		<a href='<?php echo $combine; ?>/xml' class="kosong">
-		<div class="card border shadow">
-			<div class="row mx-0">
-				<div class="col-5 text-center mt-3 mb-3"><i class="fa-brands fa-buromobelexperte fa-2x text-success" style=""></i></div>
-				<div class="col-7 text-end m-auto">
-					<div class="fs-4 fw-bold">XML</div>
-					<div class="small-text"><i class="fa-solid fa-angles-down fa-flip"></i> Download</div>
-				</div>
-			</div>
-		</div>
-		</a>
-	</div>
-	<div class="col-md-3 mb-2">
 		<a href='<?php echo $combine; ?>/json' class="kosong" target="_blank">
 		<div class="card border shadow">
 			<div class="row mx-0">
@@ -444,20 +439,6 @@ const status = new Chart(ctx_2, {
 		</div>
   </div>
 </div>
-
-<div class="special_card mb-3">
-  <div class="profile-card js-profile-card shadow">
-    <div class="profile-card__img shadow" style="background-color: #dc3545;color: #ffffff;">
-      <i class="fa-solid fa-question fa-xl" style="margin-left: 16px;margin-top: 21px;"></i>
-    </div>
-		<div class="card-body small-text pt-0">
-		The User Experience Designer position exists to create compelling and digital user experience through excellent design...
-		</div>
-  </div>
-</div>
-	
-
-	
 
 	</div>
 </div>

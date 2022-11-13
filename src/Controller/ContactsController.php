@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 namespace App\Controller;
+use Cake\Http\ServerRequest;
 
 /**
  * Contacts Controller
@@ -16,7 +17,7 @@ class ContactsController extends AppController
 		parent::initialize();
 
 		$this->loadComponent('Search.Search', [
-			'actions' => ['search'],
+			'actions' => ['search','check','index'],
 		]);
 	}
 	
@@ -28,37 +29,7 @@ class ContactsController extends AppController
 		  $this->request->query['search'] = explode(" ", $this->request->query['search']);
 		} */
 	}
-    /**
-     * Index method
-     *
-     * @return \Cake\Http\Response|null|void Renders view
-     */
-    public function index()
-    {
-        $this->paginate = [
-            'contain' => ['Users'],
-        ];
-        $contacts = $this->paginate($this->Contacts);
-
-        $this->set(compact('contacts'));
-    }
-
-    /**
-     * View method
-     *
-     * @param string|null $id Contact id.
-     * @return \Cake\Http\Response|null|void Renders view
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function view($id = null)
-    {
-        $contact = $this->Contacts->get($id, [
-            'contain' => ['Users'],
-        ]);
-
-        $this->set(compact('contact'));
-    }
-
+	
     /**
      * Add method
      *
@@ -70,10 +41,11 @@ class ContactsController extends AppController
         $contact = $this->Contacts->newEmptyEntity();
         if ($this->request->is('post')) {
             $contact = $this->Contacts->patchEntity($contact, $this->request->getData());
+			$contact->ip = $this->request->clientIp();
+			$contact->status =  1;
             if ($this->Contacts->save($contact)) {
-                $this->Flash->success(__('The contact has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
+                $this->Flash->success(__('Contact has been sent. Our moderator will respond as soonas possible. Thank you.'));
+				return $this->redirect($this->referer());
             }
             $this->Flash->error(__('The contact could not be saved. Please, try again.'));
         }
@@ -95,6 +67,7 @@ class ContactsController extends AppController
 		$contacts = $this->paginate($this->Contacts->find('search', ['search' => $this->request->getQuery()]));
 	
 		$ticket = $this->request->getQuery('ticket');
+		
 		
 		if ($ticket != NULL) {
 			$this->set('count_ticket', $this->Contacts->find()->where(['ticket' => $ticket])->count());

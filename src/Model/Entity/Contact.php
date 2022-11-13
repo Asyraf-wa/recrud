@@ -48,6 +48,7 @@ class Contact extends Entity
         'note_admin' => true,
         'ip' => true,
         'status' => true,
+        'is_replied' => true,
         'respond_date_time' => true,
         'slug' => true,
         'created' => true,

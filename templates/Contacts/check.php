@@ -22,10 +22,10 @@
 <div class="text-end">
 <?php if (!empty($_isSearch)) {
 	echo ' ';
-	echo $this->Html->link(__('Reset'), ['action' => 'check', '?' => array_intersect_key($this->request->getQuery(), array_flip(['sort', 'direction']))], ['class' => 'btn btn-outline-primary btn-sm']);
+	echo $this->Html->link(__('Reset'), ['action' => 'check', '?' => array_intersect_key($this->request->getQuery(), array_flip(['sort', 'direction']))], ['class' => 'btn btn-outline-primary']);
 }
 ?> 
-<?php echo $this->Form->button(__('Search'), ['class' => 'btn btn-outline-primary btn-sm']); ?>
+<?php echo $this->Form->button(__('Search'), ['class' => 'btn btn-outline-primary']); ?>
 <?php echo $this->Form->end(); ?>	
 </div>
 
@@ -56,13 +56,13 @@
                     <td><?= h($contact->email) ?></td>
                 </tr>
                 <tr>
-                    <th><?= __('Status') ?></th>
+                    <th><?= __('Reply Status') ?></th>
                     <td>
-					<?php if ($contact->status == 1){
-						echo '<i class="fas fa-circle text-success"></i> Responded';
-					}else
-						echo '<i class="fas fa-circle text-danger"></i> Pending';
-					?>
+				<?php if ($contact->is_replied == true){
+					echo '<i class="fa-solid fa-check text-success"></i>';
+				}else
+					echo '<i class="fa-solid fa-xmark text-danger"></i>';
+				?>
 					</td>
                 </tr>
                 <tr>
@@ -93,7 +93,7 @@
             <div class="text">
                 <strong><?= __('Reply from admin') ?></strong>
                 <blockquote>
-                    <?= $this->Text->autoParagraph(h($contact->note_admin)); ?>
+                    <?= $this->Text->autoParagraph($contact->note_admin); ?>
                 </blockquote>
             </div>
 	</div>

@@ -33,13 +33,42 @@
         <div class="faqs form content">
             <?= $this->Form->create($faq) ?>
             <fieldset>
-                <?php
-                    echo $this->Form->control('category');
-                    echo $this->Form->control('question');
-                    echo $this->Form->control('answer');
-                    echo $this->Form->control('slug');
-                    echo $this->Form->control('status');
-                ?>
+<div class="row">
+	<div class="col-md-6">
+<label>Category</label><br>
+<?php echo $this->Form->radio(
+		'category',
+		[
+			['value' => 'General', 'text' => 'General', 'label' => ['class' => 'btn btn-outline-primary ms-1 mb-3']],
+			['value' => 'Account', 'text' => 'Account', 'label' => ['class' => 'btn btn-outline-primary ms-1 mb-3']],
+			['value' => 'Other', 'text' => 'Other', 'label' => ['class' => 'btn btn-outline-primary ms-1 mb-3']],
+		],
+		['class' => 'form-control','required' => false]
+	);
+	if ($this->Form->isFieldError('category')) {
+		echo $this->Form->error('category', 'Please select category');
+	} ?>
+
+	</div>
+	<div class="col-md-6">
+<label>Status</label><br>
+<?php echo $this->Form->radio(
+	'status',
+	[
+		['value' => '0', 'text' => 'Disabled', 'label' => ['class' => 'btn btn-outline-primary ms-1 mb-3']],
+		['value' => '1', 'text' => 'Active', 'label' => ['class' => 'btn btn-outline-primary ms-1 mb-3']],
+		['value' => '2', 'text' => 'Archived', 'label' => ['class' => 'btn btn-outline-primary ms-1 mb-3']],
+	],
+	['class' => 'form-control','required' => false]
+);
+if ($this->Form->isFieldError('status')) {
+	echo $this->Form->error('status', 'Please select status');
+} ?>
+
+	</div>
+</div>
+                    <?php echo $this->Form->control('question'); ?>
+                    <?php echo $this->Form->control('answer'); ?>
             </fieldset>
 				<div class="text-end">
 				  <?= $this->Form->button('Reset', ['type' => 'reset', 'class' => 'btn btn-outline-warning']); ?>
@@ -60,7 +89,14 @@
 			  <i class="fa-solid fa-question fa-xl" style="margin-left: 16px;margin-top: 21px;"></i>
 			</div>
 				<div class="card-body small-text pt-0">
-				The User Experience Designer position exists to create compelling and digital user experience through excellent design...
+There are three (3) default categories for frequently asked questions:
+<ol>
+	<li>General</li>
+	<li>Account</li>
+	<li>Other</li>
+</ol>
+
+Only status active question will be render in FAQ list.
 				</div>
 		  </div>
 		</div>

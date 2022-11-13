@@ -23,8 +23,6 @@
 				</button>
 					<div class="dropdown-menu dropdown-menu-end" aria-labelledby="orederStatistics">
 									<li><?= $this->Html->link(__('<i class="fa-solid fa-plus"></i> New Faq'), ['action' => 'add'], ['class' => 'dropdown-item', 'escapeTitle' => false]) ?></li>
-									<li><hr class="dropdown-divider"></li>
-					<li><?= $this->Html->link(__('<i class="fa-solid fa-chart-line"></i> Report'), ['action' => 'report'], ['class' => 'dropdown-item', 'escapeTitle' => false]) ?></li>
 					</div>
 			</div>	
 		</div>
@@ -57,10 +55,8 @@
 				<th><?= $this->Paginator->sort('category') ?></th>
 				<th><?= $this->Paginator->sort('question') ?></th>
 				<th><?= $this->Paginator->sort('answer') ?></th>
-				<th><?= $this->Paginator->sort('slug') ?></th>
-				<th><?= $this->Paginator->sort('status') ?></th>
+				<th class="text-center"><?= $this->Paginator->sort('status') ?></th>
 				<th><?= $this->Paginator->sort('created') ?></th>
-				<th><?= $this->Paginator->sort('modified') ?></th>
 				<th class="text-center"><?= __('Actions') ?></th>
 			</tr>
 		</thead>
@@ -76,16 +72,22 @@
                     <td><?= h($faq->category) ?></td>
                     <td><?= h($faq->question) ?></td>
                     <td><?= h($faq->answer) ?></td>
-                    <td><?= h($faq->slug) ?></td>
-                    <td><?= $this->Number->format($faq->status) ?></td>
-                    <td><?= h($faq->created) ?></td>
-                    <td><?= h($faq->modified) ?></td>
+                    <td class="text-center">
+			<?php if ($faq->status == 1){
+				echo '<span class="badge bg-success">Active</span>';
+			}elseif ($faq->status == 0){
+				echo '<span class="badge bg-danger">Disabled</span>';
+			}else
+				echo '<span class="badge bg-secondary">Archived</span>';
+			?>
+			</td>
+                    <td><?php echo date('M d, Y (h:i A)', strtotime($faq->created)); ?></td>
 			<td class="actions text-center">
 	<div class="btn-group shadow" role="group" aria-label="Basic example">
 		<?= $this->Html->link(__('<i class="far fa-folder-open"></i>'), ['action' => 'view', $faq->id], ['class' => 'btn btn-outline-primary btn-xs', 'escapeTitle' => false]) ?>
 		<?= $this->Html->link(__('<i class="fa-regular fa-pen-to-square"></i>'), ['action' => 'edit', $faq->id], ['class' => 'btn btn-outline-warning btn-xs', 'escapeTitle' => false]) ?>
 		<?php $this->Form->setTemplates([
-			'confirmJs' => 'addToModal(""); return false;'
+			'confirmJs' => 'addToModal("{{formName}}"); return false;'
 		]); ?>
 		<?= $this->Form->postLink(
 			__('<i class="fa-regular fa-trash-can"></i>'),
@@ -281,19 +283,6 @@ const status = new Chart(ctx_2, {
 	</a>
 	</div>
 	<div class="col-md-3 mb-2">
-		<a href='<?php echo $combine; ?>/xml' class="kosong">
-		<div class="card border shadow">
-			<div class="row mx-0">
-				<div class="col-5 text-center mt-3 mb-3"><i class="fa-brands fa-buromobelexperte fa-2x text-success" style=""></i></div>
-				<div class="col-7 text-end m-auto">
-					<div class="fs-4 fw-bold">XML</div>
-					<div class="small-text"><i class="fa-solid fa-angles-down fa-flip"></i> Download</div>
-				</div>
-			</div>
-		</div>
-		</a>
-	</div>
-	<div class="col-md-3 mb-2">
 		<a href='<?php echo $combine; ?>/json' class="kosong" target="_blank">
 		<div class="card border shadow">
 			<div class="row mx-0">
@@ -335,6 +324,36 @@ const status = new Chart(ctx_2, {
 			<?php echo $this->Form->create(null, ['valueSources' => 'query', 'url' => ['controller' => 'Faqs','action' => 'index']]); ?>
 			<fieldset>
 			<div class="mb-1"><?php echo $this->Form->control('id',['required' => false]); ?></div>
+			<div class="mb-1"><?php echo $this->Form->control('question',['required' => false]); ?></div>
+			<div class="mb-1"><?php echo $this->Form->control('answer',['required' => false]); ?></div>
+<div class="mb-1">
+    <?php echo $this->Form->label('Category'); ?><br>
+    <?php
+    $options = [
+        'General' => 'General',
+        'Account' => 'Account',
+        'Other' => 'Other',
+    ];
+    echo $this->Form->select('category', $options, [
+        'multiple' => 'checkbox',
+        'class' =>'form-check-input'
+    ]); 
+    ?>
+</div>
+<div class="mb-1">
+    <?php echo $this->Form->label('Status'); ?><br>
+    <?php
+    $options = [
+        '1' => 'Active',
+        '0' => 'Disabled',
+        '2' => 'Archived',
+    ];
+    echo $this->Form->select('status', $options, [
+        'multiple' => 'checkbox',
+        'class' =>'form-check-input'
+    ]); 
+    ?>
+</div>
 			</fieldset>
 				<div class="text-end">
 <?php 
@@ -347,17 +366,6 @@ const status = new Chart(ctx_2, {
 ?>
 				  <?= $this->Form->end() ?>
                 </div>
-		</div>
-  </div>
-</div>
-
-<div class="special_card mb-3">
-  <div class="profile-card js-profile-card shadow">
-    <div class="profile-card__img shadow" style="background-color: #dc3545;color: #ffffff;">
-      <i class="fa-solid fa-question fa-xl" style="margin-left: 16px;margin-top: 21px;"></i>
-    </div>
-		<div class="card-body small-text pt-0">
-		The User Experience Designer position exists to create compelling and digital user experience through excellent design...
 		</div>
   </div>
 </div>
@@ -374,7 +382,7 @@ const status = new Chart(ctx_2, {
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body text-center">
-			<i class="fa-regular fa-circle-xmark fa-6x text-danger mb-3"></i>
+			<i class="fa-solid fa-triangle-exclamation fa-6x text-danger mb-3"></i>
                 <p id="confirmMessage"></p>
             </div>
             <div class="modal-footer">

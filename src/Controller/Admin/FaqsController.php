@@ -79,7 +79,7 @@ class FaqsController extends AppController
      */
     public function index()
     {
-		$this->set('title', 'Faqs List');
+		$this->set('title', 'Frequently Asked Questions');
 		$this->paginate = [
 			'maxLimit' => 10,
 		];
@@ -150,11 +150,20 @@ class FaqsController extends AppController
     {
 		$this->set('title', 'New Faqs');
 		
-		
+		EventManager::instance()->on('AuditStash.beforeLog', function ($event, array $logs) {
+			foreach ($logs as $log) {
+				$log->setMetaInfo($log->getMetaInfo() + ['a_name' => 'Add']);
+				$log->setMetaInfo($log->getMetaInfo() + ['c_name' => 'Faqs']);
+				$log->setMetaInfo($log->getMetaInfo() + ['ip' => $this->request->clientIp()]);
+				$log->setMetaInfo($log->getMetaInfo() + ['url' => Router::url(null, true)]);
+				$log->setMetaInfo($log->getMetaInfo() + ['slug' => $this->Authentication->getIdentity('slug')->getIdentifier('slug')]);
+			}
+		});
 		
         $faq = $this->Faqs->newEmptyEntity();
         if ($this->request->is('post')) {
             $faq = $this->Faqs->patchEntity($faq, $this->request->getData());
+			$faq->status = 1;
             if ($this->Faqs->save($faq)) {
                 $this->Flash->success(__('The faq has been saved.'));
 
@@ -178,23 +187,15 @@ class FaqsController extends AppController
         $faq = $this->Faqs->get($id, [
             'contain' => [],
         ]);
-		
-		
-
-
-EventManager::instance()->on('AuditStash.beforeLog', function ($event, array $logs) {
+		EventManager::instance()->on('AuditStash.beforeLog', function ($event, array $logs) {
 			foreach ($logs as $log) {
 				$log->setMetaInfo($log->getMetaInfo() + ['a_name' => 'Edit']);
-				$log->setMetaInfo($log->getMetaInfo() + ['c_name' => 'Users']);
+				$log->setMetaInfo($log->getMetaInfo() + ['c_name' => 'Faqs']);
 				$log->setMetaInfo($log->getMetaInfo() + ['ip' => $this->request->clientIp()]);
 				$log->setMetaInfo($log->getMetaInfo() + ['url' => Router::url(null, true)]);
-				$log->setMetaInfo($log->getMetaInfo() + ['c_name' => 'Users']);
-				//$log->setMetaInfo($log->getMetaInfo() + ['slug' => $user]);
-				
+				$log->setMetaInfo($log->getMetaInfo() + ['slug' => $this->Authentication->getIdentity('slug')->getIdentifier('slug')]);
 			}
 		});
-		
-		
         if ($this->request->is(['patch', 'post', 'put'])) {
             $faq = $this->Faqs->patchEntity($faq, $this->request->getData());
             if ($this->Faqs->save($faq)) {
@@ -216,6 +217,15 @@ EventManager::instance()->on('AuditStash.beforeLog', function ($event, array $lo
      */
     public function delete($id = null)
     {
+		EventManager::instance()->on('AuditStash.beforeLog', function ($event, array $logs) {
+			foreach ($logs as $log) {
+				$log->setMetaInfo($log->getMetaInfo() + ['a_name' => 'Delete']);
+				$log->setMetaInfo($log->getMetaInfo() + ['c_name' => 'Faqs']);
+				$log->setMetaInfo($log->getMetaInfo() + ['ip' => $this->request->clientIp()]);
+				$log->setMetaInfo($log->getMetaInfo() + ['url' => Router::url(null, true)]);
+				$log->setMetaInfo($log->getMetaInfo() + ['slug' => $this->Authentication->getIdentity('slug')->getIdentifier('slug')]);
+			}
+		});
         $this->request->allowMethod(['post', 'delete']);
         $faq = $this->Faqs->get($id);
         if ($this->Faqs->delete($faq)) {

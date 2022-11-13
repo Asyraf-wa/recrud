@@ -85,9 +85,9 @@ class FaqsController extends AppController
 		//Search
 		//$faqs = $this->paginate($this->Faqs->find('search', ['search' => $this->request->getQuery()]));
 		
-		$this->set('general', $this->paginate($this->Faqs->find('all')->where(['category' => 'General'])));
-		$this->set('account', $this->paginate($this->Faqs->find('all')->where(['category' => 'Account'])));
-		$this->set('other', $this->paginate($this->Faqs->find('all')->where(['category' => 'Other'])));
+		$this->set('general', $this->paginate($this->Faqs->find('all')->where(['category' => 'General','status' => '1'])));
+		$this->set('account', $this->paginate($this->Faqs->find('all')->where(['category' => 'Account','status' => '1'])));
+		$this->set('other', $this->paginate($this->Faqs->find('all')->where(['category' => 'Other','status' => '1'])));
 
         //$this->set(compact('faqs'));
     }

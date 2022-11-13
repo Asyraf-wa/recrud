@@ -46,18 +46,42 @@ class FaqsTable extends Table
         $this->addBehavior('Timestamp');
 		$this->addBehavior('AuditStash.AuditLog');
 		$this->addBehavior('Search.Search');
+		$this->addBehavior('Tools.Slugged',
+			['label' => 'question', 'unique' => true, 'mode' => 'ascii', 'field' => 'slug']
+		);
 		$this->searchManager()
 			->value('id')
-				->add('search', 'Search.Like', [
-					//'before' => true,
-					//'after' => true,
+			->add('answer', 'Search.Like', [
+					'before' => true,
+					'after' => true,
+					'fieldMode' => 'OR',
+					'comparison' => 'LIKE',
+					'fields' => ['answer'],
+				])
+			->add('question', 'Search.Like', [
+					'before' => true,
+					'after' => true,
+					'fieldMode' => 'OR',
+					'comparison' => 'LIKE',
+					'fields' => ['question'],
+				])
+			->add('status', 'Search.Value', [
+					'before' => true,
+					'after' => true,
 					'fieldMode' => 'OR',
 					'multiValue' => true,
-					'multiValueSeparator' => '|',
-					'comparison' => 'LIKE',
-					'wildcardAny' => '*',
-					'wildcardOne' => '?',
-					'fields' => ['id'],
+					'multiValueSeparator' => '',
+					'comparison' => 'VALUE',
+					'fields' => ['status'],
+				])
+			->add('category', 'Search.Value', [
+					'before' => true,
+					'after' => true,
+					'fieldMode' => 'OR',
+					'multiValue' => true,
+					'multiValueSeparator' => '',
+					'comparison' => 'VALUE',
+					'fields' => ['category'],
 				]);
     }
 
@@ -87,15 +111,6 @@ class FaqsTable extends Table
             ->requirePresence('answer', 'create')
             ->notEmptyString('answer');
 
-        $validator
-            ->scalar('slug')
-            ->maxLength('slug', 255)
-            ->requirePresence('slug', 'create')
-            ->notEmptyString('slug');
-
-        $validator
-            ->integer('status')
-            ->notEmptyString('status');
 
         return $validator;
     }

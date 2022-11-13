@@ -8,8 +8,27 @@
 	echo $this->Html->script('qr-code-styling-1-5-0.min.js');
 	echo $this->Html->script('bootstrapModal', ['block' => 'scriptBottom']);
 ?>
-<h1 class="m-0 me-2 page_title"><?php echo $title; ?></h1>
-<small class="text-muted"><?php echo $system_name; ?></small>
+<div class="row mb-3">
+	<div class="col-8 col-md-10">
+		<h1 class="m-0 me-2 page_title"><?php echo $title; ?></h1>
+		<small class="text-muted"><?php echo $system_name; ?></small>
+	</div>
+	<div class="col-4 col-md-2">
+		<div class="text-end">
+			<div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+			<?php echo $this->Form->button ('<i class="fa-solid fa-arrow-left text-primary"></i>',['type' =>'button', 'onclick' =>'history.back()', 'escapeTitle' => false, 'class'=> 'btn_custom']); ?>
+			<div class="btn-group" role="group">
+			  <button id="btnGroupDrop1" type="button" class="btn_custom" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<i class="fa-solid fa-bars text-primary"></i>
+			  </button>
+			  <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" style="">
+				<li><?= $this->Html->link(__('<i class="fa-solid fa-plus"></i> Register New User'), ['action' => 'registration'], ['class' => 'dropdown-item', 'escapeTitle' => false]) ?></li>
+			  </div>
+			</div>
+			</div>
+		</div>
+	</div>
+</div>
 
 <div class="row mt-3">
 	<div class="col-md-8">

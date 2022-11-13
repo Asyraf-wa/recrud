@@ -111,7 +111,7 @@ $a_name = $this->request->getParam('action');
                       <div class="dropdown-divider"></div>
                     </li>
                     <li>
-						<?= $this->Html->link(__('<i class="fa-solid fa-user-astronaut"></i> Account'), ['action' => 'profile', $this->Identity->get('slug')], ['class' => 'dropdown-item', 'escapeTitle' => false]) ?>
+						<?= $this->Html->link(__('<i class="fa-solid fa-user-astronaut"></i> Account'), ['prefix' => false, 'controller' => 'Users', 'action' => 'profile', $this->Identity->get('slug')], ['class' => 'dropdown-item', 'escapeTitle' => false]) ?>
                     </li>
                     <li>
 						<?= $this->Html->link(__('<i class="fa-solid fa-arrow-right-from-bracket"></i> Logout'), ['controller' => 'Users', 'action' => 'logout', 'prefix' => false], ['class' => 'dropdown-item', 'escapeTitle' => false]) ?>

@@ -18,7 +18,7 @@ class SettingsSeed extends AbstractSeed
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         $data = [
             [
@@ -56,7 +56,7 @@ class SettingsSeed extends AbstractSeed
                 'ribbon_link' => 'https://codethepixel.com',
                 'ribbon_status' => '0',
                 'created' => '2020-04-08 20:56:04',
-                'modified' => '2022-11-07 07:46:01',
+                'modified' => '2022-11-14 09:06:06',
             ],
         ];
 

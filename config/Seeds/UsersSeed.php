@@ -18,7 +18,7 @@ class UsersSeed extends AbstractSeed
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         $data = [
             [
@@ -27,8 +27,8 @@ class UsersSeed extends AbstractSeed
                 'fullname' => 'Administrator',
                 'password' => '$2y$10$FiyNt1nWlXxeIgRASuB4WeggEbQcu/klEsaNGNKZRo1yZ6BLDhz6G',
                 'email' => 'admin@recrud.com',
-                'avatar' => '40-409064_m.jpg',
-                'avatar_dir' => 'webroot\\files\\Users\\avatar\\Administrator',
+                'avatar' => '',
+                'avatar_dir' => '',
                 'token' => '',
                 'status' => '1',
                 'is_email_verified' => '1',
@@ -36,7 +36,7 @@ class UsersSeed extends AbstractSeed
                 'ip_address' => '192.168.0.1',
                 'slug' => 'Administrator',
                 'created' => '2022-10-26 02:54:19',
-                'modified' => '2022-11-05 14:58:24',
+                'modified' => '2022-11-13 16:32:04',
                 'created_by' => NULL,
                 'modified_by' => NULL,
             ],

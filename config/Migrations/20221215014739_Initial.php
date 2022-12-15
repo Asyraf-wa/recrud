@@ -14,7 +14,7 @@ class Initial extends AbstractMigration
      * https://book.cakephp.org/phinx/0/en/migrations.html#the-up-method
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         $this->table('audit_logs')
             ->addColumn('id', 'integer', [
@@ -111,41 +111,6 @@ class Initial extends AbstractMigration
                     'created',
                 ]
             )
-            ->create();
-
-        $this->table('books')
-            ->addColumn('id', 'integer', [
-                'autoIncrement' => true,
-                'default' => null,
-                'limit' => null,
-                'null' => false,
-            ])
-            ->addPrimaryKey(['id'])
-            ->addColumn('title', 'string', [
-                'default' => null,
-                'limit' => 255,
-                'null' => false,
-            ])
-            ->addColumn('date', 'datetime', [
-                'default' => null,
-                'limit' => null,
-                'null' => false,
-            ])
-            ->addColumn('status', 'integer', [
-                'default' => '1',
-                'limit' => null,
-                'null' => false,
-            ])
-            ->addColumn('created', 'datetime', [
-                'default' => null,
-                'limit' => null,
-                'null' => false,
-            ])
-            ->addColumn('modified', 'datetime', [
-                'default' => null,
-                'limit' => null,
-                'null' => false,
-            ])
             ->create();
 
         $this->table('contacts')
@@ -699,10 +664,9 @@ class Initial extends AbstractMigration
      * https://book.cakephp.org/phinx/0/en/migrations.html#the-down-method
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         $this->table('audit_logs')->drop()->save();
-        $this->table('books')->drop()->save();
         $this->table('contacts')->drop()->save();
         $this->table('faqs')->drop()->save();
         $this->table('settings')->drop()->save();

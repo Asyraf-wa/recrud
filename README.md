@@ -44,6 +44,7 @@ Re-CRUD enable the developer to create the fundamental web application functions
 - [ ] Archived [coming soon]
 - [x] Notification bar
 - [x] Promotion Ribbon
+- [ ] Menu Management [coming soon]
 
 
 ## Screenshots

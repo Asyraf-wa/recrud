@@ -38,13 +38,35 @@ echo $this->Html->image('../files/Users/avatar/' . $user->slug . '/' . $user->av
 echo $this->Html->image('avatar_default.png', ['alt' => 'avatar', 'class' => 'd-block rounded', 'width'=>'100px', 'height'=>'100px']);
 ?>
 	</div>
-	<div class="col-md-10 ps-0">
+	<div class="col-md-8 ps-0">
 	<?php echo $this->Form->create($user, ['type' => 'file', 'novalidate' => true]); ?>
-<?php echo $this->Form->control('avatar',['type'=>'file','required' => false, 'class' =>'form-control', 'label' => 'Profile Image']); ?>
+	
+<?php echo $this->Form->control('avatar',['type'=>'file','required' => false, 'class' =>'form-control', 'label' => 'Profile Image', 'onchange' => 'readURL(this)']); ?>
+
 <p class="text-muted mb-0">
 <?php echo $this->Html->link(__('Remove Existing Picture'), ['action' => 'remove_avatar', $user->slug],['class' => 'btn btn-sm btn-outline-primary', 'escapeTitle' => false]) ?>&nbsp;&nbsp;&nbsp;
 Allowed JPG/JPEG Only. Recommended Size 100px X 100px
 </p>
+	</div>
+	
+	<div class="col-md-2">
+	<center>
+<?php echo $this->Html->image('avatar_default_preview.png', ['alt' => 'avatar preview', 'class' => 'd-block rounded', 'width'=>'100px', 'height'=>'100px', 'id' => 'gambar']); ?>
+</center>
+<script>
+function readURL(input) {
+	if (input.files && input.files[0]) {
+		var reader = new FileReader();
+
+		reader.onload = function (e) {
+			$('#gambar')
+				.attr('src', e.target.result);
+		};
+
+		reader.readAsDataURL(input.files[0]);
+	}
+}
+</script>
 	</div>
 </div>
 

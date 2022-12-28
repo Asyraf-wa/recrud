@@ -2,18 +2,7 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Morphext/2.4.4/morphext.css" integrity="sha256-iwSnUqgAndMlZnwFWAAzto9R/6Un2RBguZEITMb0Olk=" crossorigin="anonymous" />
 
-<!--Header-->
-<div class="row mb-3">
-	<div class="col-10">
-		<h1 class="m-0 me-2 page_title"><?php echo $title; ?></h1>
-		<small class="text-muted"><?php echo $system_name; ?></small>
-	</div>
-	<div class="col-2">
-		<div class="text-end">
 
-		</div>
-	</div>
-</div>
 
 <div class="row">
 	<div class="col-md-6">

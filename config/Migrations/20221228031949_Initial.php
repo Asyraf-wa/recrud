@@ -243,6 +243,117 @@ class Initial extends AbstractMigration
             ])
             ->create();
 
+        $this->table('menus')
+            ->addColumn('id', 'integer', [
+                'autoIncrement' => true,
+                'default' => null,
+                'limit' => null,
+                'null' => false,
+                'signed' => false,
+            ])
+            ->addPrimaryKey(['id'])
+            ->addColumn('parent_id', 'integer', [
+                'default' => null,
+                'limit' => null,
+                'null' => true,
+            ])
+            ->addColumn('lft', 'integer', [
+                'default' => null,
+                'limit' => null,
+                'null' => true,
+            ])
+            ->addColumn('rght', 'integer', [
+                'default' => null,
+                'limit' => null,
+                'null' => true,
+            ])
+            ->addColumn('level', 'integer', [
+                'default' => '0',
+                'limit' => null,
+                'null' => true,
+            ])
+            ->addColumn('icon', 'string', [
+                'default' => null,
+                'limit' => 255,
+                'null' => true,
+            ])
+            ->addColumn('controller', 'string', [
+                'default' => null,
+                'limit' => 255,
+                'null' => true,
+            ])
+            ->addColumn('action', 'string', [
+                'default' => null,
+                'limit' => 255,
+                'null' => true,
+            ])
+            ->addColumn('target', 'string', [
+                'default' => null,
+                'limit' => 255,
+                'null' => true,
+            ])
+            ->addColumn('name', 'string', [
+                'default' => null,
+                'limit' => 255,
+                'null' => true,
+            ])
+            ->addColumn('url', 'string', [
+                'default' => null,
+                'limit' => 255,
+                'null' => true,
+            ])
+            ->addColumn('prefix', 'string', [
+                'default' => null,
+                'limit' => 255,
+                'null' => true,
+            ])
+            ->addColumn('auth', 'boolean', [
+                'default' => null,
+                'limit' => null,
+                'null' => true,
+            ])
+            ->addColumn('admin', 'boolean', [
+                'default' => null,
+                'limit' => null,
+                'null' => true,
+            ])
+            ->addColumn('active', 'boolean', [
+                'default' => null,
+                'limit' => null,
+                'null' => true,
+            ])
+            ->addColumn('disabled', 'boolean', [
+                'default' => null,
+                'limit' => null,
+                'null' => true,
+            ])
+            ->addColumn('divider_before', 'boolean', [
+                'default' => false,
+                'limit' => null,
+                'null' => true,
+            ])
+            ->addColumn('parent_separator', 'boolean', [
+                'default' => null,
+                'limit' => null,
+                'null' => true,
+            ])
+            ->addColumn('division', 'boolean', [
+                'default' => false,
+                'limit' => null,
+                'null' => true,
+            ])
+            ->addIndex(
+                [
+                    'lft',
+                ]
+            )
+            ->addIndex(
+                [
+                    'parent_id',
+                ]
+            )
+            ->create();
+
         $this->table('settings')
             ->addColumn('id', 'uuid', [
                 'default' => null,
@@ -669,6 +780,7 @@ class Initial extends AbstractMigration
         $this->table('audit_logs')->drop()->save();
         $this->table('contacts')->drop()->save();
         $this->table('faqs')->drop()->save();
+        $this->table('menus')->drop()->save();
         $this->table('settings')->drop()->save();
         $this->table('todos')->drop()->save();
         $this->table('user_groups')->drop()->save();

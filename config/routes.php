@@ -80,7 +80,7 @@ return static function (RouteBuilder $routes) {
 $routes->prefix('Admin', function (RouteBuilder $routes) {
 		$routes->connect('/users', ['controller' => 'Users', 'action' => 'index']);
 		//$routes->connect('/login', ['controller' => 'Users', 'action' => 'login']);
-		$routes->connect('/settings', ['prefix' => 'admin', 'controller' => 'Settings', 'action' => 'update','1']);
+		$routes->connect('/settings', ['prefix' => 'admin', 'controller' => 'Settings', 'action' => 'update']);
 		$routes->connect('/audit-logs', ['controller' => 'auditLogs', 'action' => 'index', '?' => ['limit'=>'25', 'status' => '1']]); 
     $routes->fallbacks(DashedRoute::class);
 });

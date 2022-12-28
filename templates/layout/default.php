@@ -57,7 +57,7 @@ $a_name = $this->request->getParam('action');
     <div class="layout-wrapper layout-content-navbar">
       <div class="layout-container">
 	<!--Navigation side-bar-->
-	<?php echo $this->element('menu/side_bar'); ?>
+	<?php echo $this->element('menu/side_bar_menu'); ?>
         <!-- Layout container -->
         <div class="layout-page">
           <!-- Navbar -->
@@ -72,8 +72,22 @@ $a_name = $this->request->getParam('action');
 			<!-- Search -->
 			<div class="navbar-nav align-items-center">
 				<div class="nav-item d-flex align-items-center">
-				  <i class="fas fa-search fa-lg lh-0"></i>
-				  <input type="text" class="form-control border-0 shadow-none" placeholder="Search..." aria-label="Search..." />
+<?php if ($this->Identity->isLoggedIn()) : ?>
+<div class="d-none d-sm-block">
+<b>Logged as:</b> <?php echo $this->Identity->get('fullname'); ?> | 
+<b>Last login:</b> <?php echo date('M d, Y (h:i A)', strtotime($this->Identity->get('last_login'))); ?> | 
+<b>Role:</b> 
+<?php if ($this->Identity->get('user_group_id') == 1){
+	echo 'Administrator';
+}elseif ($this->Identity->get('user_group_id') == 2){
+	echo 'Moderator';
+}elseif ($this->Identity->get('user_group_id') == 3){
+	echo 'User';
+}else
+	echo 'Error';
+?> 
+</div>
+<?php endif ?>
 				</div>
 			</div>
 			<!-- /Search -->

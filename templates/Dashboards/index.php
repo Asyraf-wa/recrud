@@ -1,6 +1,7 @@
 <?php
 	echo $this->Html->script('qr-code-styling-1-5-0.min.js');
 ?>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <!--Header-->
 <div class="row mb-3">
 	<div class="col-10">

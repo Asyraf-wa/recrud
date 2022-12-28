@@ -73,6 +73,7 @@ if ($this->Identity->isLoggedIn()) { ?>
             <li class="menu-item <?= $c_name == 'Users' && $a_name == 'logout'?'active':'' ?>">
               <?= $this->Html->link(__('<i class="menu-icon fa-solid fa-arrow-right-from-bracket"></i> Sign-out'), ['controller' => 'Users', 'action' => 'logout', 'prefix' => false], ['class' => 'menu-link', 'escape' => false]) ?>
             </li>
+<?php if ($this->Identity->isLoggedIn() && $this->Identity->get('user_group_id') == '1') { ?>
             <!-- Administrator -->
             <li class="menu-header small text-uppercase">
               <span class="menu-header-text">Administrator</span>
@@ -95,6 +96,7 @@ if ($this->Identity->isLoggedIn()) { ?>
 			<li class="menu-item <?= $c_name == 'Faqs' && $a_name == 'index'?'active':'' ?>">
               <?= $this->Html->link(__('<i class="menu-icon fa-regular fa-circle-question"></i> FAQ'), ['prefix' => 'Admin', 'controller' => 'Faqs', 'action' => 'index'], ['class' => 'menu-link', 'escape' => false]) ?>
             </li>
+<?php } ?>
 <?php } ?>
           </ul>
         </aside>

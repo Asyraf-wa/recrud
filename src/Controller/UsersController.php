@@ -38,12 +38,26 @@ class UsersController extends AppController
 		if ($result->isValid()) {
 			$target = $this->Authentication->getLoginRedirect() ?? '/dashboard';
 			$this->UserLogs->userLoginActivity($this->Authentication->getIdentity('id')->getIdentifier('id'));
+			$this->updateLoginFields(); //capture ip and login time
+			$session = $this->request->getSession();
 			return $this->redirect($target);
 		}
 		if ($this->request->is('post')) {
 			$this->Flash->error('Invalid username or password');
 		}
 	}
+	
+	protected function updateLoginFields(){
+		$userTable = TableRegistry::get('Users');
+		$user = $this->Authentication->getIdentity();
+			$this->request->getSession()->write('User.last_login', date("Y-m-d H:i:s"));
+			$this->request->getSession()->write('User.ip_address', $this->request->clientIp());
+			$updateData = [
+				'last_login' => date("Y-m-d H:i:s"),
+				'ip_address' => $this->request->clientIp(),
+			]; 
+			$this->Users->query()->update()->set($updateData)->where(['id' => $user['id']])->execute();
+    }
 	
 	public function logout()
 	{

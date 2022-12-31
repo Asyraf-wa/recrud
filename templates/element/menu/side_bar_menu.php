@@ -74,7 +74,7 @@
 				<?php endif ?>
 				<!--Public child menu external link-->
 				<?php if (($childMenu->url != NULL) && ($childMenu->admin == false)) : ?>
-					<li class="menu-item <?= $c_name == $menu->controller?'active':'' ?>">
+					<li class="menu-item">
 						<?php $disabled = $menu->disabled ? "disabled" : ''; ?>
 						<?php echo $this->Menu->link(__('<i class="menu-icon"> ' . $childMenu->icon . '</i> &nbsp;' . $childMenu->name), $childMenu->url, ['class' => 'menu-link' . ' ' . $disabled, 'escape' => false]) ?>
 					</li>

@@ -22,7 +22,7 @@ class SettingsSeed extends AbstractSeed
     {
         $data = [
             [
-                'id' => '1',
+                'id' => 'recrud',
                 'system_name' => 'Code The Pixel',
                 'system_abbr' => 'Re-CRUD',
                 'system_slogan' => 'Code The Experiences',

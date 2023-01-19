@@ -67,8 +67,8 @@ if ($this->Form->isFieldError('status')) {
 
 	</div>
 </div>
-                    <?php echo $this->Form->control('question'); ?>
-                    <?php echo $this->Form->control('answer'); ?>
+                    <?php echo $this->Form->control('question',['required' => false]); ?>
+                    <?php echo $this->Form->control('answer',['required' => false]); ?>
             </fieldset>
 				<div class="text-end">
 				  <?= $this->Form->button('Reset', ['type' => 'reset', 'class' => 'btn btn-outline-warning']); ?>

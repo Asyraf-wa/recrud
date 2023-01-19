@@ -128,11 +128,11 @@
 {% for alias, details in relations %}
 {% set otherSingularVar = alias|variable %}
 {% set otherPluralHumanName = details.controller|underscore|humanize %}
-            <div class="related">
+            <div class="related mt-3">
                 <h4><?= __('Related {{ otherPluralHumanName }}') ?></h4>
                 <?php if (!empty(${{ singularVar }}->{{ details.property }})) : ?>
                 <div class="table-responsive">
-                    <table>
+                    <table class="table table-sm table-hovered table-bordered">
                         <tr>
 {% for field in details.fields %}
                             <th><?= __('{{ field|humanize }}') ?></th>

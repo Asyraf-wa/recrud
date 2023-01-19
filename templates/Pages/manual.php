@@ -91,6 +91,18 @@ FORM AND OTHERS
 <li><?php echo $this->Html->link('Image','#e4',['class' => '']); ?></li>
 <li><?php echo $this->Html->link('Date Time Format','#e5',['class' => '']); ?></li>
 </ul>
+
+PDF Related
+<ul>
+<li><?php echo $this->Html->link('PDF Controller','#f1',['class' => '']); ?></li>
+<li><?php echo $this->Html->link('PDF FileName','#f2',['class' => '']); ?></li>
+<li><?php echo $this->Html->link('PDF Template','#f3',['class' => '']); ?></li>
+<li><?php echo $this->Html->link('PDF Download Link','#f4',['class' => '']); ?></li>
+<li><?php echo $this->Html->link('Image in PDF','#f5',['class' => '']); ?></li>
+<li><?php echo $this->Html->link('External CSS in PDF','#f6',['class' => '']); ?></li>
+<li><?php echo $this->Html->link('Save PDF to Server','#f7',['class' => '']); ?></li>
+<li><?php echo $this->Html->link('Email Saved PDF as Email Attachment','#f8',['class' => '']); ?></li>
+</ul>
 			</div>
 		</div>
 
@@ -441,6 +453,107 @@ Put your image in .../webroot/img and load the following script:
 Sample code for rendering the date and time into readable format.
 <pre class="bg-light-gray">echo date('M d, Y (h:i A)', strtotime($user->created));</pre>
 </div>
+	</div>
+</div>
+
+
+<div class="card shadow mt-4">
+	<div class="card-header d-flex align-items-center justify-content-between border-bottom">
+		<div class="card-title mb-0">
+		  <h1 class="m-0 me-2 page_title">PDF Related</h1>
+		  <small class="text-muted"><?php echo $system_name; ?></small>
+		</div>
+	</div>
+	<div class="card-body mt-4">
+
+<div class="fw-bold fs-5" id="f1">PDF Controller</div>
+<div class="fw-light" id="f1">
+PDf controller used to generate the PDF:
+	<pre class="bg-light-gray">
+public function pdf($id = null)
+{
+    $this->viewBuilder()->enableAutoLayout(false); 
+    $report = $this->Reports->get($id);
+    $this->viewBuilder()->setClassName('CakePdf.Pdf');
+    $this->viewBuilder()->setOption(
+        'pdfConfig',
+        [
+            'orientation' => 'portrait',
+            'download' => true, // This can be omitted if "filename" is specified.
+            'filename' => 'Report_' . $id . '.pdf' //// This can be omitted if you want file name based on URL.
+        ]
+    );
+    $this->set('report', $report);
+}
+	</pre>
+</div>
+
+<div class="fw-bold fs-5" id="f1">PDF</div>
+<div class="fw-light" id="f2">
+	<pre class="bg-light-gray">
+
+	</pre>
+</div>
+
+
+<div class="fw-bold fs-5" id="f1">PDF</div>
+<div class="fw-light" id="f3">
+File Location: ...\src\Model\Table\YoursTable.php<br/>
+If you need need to search more fields, add more attributes in the fields array. 
+<pre class="bg-light-gray">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;PDF&lt;/title&gt;
+&lt;style&gt;
+@page {
+    margin: 0px 0px 0px 0px !important;
+    padding: 0px 0px 0px 0px !important;
+}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+	Content
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+</div>
+
+<div class="fw-bold fs-5" id="f1">PDF</div>
+<div class="fw-light" id="f4">
+	<pre class="bg-light-gray">
+
+	</pre>
+</div>
+
+<div class="fw-bold fs-5" id="f1">PDF</div>
+<div class="fw-light" id="f5">
+	<pre class="bg-light-gray">
+
+	</pre>
+</div>
+
+<div class="fw-bold fs-5" id="f1">PDF</div>
+<div class="fw-light" id="f6">
+	<pre class="bg-light-gray">
+
+	</pre>
+</div>
+
+<div class="fw-bold fs-5" id="f1">PDF</div>
+<div class="fw-light" id="f7">
+	<pre class="bg-light-gray">
+
+	</pre>
+</div>
+
+<div class="fw-bold fs-5" id="f1">PDF</div>
+<div class="fw-light" id="f8">
+	<pre class="bg-light-gray">
+
+	</pre>
+</div>
+
 	</div>
 </div>
 	

@@ -61,7 +61,7 @@
           <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-top-export" aria-controls="navs-top-export" aria-selected="false"><i class="fa-solid fa-download"></i> Export</button>
         </li>
       </ul>
-      <div class="tab-content px-0">
+      <div class="tab-content px-0 border shadow">
         <div class="tab-pane fade active show" id="navs-top-list" role="tabpanel">
 <div class="table-responsive">
 	<table class="table">
@@ -106,8 +106,8 @@
 {% set pk = '$' ~ singularVar ~ '->' ~ primaryKey[0] %}
 			<td class="actions text-center">
 	<div class="btn-group shadow" role="group" aria-label="Basic example">
-		<?= $this->Html->link(__('<i class="far fa-folder-open"></i>'), ['action' => 'view', {{ pk|raw }}], ['class' => 'btn btn-outline-primary btn-xs', 'escapeTitle' => false]) ?>
-		<?= $this->Html->link(__('<i class="fa-regular fa-pen-to-square"></i>'), ['action' => 'edit', {{ pk|raw }}], ['class' => 'btn btn-outline-warning btn-xs', 'escapeTitle' => false]) ?>
+		<?= $this->Html->link(__('<i class="far fa-folder-open"></i>'), ['action' => 'view', {{ pk|raw }}], ['class' => 'btn btn-outline-primary btn-sm', 'escapeTitle' => false]) ?>
+		<?= $this->Html->link(__('<i class="fa-regular fa-pen-to-square"></i>'), ['action' => 'edit', {{ pk|raw }}], ['class' => 'btn btn-outline-warning btn-sm', 'escapeTitle' => false]) ?>
 		<?php $this->Form->setTemplates([
 			'confirmJs' => 'addToModal("{{ '{{formName}}' }}"); return false;'
 		]); ?>
@@ -117,7 +117,7 @@
 			[
 				'confirm' => __('Are you sure you want to delete {{ pluralHumanName }}: "{0}"?', {{ pk|raw }}),
 				'title' => __('Delete'),
-				'class' => 'btn btn-outline-danger btn-xs',
+				'class' => 'btn btn-outline-danger btn-sm',
 				'escapeTitle' => false,
 				'data-bs-toggle' => "modal",
 				'data-bs-target' => "#bootstrapModal"
@@ -146,19 +146,19 @@
 
 <div class="row pb-3">
 	<div class="col-md-4">
-      <div class="stat_card card-1">
+      <div class="stat_card card-1 border shadow">
         <h3><?php echo $total_{{ pluralVar }}; ?></h3>
         <p>Total {{ pluralHumanName }}</p>
       </div>
 	</div>
 	<div class="col-md-4">
-      <div class="stat_card card-2">
+      <div class="stat_card card-2 border shadow">
         <h3><?php echo $total_{{ pluralVar }}_active; ?></h3>
         <p>Active {{ pluralHumanName }}</p>
       </div>
 	</div>
 	<div class="col-md-4">
-      <div class="stat_card card-3">
+      <div class="stat_card card-3 border shadow">
         <h3><?php echo $total_{{ pluralVar }}_archived; ?></h3>
         <p>Archived {{ pluralHumanName }}</p>
       </div>
@@ -337,12 +337,20 @@ const status = new Chart(ctx_2, {
 	</div>
 	<div class="col-md-3">
 
-<div class="special_card mb-3">
-  <div class="profile-card js-profile-card shadow">
-    <div class="profile-card__img shadow" style="background-color: #1da1f2;color: #ffffff;">
-	  <i class="fa-solid fa-magnifying-glass fa-xl" style="margin-left: 12px;margin-top: 22px;"></i>
-    </div>
-		<div class="card-body small-text pt-0">
+<div class="card shadow border mb-3">
+	<div class="card-body">
+		<div class="row row-cols-auto mb-3">
+			<div class="col pe-0">
+				<div class="profile-card__img shadow" style="background-color: #1da1f2;color: #ffffff;">
+				<i class="fa-solid fa-magnifying-glass fa-xl" style="margin-left: 12px;margin-top: 22px;"></i>
+				</div>	
+			</div>
+		<div class="col">
+			<h5 class="card_title_custom mb-0 mt-1">Search</h5>
+			<div class="card_subtitle_custom text-muted"><?php echo $system_name; ?></div>	
+		</div>
+		</div>	
+	<div class="card-text small-text pt-0">
 			<?php echo $this->Form->create(null, ['valueSources' => 'query', 'url' => ['controller' => '{{ pluralHumanName }}','action' => 'index']]); ?>
 			<fieldset>
 			<div class="mb-1"><?php echo $this->Form->control('id',['required' => false]); ?></div>
@@ -358,21 +366,10 @@ const status = new Chart(ctx_2, {
 ?>
 				  <?= $this->Form->end() ?>
                 </div>
-		</div>
-  </div>
-</div>
+	</div>
+	</div>	
+</div>	
 
-<div class="special_card mb-3">
-  <div class="profile-card js-profile-card shadow">
-    <div class="profile-card__img shadow" style="background-color: #dc3545;color: #ffffff;">
-      <i class="fa-solid fa-question fa-xl" style="margin-left: 16px;margin-top: 21px;"></i>
-    </div>
-		<div class="card-body small-text pt-0">
-		Content...
-		</div>
-  </div>
-</div>
-	
 	</div>
 </div>
 

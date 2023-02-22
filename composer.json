@@ -17,7 +17,8 @@
         "friendsofcake/search": "^6.2",
         "josegonzalez/cakephp-upload": "^7.0",
         "kdesilva/audit-trail": "^4.4",
-        "mobiledetect/mobiledetectlib": "^2.8"
+        "mobiledetect/mobiledetectlib": "^2.8",
+        "muffin/trash": "^3.1"
     },
     "require-dev": {
         "cakephp/bake": "^2.6",

@@ -13,6 +13,25 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 #}
+<?php
+/**
+ * @var \{{ namespace }}\View\AppView $this
+ * @var \{{ entityClass }} ${{ singularVar }}
+        {{- "\n" }}
+{%- if associations.BelongsTo is defined %}
+    {%- for assocName, assocData in associations.BelongsTo %}
+ * @var \Cake\Collection\CollectionInterface|string[] ${{ assocData.variable }}
+        {{- "\n" }}
+    {%- endfor %}
+{% endif %}
+{%- if associations.BelongsToMany is defined %}
+    {%- for assocName, assocData in associations.BelongsToMany %}
+ * @var \Cake\Collection\CollectionInterface|string[] ${{ assocData.variable }}
+        {{- "\n" }}
+    {%- endfor %}
+{% endif %}
+ */
+?>
 <!--Header-->
 <div class="row mb-3">
 	<div class="col-10">
@@ -37,39 +56,19 @@
 	<div class="col-md-9">
 		<div class="card shadow">
 			<div class="card-body">
-<?php
-/**
- * @var \{{ namespace }}\View\AppView $this
- * @var \{{ entityClass }} ${{ singularVar }}
-        {{- "\n" }}
-{%- if associations.BelongsTo is defined %}
-    {%- for assocName, assocData in associations.BelongsTo %}
- * @var \Cake\Collection\CollectionInterface|string[] ${{ assocData.variable }}
-        {{- "\n" }}
-    {%- endfor %}
-{% endif %}
-{%- if associations.BelongsToMany is defined %}
-    {%- for assocName, assocData in associations.BelongsToMany %}
- * @var \Cake\Collection\CollectionInterface|string[] ${{ assocData.variable }}
-        {{- "\n" }}
-    {%- endfor %}
-{% endif %}
- */
-?>
 {{ element('Bake.form') }}
 			</div>
 		</div>
 	</div>
 	<div class="col-md-3">
-		<div class="special_card mb-3">
-		  <div class="profile-card js-profile-card shadow">
-			<div class="profile-card__img shadow" style="background-color: #dc3545;color: #ffffff;">
-			  <i class="fa-solid fa-question fa-xl" style="margin-left: 16px;margin-top: 21px;"></i>
+		<div class="card shadow border mb-3">
+			<div class="card-body">
+					<h5 class="card_title_custom mb-0 mt-1">Title</h5>
+					<div class="card_subtitle_custom text-muted mb-3"><?php echo $system_name; ?></div>		
+			<div class="card-text small-text pt-0">
+				Content
 			</div>
-				<div class="card-body small-text pt-0">
-				Content...
-				</div>
-		  </div>
+			</div>	
 		</div>
 	</div>
 </div>

@@ -56,9 +56,7 @@
 			<div class="card-body">
 
 <div class="row">
-
-    <div class="column-responsive column-80">
-        <div class="{{ pluralVar }} view content">
+    <div class="table-responsive">
             <table table class="table table-hovered table-sm">
 {% if groupedFields['string'] %}
 {% for field in groupedFields['string'] %}
@@ -157,22 +155,28 @@
                 <?php endif; ?>
             </div>
 {% endfor %}
-        </div>
     </div>
 </div>
 			</div>
 		</div>
 	</div>
 	<div class="col-md-3">
-<div class="special_card mb-3">
-  <div class="profile-card js-profile-card shadow">
-	<div class="profile-card__img shadow" style="background-color: #dc3545;color: #ffffff;">
-	  <i class="fa-solid fa-triangle-exclamation fa-xl" style="margin-left: 11px;margin-top: 21px;"></i>
-	</div>
-		<div class="card-body pt-0">
+	
+<div class="card shadow border mb-3">
+	<div class="card-body">
+		<div class="row row-cols-auto mb-3">
+			<div class="col pe-0">
+				<div class="profile-card__img shadow" style="background-color: #dc3545;color: #ffffff;">
+				<i class="fa-solid fa-triangle-exclamation fa-xl" style="margin-left: 11px;margin-top: 21px;"></i>
+				</div>	
+			</div>
+		<div class="col">
+			<h5 class="card_title_custom mb-0 mt-1">Archived {{ singularVar }}</h5>
+			<div class="card_subtitle_custom text-muted"><?php echo $system_name; ?></div>	
+		</div>
+		</div>	
+	<div class="card-text pt-0">
 <?php if(${{ singularVar }}->status == 0 || ${{ singularVar }}->status == 1): ?>
-
-	<div class="fw-semibold fs-5 py-0">Archived {{ singularVar }}</div>
 <div class="mb-3 col-12 mb-0">
   <div class="alert alert-warning">
 	<p class="mb-0">This step will transfer the {{ singularVar }} to archived. Once transfer to archived, it will remained and cannot be revert back. Please be certain.</p>
@@ -199,8 +203,9 @@
 <?php if(${{ singularVar }}->status == 2): ?>
 This {{ singularVar }} has been archived on <?php echo date('M d, Y (h:i A)', strtotime(${{ singularVar }}->modified)); ?>
 <?php endif; ?>	
-		</div>
-  </div>
+	</div>
+	</div>	
 </div>
+	
 	</div>
 </div>

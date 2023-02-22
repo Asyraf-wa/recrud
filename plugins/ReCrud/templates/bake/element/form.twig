@@ -14,9 +14,7 @@
  */
 #}
 {% set fields = Bake.filterFields(fields, schema, modelObject) %}
-<div class="row">
-    <div class="column-responsive column-80">
-        <div class="{{ pluralVar }} form content">
+
             <?= $this->Form->create(${{ singularVar }}) ?>
             <fieldset>
 {% for field in fields %}
@@ -55,6 +53,3 @@
 				  <?= $this->Form->button(__('Submit'),['type' => 'submit', 'class' => 'btn btn-outline-primary']) ?>
 				  <?= $this->Form->end() ?>
                 </div>
-        </div>
-    </div>
-</div>

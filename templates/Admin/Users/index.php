@@ -44,7 +44,7 @@
           <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-top-export" aria-controls="navs-top-export" aria-selected="false"><i class="fa-solid fa-download"></i> Export</button>
         </li>
       </ul>
-      <div class="tab-content px-0">
+      <div class="tab-content px-0 border">
         <div class="tab-pane fade active show" id="navs-top-list" role="tabpanel">
 <div class="table-responsive">
 	<table class="table">

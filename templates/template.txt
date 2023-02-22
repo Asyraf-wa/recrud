@@ -88,6 +88,7 @@
 
 	</div>
 </div>
+
 ===================
 $this->set('title', 'User');
 ===================
@@ -148,4 +149,24 @@ Content
 <div class="card bg-spring">
 Content
 </div>
+</div>
+
+===========
+===========
+<div class="card shadow border mb-3">
+	<div class="card-body">
+<h5 class="card-title">Card title</h5>
+<div class="card-subtitle text-muted mb-3">Card subtitle</div>
+<p class="card-text">
+  Some quick example text to build on the card title and make up the bulk of the card's content.
+</p>
+</div>	
+</div>	
+	
+	
+
+<div class="card shadow border mb-3">
+	<div class="card-body">
+		content 
+	</div>
 </div>

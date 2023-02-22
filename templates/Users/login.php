@@ -79,12 +79,12 @@ Leading The CRUD Evolution<br>
 <div class="card shadow">
 	<div class="card-body">
 <div class="my-4 text-center">
-<b class="gradient-animate-big">&lt;&#47;&gt;</b>
-<div class="crud_tag"><b class="page_title_gradient">Leading The CRUD Evolution</b></div>
+<b class="gradient-animate-big">
+Leading The CRUD Evolution</b>
 </div>
 
 <br>
-<div class="justify mb-3">
+<div class="text-justify mb-3">
 <?= $system_abbr; ?> is a framework that enables the developer to generate comprehensive Create Read Update Delete Search and Report CRUD components using the <?= $system_abbr; ?> generator. The integrated important features in the CRUD operation enable the code automation for generating web application functions such as  <span id="js-rotating">create, retrieve, update, delete, search, report, authentication, configurations, contact management, FAQ management</span> and comprehensive form helper features. All you need to do is to set your database, then <?= $system_abbr; ?> them!
 </div>
 <br>

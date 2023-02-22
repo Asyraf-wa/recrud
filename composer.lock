@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "07e466035b64f68639faf81aafa3b0b5",
+    "content-hash": "333b21e48246df20251f38459fee1afe",
     "packages": [
         {
             "name": "cakephp/authentication",
@@ -1410,6 +1410,69 @@
                 "source": "https://github.com/serbanghita/Mobile-Detect/tree/2.8.41"
             },
             "time": "2022-11-08T18:31:26+00:00"
+        },
+        {
+            "name": "muffin/trash",
+            "version": "3.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/UseMuffin/Trash.git",
+                "reference": "1c3f572d38fa4e5c1bb93f128012554b5919e74e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/UseMuffin/Trash/zipball/1c3f572d38fa4e5c1bb93f128012554b5919e74e",
+                "reference": "1c3f572d38fa4e5c1bb93f128012554b5919e74e",
+                "shasum": ""
+            },
+            "require": {
+                "cakephp/orm": "^4.1",
+                "php": ">=7.2"
+            },
+            "require-dev": {
+                "cakephp/cakephp": "^4.1",
+                "cakephp/cakephp-codesniffer": "^4.0",
+                "phpunit/phpunit": "^8.5.0 || ^9.3"
+            },
+            "type": "cakephp-plugin",
+            "autoload": {
+                "psr-4": {
+                    "Muffin\\Trash\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jad Bitar",
+                    "homepage": "http://jadb.io",
+                    "role": "Author"
+                },
+                {
+                    "name": "ADmad",
+                    "homepage": "https://github.com/ADmad",
+                    "role": "Author"
+                },
+                {
+                    "name": "Others",
+                    "homepage": "https://github.com/usemuffin/trash/graphs/contributors"
+                }
+            ],
+            "description": "Adds soft delete support to CakePHP ORM tables.",
+            "homepage": "https://github.com/usemuffin/trash",
+            "keywords": [
+                "cakephp",
+                "muffin",
+                "orm",
+                "trash"
+            ],
+            "support": {
+                "issues": "https://github.com/usemuffin/trash/issues",
+                "source": "https://github.com/usemuffin/trash"
+            },
+            "time": "2022-06-28T08:48:16+00:00"
         },
         {
             "name": "phenx/php-font-lib",

@@ -80,6 +80,7 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
         $this->addPlugin('CakePdf');
         $this->addPlugin('ReCrud');
         $this->addPlugin('AuditStash');
+        $this->addPlugin('Muffin/Trash');
     }
 
     /**

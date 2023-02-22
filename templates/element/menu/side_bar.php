@@ -1,103 +1,115 @@
 <?php 
 	$c_name = $this->request->getParam('controller');
 	$a_name = $this->request->getParam('action');
-	//echo $c_name;
-	//exit;
 ?>
-<!-- Menu -->
+<style>
+a.navi:link { 
+	text-decoration:none;
+    height: 40px;
+    padding: 0 10px;
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+    white-space: nowrap;
+	color: var(--bs-nav-link-color);
+}
+a.navi:visited { 
+	text-decoration:none;
+    height: 40px;
+    padding: 0 10px;
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+    white-space: nowrap;
+	color: var(--bs-nav-link-color);
+}
+a.navi:hover { 
+	text-decoration:none;
+    height: 40px;
+    padding: 0 10px;
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+    white-space: nowrap;
+	color: var(--bs-nav-link-color);
+}
+.sidebar_active { 
+	font-weight: bold;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+    white-space: nowrap;
+	color: var(--bs-nav-link-color);
+}
 
-        <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
-          <div class="app-brand demo">
-            <a href="index.html" class="app-brand-link">
-              
-              <span class="app-brand-text demo menu-text fw-bolder ms-2">
+</style>
+<div class="sidebar bg-body-tertiary">
+<div class="sidebar-header">
+<a href="#" class="sidebar-logo"><b class="gradient-animate-sidebar-logo"><i class="fa-solid fa-code"></i></b></a>
+<a href="#" class="sidebar-logo-text"><span><b class="gradient-animate-small">Re-CRUD</b></span></a>
+</div><!-- sidebar-header -->
+<div class="sidebar-body">
+<ul class="nav-sidebar">
 
-			<div id="logoFade" class="logo-fade hide"><b class="gradient-animate-small">&lt;&#47;&gt; <?php echo $system_abbr; ?></b></div>
-			  </span>
-            </a>
-
-            <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
-			  <i class="fas fa-chevron-left fa-sm" style="padding-left:8px;padding-top:12px;"></i>
-            </a>
-          </div>
-
-          <div class="menu-inner-shadow"></div>
-
-          <ul class="menu-inner py-1">
 <?php if ($this->Identity->isLoggedIn() == NULL) { ?>
-		<li class="menu-item <?= $c_name == 'Users' && $a_name == 'login'?'active':'' ?>">
-		  <?= $this->Html->link(__('<i class="menu-icon fa-solid fa-code"></i> Sign-in'), ['controller' => 'Users', 'action' => 'login', 'prefix' => false], ['class' => 'menu-link', 'escape' => false]) ?>
+		<li class="nav-item <?= $c_name == 'Users' && $a_name == 'login'?'sidebar_active':'' ?>">
+		<?= $this->Html->link(__('<i class="sidebar_icon fa-solid fa-arrow-right-to-bracket"></i><span">Sign-in</span>'), ['controller' => 'Users', 'action' => 'login', 'prefix' => false], ['class' => 'navi', 'escape' => false]) ?>
 		</li>
+		
 <?php } ?>
 <?php if ($this->Identity->isLoggedIn()) { ?>
             <!-- Dashboard -->
-			<li class="menu-item <?= $c_name == 'Dashboards' && $a_name == 'index'?'active':'' ?>">
-              <?= $this->Html->link(__('<i class="menu-icon fa-solid fa-code"></i> Dashboard'), ['controller' => 'Dashboards', 'action' => 'index', 'prefix' => false], ['class' => 'menu-link', 'escape' => false]) ?>
+			<li class="nav-item <?= $c_name == 'Dashboards' && $a_name == 'index'?'sidebar_active':'' ?>">
+              <?= $this->Html->link(__('<i class="sidebar_icon fa-solid fa-code"></i><span">Dashboard</span>'), ['controller' => 'Dashboards', 'action' => 'index', 'prefix' => false], ['class' => 'navi', 'escape' => false]) ?>
             </li>
 <?php } ?>
-			<li class="menu-item <?= $c_name == 'Faqs' && $a_name == 'index'?'active':'' ?>">
-              <?= $this->Html->link(__('<i class="menu-icon fa-regular fa-circle-question"></i> FAQ'), ['controller' => 'Faqs', 'action' => 'index', 'prefix' => false], ['class' => 'menu-link', 'escape' => false]) ?>
-            </li>
-			<li class="menu-item <?= $c_name == 'Contact' && $a_name == 'add'?'active':'' ?>">
-              <?= $this->Html->link(__('<i class="menu-icon fa-regular fa-message"></i> Contact Us'), ['controller' => 'Contact', 'action' => 'index', 'prefix' => false], ['class' => 'menu-link', 'escape' => false]) ?>
-            </li>
-            <li class="menu-item <?= $c_name == 'Pages' && $a_name == 'manual'?'active':'' ?>">
-              <?= $this->Html->link(__('<i class="menu-icon fa-solid fa-circle-info"></i> Documents'), ['controller' => 'Pages', 'action' => 'manual', 'prefix' => false], ['class' => 'menu-link', 'escape' => false]) ?>
-            </li>
-			
-<?php
-if ($this->Identity->isLoggedIn()) { ?>
-            <!-- My Account -->
-            <li class="menu-header small text-uppercase"><span class="menu-header-text">My Account</span></li>
-			
-            <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon fa-solid fa-user-tie"></i>
-                <div data-i18n="Account Settings">My Profile</div>
-              </a>
-              <ul class="menu-sub">
-                <li class="menu-item <?= $c_name == 'Users' && $a_name == 'profile'?'active':'' ?>">
-					<?= $this->Html->link(__('<i class="menu-icon fa-solid fa-user-tie"></i> Profile'), ['controller' => 'Users', 'action' => 'profile', 'prefix' => false, $this->Identity->get('slug')], ['class' => 'menu-link', 'escape' => false]) ?>
-				</li>
-				<li class="menu-item <?= $c_name == 'Users' && $a_name == 'update'?'active':'' ?>">
-				  <?= $this->Html->link(__('<i class="menu-icon fa-regular fa-pen-to-square"></i> Update'), ['controller' => 'Users', 'action' => 'update', 'prefix' => false, $this->Identity->get('slug')], ['class' => 'menu-link', 'escape' => false]) ?>
-				</li>
-				<li class="menu-item <?= $c_name == 'Users' && $a_name == 'changePassword'?'active':'' ?>">
-				  <?= $this->Html->link(__('<i class="menu-icon fa-solid fa-unlock-keyhole"></i> Password'), ['controller' => 'Users', 'action' => 'change_password', 'prefix' => false, $this->Identity->get('slug')], ['class' => 'menu-link', 'escape' => false]) ?>
-				</li>
-				<li class="menu-item <?= $c_name == 'Users' && $a_name == 'activity'?'active':'' ?>">
-				  <?= $this->Html->link(__('<i class="menu-icon fa-solid fa-cubes-stacked"></i> Activities'), ['controller' => 'Users', 'action' => 'activity', 'prefix' => false, $this->Identity->get('slug')], ['class' => 'menu-link', 'escape' => false]) ?>
-				</li>
-              </ul>
-            </li>
-            <li class="menu-item <?= $c_name == 'Users' && $a_name == 'logout'?'active':'' ?>">
-              <?= $this->Html->link(__('<i class="menu-icon fa-solid fa-arrow-right-from-bracket"></i> Sign-out'), ['controller' => 'Users', 'action' => 'logout', 'prefix' => false], ['class' => 'menu-link', 'escape' => false]) ?>
-            </li>
-<?php if ($this->Identity->isLoggedIn() && $this->Identity->get('user_group_id') == '1') { ?>
-            <!-- Administrator -->
-            <li class="menu-header small text-uppercase">
-              <span class="menu-header-text">Administrator</span>
-            </li>
-			<li class="menu-item <?= $c_name == 'Settings' && $a_name == 'update'?'active':'' ?>">
-              <?= $this->Html->link(__('<i class="menu-icon fa-solid fa-gear"></i> Site Configuration'), ['prefix' => 'Admin', 'controller' => 'Settings', 'action' => 'update','1'], ['class' => 'menu-link', 'escape' => false]) ?>
-            </li>
-			<li class="menu-item <?= $c_name == 'Users' && $a_name == 'index'?'active':'' ?>">
-              <?= $this->Html->link(__('<i class="menu-icon fa-solid fa-users-viewfinder"></i> User Management'), ['prefix' => 'Admin', 'controller' => 'Users', 'action' => 'index'], ['class' => 'menu-link', 'escape' => false]) ?>
-            </li>
-			<li class="menu-item <?= $c_name == 'Todos' && $a_name == 'index'?'active':'' ?>">
-              <?= $this->Html->link(__('<i class="menu-icon fa-solid fa-list-check"></i> Todo'), ['prefix' => 'Admin', 'controller' => 'Todos', 'action' => 'index'], ['class' => 'menu-link', 'escape' => false]) ?>
-            </li>
-			<li class="menu-item <?= $c_name == 'Contacts' && $a_name == 'index'?'active':'' ?>">
-              <?= $this->Html->link(__('<i class="menu-icon fa-regular fa-message"></i> Contacts'), ['prefix' => 'Admin', 'controller' => 'Contacts', 'action' => 'index'], ['class' => 'menu-link', 'escape' => false]) ?>
-            </li>
-			<li class="menu-item <?= $c_name == 'AuditLogs' && $a_name == 'index'?'active':'' ?>">
-              <?= $this->Html->link(__('<i class="menu-icon fa-solid fa-timeline"></i> Audit Trail'), ['prefix' => 'Admin', 'controller' => 'auditLogs', 'action' => 'index', '?' => ['limit'=>'25', 'status' => '1']], ['class' => 'menu-link', 'escape' => false]) ?>
-            </li>
-			<li class="menu-item <?= $c_name == 'Faqs' && $a_name == 'index'?'active':'' ?>">
-              <?= $this->Html->link(__('<i class="menu-icon fa-regular fa-circle-question"></i> FAQ'), ['prefix' => 'Admin', 'controller' => 'Faqs', 'action' => 'index'], ['class' => 'menu-link', 'escape' => false]) ?>
-            </li>
-<?php } ?>
-<?php } ?>
-          </ul>
-        </aside>
-        <!-- / Menu -->
+
+<li class="nav-item <?= $c_name == 'Faqs' && $a_name == 'index'?'sidebar_active':'' ?>">
+	<?= $this->Html->link(__('<i class="sidebar_icon fa-regular fa-circle-question"></i><span"> FAQ</span>'), ['controller' => 'Faqs', 'action' => 'index', 'prefix' => false], ['class' => 'navi', 'escape' => false]) ?>
+</li>
+
+
+<li class="nav-item <?= $c_name == 'Contacts' && $a_name == 'index'?'sidebar_active':'' ?>">
+	<?= $this->Html->link(__('<i class="sidebar_icon fa-regular fa-message"></i><span"> Contact Us</span>'), ['controller' => 'Contacts', 'action' => 'index', 'prefix' => false], ['class' => 'navi', 'escape' => false]) ?>
+</li>
+
+<li class="nav-item <?= $c_name == 'Pages' && $a_name == 'manual'?'sidebar_active':'' ?>">
+	<?= $this->Html->link(__('<i class="sidebar_icon fa-solid fa-circle-info"></i><span"> Documents</span>'), ['controller' => 'Pages', 'action' => 'manual', 'prefix' => false], ['class' => 'navi', 'escape' => false]) ?>
+</li>
+
+
+
+<li class="nav-item"><a href="https://codethepixel.com" class="nav-link"><i class="sidebar_icon fa-solid fa-code"></i>Dashboard</a></li>
+
+<li class="nav-item">
+<a href="" class="nav-link with-sub"><i class="sidebar_icon fa-regular fa-folder"></i><span>Documentation</span></a>
+<nav class="nav-sub">
+<a href="" class="sub-link active"><i class="sidebar_icon fa-regular fa-folder"></i> Overview</a>
+<a href="" class="sub-link">Insights</a>
+<a href="" class="sub-link">Transactions</a>
+<a href="" class="sub-link">Reports</a>
+</nav>
+</li>
+</ul>
+<hr/>
+
+
+<nav class="nav-sidebar">
+<a href="" class="nav-link"><i data-feather="activity"></i><span>Activity Logs</span></a>
+<a href="" class="nav-link"><i data-feather="settings"></i><span>Preferences</span></a>
+<a href="" class="nav-link"><i data-feather="help-circle"></i><span>Help &amp; Support</span></a>
+<a href="" class="nav-link"><i data-feather="edit-3"></i><span>Give Feedback</span></a>
+</nav>
+</div><!-- sidebar-body -->
+<div class="sidebar-footer">
+<a href="" class="avatar online"><span class="avatar-initial">s</span></a>
+<div class="avatar-body">
+<div class="d-flex align-items-center justify-content-between">
+<h6>Samantha Doe</h6>
+<a href="" class="footer-menu"><i class="ri-settings-4-line"></i></a>
+</div>
+<span>Superuser/Administrator</span>
+</div><!-- avatar-body -->
+</div><!-- sidebar-footer -->
+</div><!-- sidebar -->

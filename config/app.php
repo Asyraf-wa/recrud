@@ -184,7 +184,7 @@ return [
      *   your application that still emit deprecations.
      */
     'Error' => [
-        'errorLevel' => E_ALL,
+        'errorLevel' => E_ALL, //change to E_ALL ^ E_USER_DEPRECATED to off deprecated warning
         'skipLog' => [],
         'log' => true,
         'trace' => true,
